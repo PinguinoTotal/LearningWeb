@@ -1,0 +1,25 @@
+body{
+    background-color: aliceblue;
+}
+
+#caja{
+    border: 5px solid black;
+    padding: 5px;
+    background-color: rgb(32, 21, 185);
+    color: white;
+    text-align: center;
+    line-height: 50px;
+    text-transform: uppercase;
+    text-decoration: line-through;
+}
+
+h2{
+    border: 2px solid red;
+    color: red;
+    background-image: url(imagenes/patron2.png);
+}
+
+p{
+    font-size: 50px;
+    text-align: justify;
+}

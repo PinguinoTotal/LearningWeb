@@ -1,0 +1,32 @@
+@font-face {
+    font-family: Lilita_One;
+    src: url(fonts/LilitaOne-Regular.ttf);
+}
+
+h1{
+    font-family: 'VT323', monospace;
+    font-style: italic;
+    text-transform: uppercase;
+    font-size: 30px;
+
+    /*Colores*/
+    /*Colores del sistema (se puede buscar en paginas web de colores de ccs por default)*/
+    color: mediumpurple;
+
+    /*Colores hexadecimales*/
+    color: #cccccc;
+    /*Colores RGB*/
+    /*Colores RGBA*/
+}
+
+h3{
+    font-family: Lilita_One,"comic Sans MS";
+    font-size: 25px;
+    font-weight: lighter;
+    color: olive;
+}
+p{
+    font-family: sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+}
