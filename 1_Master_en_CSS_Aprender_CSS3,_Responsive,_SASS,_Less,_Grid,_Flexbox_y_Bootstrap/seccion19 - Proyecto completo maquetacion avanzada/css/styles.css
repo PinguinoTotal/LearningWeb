@@ -179,3 +179,28 @@ body{
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: 15px;
 }
+
+/*BARRA LATERAL*/
+#lateral{
+    width: 300px;
+    min-height: 1200px;
+    font-family: 'Trebuchet MS';
+    float: right;
+}
+
+aside h3{
+    display: block;
+    width: auto;
+    height: 45px;
+    line-height: 49px;
+    background-image: url(../img/pxgray.png);
+    box-shadow: 0px 1px 0px #393d3f, 1px 2px 0px #393d3f, 2px 3px 0px #393d3f, 3px 4px 0px #393d3f;
+    font-size: 30px;
+    font-family: "BebasNeue";
+    font-weight: normal;
+    letter-spacing: 2px;
+    padding-left: 15px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
