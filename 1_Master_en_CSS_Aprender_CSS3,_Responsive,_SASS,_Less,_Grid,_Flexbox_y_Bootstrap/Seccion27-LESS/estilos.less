@@ -1,0 +1,31 @@
+@bgcolor: lightblue;
+@fuente: Arial;
+@b: body;
+
+@{b}{
+    background-color: @bgcolor;
+}
+
+h1{
+    font-family: @fuente;
+}
+
+//anidacion
+.informacion{
+    ul{
+        a{
+            color: white;
+            font-size: 18px;
+        }
+    }
+}
+
+//mixins
+.sombras(){
+    box-shadow: 0px 0px 10px black;
+    text-shadow: 0px 0px 5px black;
+}
+
+.informacion{
+    .sombras();
+}
