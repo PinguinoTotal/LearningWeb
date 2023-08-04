@@ -1,0 +1,244 @@
+/*COSAS GENERALES*/
+* {
+    text-decoration: none;
+    margin: 0px;
+    padding: 0px;
+    font-family: sans-serif;
+}
+
+#container {
+    border: 1px solid rgba(225, 255, 226, .8);
+    width: 75%;
+    height: auto;
+    margin: 0px auto;
+    box-shadow: 0px 0px 10px #ccc;
+    margin-top: 40px;
+    margin-bottom: 40px;
+
+    min-height: 600px;
+}
+
+#header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    height: 120px;
+    border-bottom: 1px solid #ccc;
+}
+
+.logo {
+    flex-basis: 65%;
+    flex-grow: 1;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: italic;
+    font-weight: 900%;
+    font-size: 35px;
+    text-transform: uppercase;
+
+    padding: 10px;
+    margin-left: 20px;
+    color: black;
+    text-shadow: 1px 1px 0px #ccc;
+}
+
+.logo h1 {
+    flex-grow: 1;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: italic;
+    font-weight: 900%;
+    font-size: 35px;
+}
+
+#menu {
+    flex-grow: 1;
+    flex-basis: 30%;
+    height: 100%;
+    padding-right: 20px;
+}
+
+#menu>ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    list-style: none;
+}
+
+#menu a {
+    text-transform: uppercase;
+    color: #444;
+    padding: 15px;
+    transition: all 300ms;
+}
+
+#menu a:hover {
+    color: white;
+    background-color: #ccc;
+}
+
+#content {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#proyects {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    flex-basis: 80%;
+}
+
+.proyect {
+    flex-grow: 1;
+    flex-basis: 250px;
+    margin-bottom: 25px;
+    border: 1px solid #ccc;
+    margin-right: 20px;
+}
+
+.proyect img {
+    width: 100%;
+}
+
+.proyect-info {
+    padding: 10px;
+}
+
+.proyect-info a {
+    font-size: 16px;
+    color: black;
+    transition: all 300ms;
+}
+
+.proyect-info a:hover {
+    color: green;
+}
+
+.proyect-info p {
+    font-size: 16px;
+    color: gray;
+    margin-right: 30px;
+}
+
+#aside {
+
+    flex-basis: 15%;
+    padding: 15px;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+#aside h2 {
+    display: block;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 100;
+    color: #444;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 226, 0.8);
+    text-align: center;
+}
+
+#aside ul {
+    list-style: none;
+}
+
+#aside ul li {
+    padding-bottom: 20px;
+}
+
+#aside a {
+    display: block;
+    padding: 20px;
+    background-color: #eee;
+    color: #444;
+    text-align: center;
+    text-transform: uppercase;
+    transition: all 300ms;
+}
+
+#aside a:hover {
+    background-color: #444;
+    color: #eee;
+}
+
+#footer {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+
+    height: 120px;
+    align-items: center;
+    border-top: 1px solid rgba(225, 255, 226, .8);
+}
+
+#footer .logo {
+    opacity: 0.5;
+    flex-basis: auto;
+    flex-grow: 1;
+    order: 2;
+    text-align: right;
+    margin-right: 20px;
+}
+
+#footer .info {
+    flex-grow: 1;
+    order: 1;
+    margin-left: 20px;
+    color: #444;
+}
+
+@media (max-width: 1600px) {
+
+    #header {
+        text-align: center;
+    }
+
+    #menu ul {
+        align-items: flex-start;
+        justify-content: space-evenly;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 570px) {
+    #content {
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+
+    #aside ul{
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+    }
+
+    .proyect{
+        margin-right: 20px;
+        margin-left: 20px;
+    }
+
+    #footer .logo{
+        order: 1;
+        flex-basis: 100%;
+        text-align: center;
+        margin: 0px;
+    }
+
+    #footer .info {
+        order: 2;
+        flex-basis: 100%;
+        text-align: center;
+        margin: 0px;
+    }
+
+    
+}
