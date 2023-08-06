@@ -1,0 +1,149 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    text-decoration: none;
+    text-align: center;
+
+}
+
+/*===========================================================================*/
+#website-areas {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 150px 70px 1fr 70px;
+    grid-template-areas:
+        "cabecera cabecera cabecera cabecera cabecera"
+        "menu menu menu menu menu"
+        "contenido contenido contenido contenido lateral"
+        "pie pie pie pie pie";
+
+
+    width: 70%;
+    height: 1001px;
+    margin: 0px auto;
+    border: 1px solid #ccc;
+}
+
+#website-areas #cabecera {
+    grid-area: cabecera;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: blue;
+    color: white;
+}
+
+
+#website-areas #menu {
+    grid-area: menu;
+
+    background-color: lightblue;
+}
+
+#website-areas #menu ul {
+
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+
+    list-style: none;
+    line-height: 70px;
+}
+
+#website-areas #contenido {
+    grid-area: contenido;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 25px;
+    padding: 20px;
+
+    background-color: #eee;
+}
+
+#website-areas #contenido article {
+    background-color: #ccc;
+    border: 1px solid #555;
+}
+
+#website-areas #lateral {
+    grid-area: lateral;
+    background-color: orange;
+    color: white
+}
+
+#website-areas #footer {
+    grid-area: pie;
+    background-color: black;
+    color: white;
+}
+
+/*===========================================================================*/
+
+#website {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 150px 70px 1fr 70px;
+
+
+    width: 70%;
+    height: 1001px;
+    margin: 0px auto;
+    border: 1px solid #ccc;
+}
+
+#website #cabecera {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-column: 1/6;
+
+    background-color: blue;
+    color: white;
+}
+
+
+#website #menu {
+    grid-column: 1/6;
+
+
+    background-color: lightblue;
+}
+
+#website #menu ul {
+
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+
+    list-style: none;
+    line-height: 70px;
+}
+
+#website #contenido {
+    grid-column: 1/5;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 25px;
+    padding: 20px;
+
+    background-color: #eee;
+}
+
+#website #contenido article {
+    background-color: #ccc;
+    border: 1px solid #555;
+}
+
+#website #lateral {
+    grid-column: 5/6;
+
+    background-color: orange;
+    color: white
+}
+
+#website #footer {
+    grid-column: 1/6;
+
+    background-color: black;
+    color: white;
+}
