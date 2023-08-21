@@ -1,0 +1,14 @@
+.box{
+    float: left;
+    background-color: lightgray;
+    
+    width: 200px;
+    height: 250px;
+    margin: 20px;
+    
+}
+
+.dashed{
+    border: 3px dashed black;
+    background-color: lightcoral;
+}
