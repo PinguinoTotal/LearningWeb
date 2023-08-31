@@ -1,5 +1,8 @@
 # Estas son las notas que he echo de los cursos tomados en Udemy (profesor victor robles web) de desarrollo web, tambien estan complementados con informacion de youtube
 
+## Algunos extras:
+con **f1** se saca un buscador de visual studio code 
+
 ## Curso de HTML5 desde 0: El más completo en español
 
 3.- (observaciones) Usar firefox, visual stuidio code, poner extendiones en firefox, tambien ya puede utulizar completamente visual studio code
@@ -1210,9 +1213,557 @@ es una libreria para hacer cosas más rapidas
 
 90.- para usar jQuery se mete un js y se pone con un script hasta la parte de arriba del documento
 
+#### Selectores
+
 91.- 
 ~~~javascript
-$(document).ready(function(){}); //esto es para que el documento cuando este listo, ya se puede utilizar y el signo "$" significa jQuery
-var cajaRoja = $("#rojo"); //asi se seleccionan cosas en jQuery es posible ponerlos en una variable 
-$("#rojo").css("background","red"); //cambiando el css del elemento rojo en jQuery
+    $(document).ready(function(){ //se refiere a que todos las cosas de la pagina este cargada y lista para usarse 
+    //selector de ID
+    var rojo = $("#rojo").css("background","red") //cambiando el css desde javaScript
+                        .css("color","white"); //es posible encadenar cosas de css continuando con punto y no cerrando el punto y aparte
+    //pueden guardarse en variables o simplemente seleccionarlas y cambiarlas
+
+    console.log(rojo);
+
+    $("#amarillo").css("background","yellow")
+                 .css("color","green");
+
+    $("#verde").css("background","green")
+                .css("color","white");
+});
 ~~~
+
+92.-
+~~~javascript
+    //selecto de Clase
+    var mi_clase = $(".zebra") /*toma los elementos que tienen la clase zebra 
+    por la naturaleza de que varios elementos pueden tener la misma clase, esta funcion
+    nos arrojara un array de elementos y podemos ocuparlos como un array normal*/
+    
+    mi_clase.css("border","5px dashed black"); /*se les pone los mismos estilos css a todos los 
+    elementos del array */
+
+    $(".sonBorde").click(()=>{ //cuando le de click a algunos de los elementos que tenga la clase sin borde
+        $(this).addClass("zebra"); //'al elemento que estoy clickando añadele la clase zebra'
+    });
+~~~
+
+93.-
+~~~javascript
+    //selectores de etiqueta
+    var parrafos = $('p').css("cursor","pointer");
+    
+    parrafos.click(function(){
+        var that = $(this); //es mejor hacer esto si el this se usa mucho para no sobrecargar 
+
+        if(!that.hasClass('grande')){ //pregunta si la esto tiene la clase grande
+            that.addClass('grande');
+        }else{
+            that.removeClass('grande'); //elimina la clase grande de este elemento
+        }
+    })
+~~~
+
+94.-
+~~~javascript
+    //selector de atributo
+    $('[title="google"]').css("background", "#ccc") //selecciona los que tienen esta caracteristica 
+    $('[title="facebook"]').css("background", "blue")
+~~~
+
+95.-
+~~~javascript
+    //selector de atributo
+    $('[title="google"]').css("background", "#ccc"); //selecciona los que tienen esta caracteristica 
+    $('[title="facebook"]').css("background", "blue");
+
+    //otros
+    $('p,a').addClass('margen_superior'); //aplicando clases a multiples etiquetas
+
+    var busqueda = $("#caja").find(".resaltado"); //busca dentro de la caja la clase resaltado
+    console.log(busqueda);
+~~~
+
+### Eventos en jQuery
+
+96.- mouseover y mouseout
+~~~javascript
+    var caja = $('#caja');
+
+    caja.mouseover(function(){ //mouse que entra dentro del elemento
+        $(this).css("background","red"); 
+    });
+
+    caja.mouseout(function(){ //mouse que sale del elemento 
+        $(this).css("background", "green");
+    })
+~~~
+
+97.- hover
+~~~javascript
+    function CambiaRojo() { //mouse que entra dentro del elemento
+        $(this).css("background", "red");
+    }
+
+    function CambiaVerde() { //mouse que sale del elemento 
+        $(this).css("background", "green");
+    }
+
+    caja.hover(CambiaRojo,CambiaVerde); //el evento over toma en cuenta
+    //primero cuando entra dentro del elemento y luego cuando sale
+~~~
+
+98.- click y doble click
+~~~javascript
+    caja.click(function(){ //click normla
+        $(this).css("background", "blue")
+            .css("color", "white");
+    })
+
+    caja.dblclick(function(){ //doble click
+        $(this).css("background", "orange")
+            .css("color", "yellow");
+    })
+~~~
+
+99.- focus y blur
+~~~javascript
+    var nombre = $('#nombre');
+    nombre.focus(function(){ //cuando estoy dentro de un campo de formulario
+        $(this).css("border","2px solid green");
+    });
+
+    nombre.blur(function(){ //cuando salgo de un campo de formulario
+        $(this).css("border","1px solid #ccc");
+        $('#datos').show(); //enseña la caja que tiene displat block none en el css
+        $('#datos').text($(this).val()); //pondra el texto de el valor de la caja que acabamos de salir 
+    });
+~~~
+
+100.- 
+~~~javascript
+    //Mousemove 
+    $(document).mousemove(function(){ //detecta cuando el mouse se mueve en la pagina 
+        console.log("En X:" + event.clientX); //event.clientX nos dice la coordenada en x del mouse
+        console.log("En Y:" + event.clientY); //event.clientY nos dice la coordenada en y del mouse
+
+        $('body').css("cursor", "none"); //esconde el curor en la pagina 
+        var sigueme = $('#sigueme');
+        sigueme.css("left", event.clientX);
+        sigueme.css("top", event.clientY);
+    });
+~~~
+
+### Efectos, animaciones y más
+101.-
+~~~javascript
+$(document).ready(function(){
+
+    ReloadLinks();
+
+    $('#add_button')
+        .removeAttr('disabled') //elimina un atributo del elemento seleccionado 
+        .click(function(){
+        var newLink = $('#add_link').val();
+        //$('#menu').html('<li><a href="'+ newLink + '"></a></li>'); //con este metodo se introduce al 
+        //html del elemento que hemos seleccionado, pero machaca todo lo que hay dentro 
+        //$('#menu').append('<li><a href="'+ newLink + '"></a></li>'); //este añade a el html hasta abajo de todo
+        $('#menu').prepend('<li><a href="'+ newLink + '"></a></li>'); //este añade al el html hasta arriba de todo
+        //$('#menu').before('<li><a href="'+ newLink + '"></a></li>'); //lo mete antes del elemento menu osease afuera de la lista 
+        //$('#menu').after('<li><a href="'+ newLink + '"></a></li>'); //lo mete despues del elemento menu osease afuera de la lista
+        $('#add_link').val(''); //vaciando la caja de texto
+        ReloadLinks();
+    });
+
+    
+
+    function ReloadLinks(){
+        $('a').each(function(index){ //funcion que recorre elemento por elemento de jquery
+            var that = $(this)
+            var enlace = (that.attr("href")); //tomar el atributo "href" de cada elemto de los elementos a
+            
+            that.attr('target', '_blank'); //el atributo target has que abra una nueva pestaña
+            
+            that.text(enlace); //añade como texto lo que le pongas ahi 
+        });
+    }
+});
+~~~
+
+102.-
+~~~javascript
+$(document).ready(function(){
+    $("#mostrar").hide();
+    
+    $("#mostrar").click(function(){
+        $(this).hide(); //hide hace que el elemento no se vea (display: none)
+        $("#ocultar").show(); //show hace que el elemento se vea (display: block)
+        //$("#caja").show('fast'); //existen modificadores que nos daran 'animaciones' 
+        //de ocultarse o mostrarse de manera más rapida o lenta
+        $("#caja").fadeIn('fast'); //fundido del elemto que lo muestra
+    });
+
+    $("#ocultar").click(function(){
+        $(this).hide();
+        $("#mostrar").show();
+        $("#caja").fadeOut('fast'); //fundido del elemento que lo oculta
+    });
+
+    $("#todoEnUno").click(function(){
+        $("#caja").toggle('fast');  //muestra o oculta el elemnto dependiendo de como este 
+        //existen varios para hacer cosas en los efectos, faceToggle, slideToogle, slideUp
+        //se tiene que buscar en algo de data 
+    });
+});
+~~~
+
+103.-
+~~~javascript
+$("#animame").click(function(){
+        caja.animate({ //esta es la manera de crear animaciones personalizadas de un elemento 
+                marginLeft: '500px',    //cada animacion debe hacerse por bloques de animacion
+                fontSize: '40px',   //estos alteran el css directamente en javaScript 
+                height: '110px' 
+            }, 'slow')  //tambien puede darseles un tiempo o velocidad en la cual se debe realizar la animacion
+            .animate({
+                borderRadius: '900px',
+                marginTop: '80px'
+            }, 'slow')
+            .animate({
+                borderRadius: '0px',
+                marginLeft: '0px'
+            }, 'slow')
+            .animate({
+                borderRadius: '990px',
+                marginTop: '0px'
+            }, 'slow')
+            .animate({
+                marginLeft: '500px',
+                fontSize: '40px',
+                height: '110px'
+            }, 'slow');
+    });
+~~~
+
+114.-se puede hscer que despues de terminar de ejecutarse una animacion, se ejecute una linea de codigo 
+~~~javascript
+caja.fadeOut('fast', function(){
+//esta zona de codigo se ejecutara despues de terminar la animacion 
+}); //fundido del elemento que lo oculta
+~~~
+
+### Peticiones AJAX en jQuery
+solo se actualiza un pedazo de la pagina 
+para esta parte se utiliza un servidor ***fake*** que nos podra hacer como si tuvieramos un servidor [reqres](https://reqres.in)
+
+105.-
+~~~javascript
+    // metodo load cargamos el html de una pagina 
+    $('#datos').load('https://reqres.in/');
+~~~
+
+106.- metodo get (este nos sirve para pedirle informacion al servidor)
+~~~javascript
+    // metodo get para sacar informacion de una base de datos  
+    $.get("https://reqres.in/api/users?page=2", function(response){ //obtiene los datos
+        response.data.forEach((element, index) => { //del response extrae cada uno de los arrays 
+            console.log(element.first_name)
+            $('#datos').append("<p>"+element.first_name+" "+element.last_name+ "</p>")
+        });
+    });
+~~~
+
+107.- metodo post, sirve para pasarle informacion al servidor 
+en este apartado ocupamos nuevas cosas del html poniendo más cosas a el html se entiende mejor con la documentacion [documentacion html](https://www.w3schools.com/tags/tag_form.asp)
+~~~javascript
+    $('#formulario').submit(function(){ //haciendo submit a el formulario
+        var usuario = {
+            name : $('input[name="name"]').val(),  //obtenemos el valor de el input con nombre name
+            web : $('input[name="web"]').val()
+        } 
+        console.log(usuario);
+        $.post($(this).attr("action"), usuario, function(response){
+            console.log(response);
+        }).done(function(){ //despues de mandar los datos el done se ejecuta despues de resivir la respuesta ajax
+            alert("usuario añadido correctamente"); 
+        });
+
+        //con $(this).attr("action") le damos la url a la cual mandaremos los datos 
+        //con $.post($(this).attr("action"), usuario le damos el usuario creado anteriormente
+
+        return false; //hacemos que el submit no nos mande a otra pagina 
+    });
+});
+~~~
+
+108.- usando el metodo ajax
+~~~javascript
+    $('#formulario').submit(function(){ //haciendo submit a el formulario
+        var usuario = {
+            name : $('input[name="name"]').val(),  //obtenemos el valor de el input con nombre name
+            web : $('input[name="web"]').val()
+        } 
+        /*
+        console.log(usuario);
+        $.post($(this).attr("action"), usuario, function(response){
+            console.log(response);
+        }).done(function(){ //despues de mandar los datos el done se ejecuta despues de resivir la respuesta ajax
+            alert("usuario añadido correctamente"); 
+        });*/
+
+        //con $(this).attr("action") le damos la url a la cual mandaremos los datos 
+        //con $.post($(this).attr("action"), usuario le damos el usuario creado anteriormente
+
+        $.ajax({ //el metodo ajax es el metodo "extendido de los metodos get y post, 
+                //en este ya tenemos casi todo el control de los datos que mandamos y la  respuesta que tenemos 
+                type: 'POST', // eligiendo que tipo de metodo sera
+                ulr: $(this).attr("action"), //eligiendo la url a la que le enviaremos los datos 
+                data: usuario, //datos que le enviaremos a la url
+                beforeSend: function(){ //antes de mandar lod datos 
+                    console.log("Enviando usuario.....");
+                },
+                succes: function(response){ //si el envio de datos es exitoso
+                    console.log(response);
+                },
+                error: function(){ //por si ocurre un error en el envio de datos
+                    console.log("a ocurrido un error");
+                }, 
+                Timeout: 2000 //el tiempo quiero que tarde como maximo la peticion
+
+
+        });
+~~~
+
+### jQuery UI
+[documentacion jQuery UI](https://jqueryui.com/draggable/)
+
+
+110.-Instalando jQuery UI
+
+~~~ html
+    <script type="text/javascript" src="js/jquery-ui-1.13.2/jquery-ui.min.js"></script> 
+    <!--Agregando la libreria ui en el archivo, esta tiene que ir debajo de la libreria de jQuery-->
+
+    <link rel="stylesheet" href="js/jquery-ui-1.13.2/jquery-ui.min.css"> 
+    <link rel="stylesheet" href="js/jquery-ui-1.13.2/jquery-ui.structure.min.css">
+    <link rel="stylesheet" href="js/jquery-ui-1.13.2/jquery-ui.theme.min.css"> <!--para poder usar todo-->
+~~~
+
+111.-
+~~~ javascript
+    $(".elemento").draggable(); //mover elemento por la pagina 
+~~~
+
+112.-
+~~~ javascript
+    $(".elemento").resizable(); //redimensionar la caja 
+~~~
+
+113.-
+para usar el selected es necesario meter algunas reglas en el CSS
+~~~ css
+    ul .ui-selecting {background-color: green;} /*cuando selecciono un elemento y el cursor se estra presionando sobre el*/
+    ul .ui-selected {background-color: blue;} /*cuando selecciono un elemento y ya no estoiy haciendo click en el */
+~~~
+
+para que en el javascript poner
+~~~ javascript
+    $(".listaSeleccionable").selectable(); //los elementos que esten dentro de esto se 
+    //volveran seleccionables y se podra usar  .ui-selecting y .ui-selected
+~~~
+
+114.- para poder acomodar elementos
+~~~ javascript
+    $(".listaSeleccionable").sortable({//los elementos que esten dentro de esto se 
+    //podran acomodar como queramos, no funciona si esta en uso selectable 
+        update: function(event, ui){ //detecta cuando cambia la lista 
+            console.log("ha cambiado la lista");
+        }
+    }); 
+~~~
+
+115.-
+~~~ javascript
+    $("#elementoMovido").draggable(); //hacer un cuadro que pueda moverse por la pantalla 
+    $("#area").droppable({ //hacer un area que pueda resivir el objeto movible
+        drop: function(){ //evento que se dispara cuando un elemento draggable se suelta en el 
+            console.log("has soltado algo dentro del area");
+        }
+    });
+~~~
+
+116.- la mayor parte de los efectos que se ven pueden ser vistos y "probados" en la documentacion de jQuery UI y estos se pueden ver en: [efectos](https://jqueryui.com/effect/)
+~~~ javascript
+    $('#mostrar').click(function(){
+        //$('.cajaEfectos').fadeToggle(); // mostrar de manera que aprace
+        //$('.cajaEfectos').effect("explode"); // agregar el efecto explode
+        //$('.cajaEfectos').toggle("explode"); //lo aparece con una mini explosion 
+        //$('.cajaEfectos').toggle("blind"); //lo abre como ventana hacia abajo 
+        //$('.cajaEfectos').toggle("slide"); //lo abre como ventana hacia la derecha
+        //$('.cajaEfectos').toggle("drop"); //lo abre como ventana hacia la derecha pero como degradado
+        //$('.cajaEfectos').toggle("fold"); //casi lo mismo que slide
+        $('.cajaEfectos').toggle("puff",4000 ); //de grande a tamaño normal, tambien es posible poner el timpo en que lo querramos hacer  
+    });
+~~~
+### plugins y widgets 
+117.- el tooltip es una texto que sale cuando pasas sobre un elemento
+[tooltips](https://jqueryui.com/tooltip/) // [otroDeTooltips](https://www.heteroclito.fr/modules/tooltipster/)
+~~~ html
+    <a href="#" title="lo que se vera sobre el enlace">enlace</a>
+    <!--asi tambien se puede hacer un tooltip con html-->
+~~~
+
+116.- los cuadros de texto son los "letreritos" que te salen cuando algo falla o te queire decir algo la pagina (dialog) [popupsDeTexto](https://jqueryui.com/dialog/)
+
+117.- los calendarios son date pickers que nos dejan seleccionar una fecha [datePickers](https://jqueryui.com/datepicker/#date-formats)
+
+118.- las tabs me dejan ver como unos folders que puedo ver entre las pestañas y despliegan diferentes tipos de textos [tabs](https://jqueryui.com/tabs/)
+
+125 - 130.- se maqueto toda la pagina web, si quieres verlo esta en la seccion 35
+
+131.- buscando en internet como poner un pluggin para el slider
+
+132.- 
+~~~ javascript
+    posts.forEach((item,index) =>{
+        console.log(item.title);
+        var post = `
+        <article class="post">
+        <h2>${item.title}</h2>
+        <span class="date">${item.date}</span>
+        <p>
+            ${item.content}
+        </p>
+        <a href="#" class="button-more">Leer más</a>
+    </article>
+    `;
+        $("#posts").append(post);
+    });
+
+    //esta es la manera de hacer una "plantilla" de html que cambie con los datos de un Json
+~~~
+
+133.- para cambiar de tema en las webs podemos cambiar el css de el html por medio de javascript, pasando todos los "colores" que se encuentran en la web a un css diferente, ya que pueden haber mas de un css cambiando los estilos a las paginas y si hacemos que uno se encarge de lo escencial los demas puden ser cambiados para cambiar los temas 
+
+~~~ html
+    <!--Estilos CSS-->
+    <link rel="stylesheet" href="css/styles.css">
+    <link id="theme" rel="stylesheet" href="css/green.css"> 
+    <!--Este va a ser el estilo por defecto de nuestra pagina, que se cambiara
+    por identificador theme-->
+~~~
+
+css de la hoja de color verde
+~~~ css
+    body {
+    background-image: url(../img/hojas.jpg);
+    background-attachment: fixed;
+    /*esto para que la imagen no se mueva de como se ve */
+}
+
+#logo{
+    background-color: #235E3E;
+}
+
+#menu ul li:hover{
+    background-color: #235E3E;
+}
+
+.button-more{
+    background-color: #235E3E;
+}
+~~~
+
+css de la hoja de color rojo
+~~~ css
+    body {
+    background-image: url(../img/rojo.jpg);
+    background-attachment: fixed;
+    /*esto para que la imagen no se mueva de como se ve */
+}
+
+#logo{
+    background-color: #ca3413;
+}
+
+#menu ul li:hover{
+    background-color: #ca3413;
+}
+
+.button-more{
+    background-color: #ca3413;
+}
+~~~
+
+css de la hoja de color azul
+~~~ css
+    body {
+    background-image: url(../img/cielo.jpg);
+    background-attachment: fixed;
+    /*esto para que la imagen no se mueva de como se ve */
+}
+
+#logo{
+    background-color: #1f87C4;
+}
+
+#menu ul li:hover{
+    background-color: #1f87C4;
+}
+
+.button-more{
+    background-color: #1f87C4;
+}
+~~~
+
+cambiando el tema por medio de javascript
+~~~ javascript
+    //Selector de tema 
+    var theme = $("#theme");
+
+    $("#to-green").click(function(){
+        theme.attr("href", "css/green.css")
+    });
+
+    $("#to-red").click(function(){
+        theme.attr("href", "css/red.css")
+    });
+
+    $("#to-blue").click(function(){
+        theme.attr("href", "css/blue.css")
+    });
+~~~
+
+134.- haciendo que se suba desde la parte de abajo de la web 
+~~~ javascript
+    //scroll
+    $(".subir").click(function(e){
+        e.preventDefault(); //que no nos lleve a ningun enlace
+
+        $("html, body").animate({
+            scrollTop: 0 //sube a lo alto de la pagina
+        }, 500);
+
+        return false;
+    });
+~~~
+
+136.-tambien se pueden cargar en diferentes archivos javascript para no estar verificando si nos encontramos en esta pagina, de echo es una mejor practica separar las funcionalidades del javascript en varios javascript y agregarlos si son necesarios 
+~~~ javascript
+    //slider
+    if(window.location.href.indexOf('index') > -1){ //comprobando si estamos en la pagina index
+        $('.galeria').bxSlider({
+            mode: 'fade',
+            captions: true,
+            slideWidth: 1200,
+            responsive: true
+        });
+    }
+~~~
+
+139.- existen varias librerias que hacen ***jquery form validator***, y pues es cuestion de ver las librerias y usarlas  
+
+### TypeScript
+
+
+

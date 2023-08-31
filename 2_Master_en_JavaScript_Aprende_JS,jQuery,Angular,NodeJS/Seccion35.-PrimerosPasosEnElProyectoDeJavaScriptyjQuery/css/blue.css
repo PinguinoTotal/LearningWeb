@@ -1,0 +1,17 @@
+body {
+    background-image: url(../img/cielo.jpg);
+    background-attachment: fixed;
+    /*esto para que la imagen no se mueva de como se ve */
+}
+
+#logo{
+    background-color: #1f87C4;
+}
+
+#menu ul li:hover{
+    background-color: #1f87C4;
+}
+
+.button-more{
+    background-color: #1f87C4;
+}
