@@ -1764,6 +1764,206 @@ cambiando el tema por medio de javascript
 139.- existen varias librerias que hacen ***jquery form validator***, y pues es cuestion de ver las librerias y usarlas  
 
 ### TypeScript
+es un super set de javascript que se le añaden nuevas cosas que le dan nuevas funcionalidades, e sposible que navegadores antiguos no jalen al 100%, se usa para angular 
+
+144.- hacer una tipo jsonb que pueda ser modificado por dentro 
+~~~ javascript
+var bicicleta = {
+    color: "rojo",
+    modelo: "bmx",
+    frenos: "disco",
+    velocidadMaxima: "60km",
+    cambiaColor: function(nuevo_color){
+        //bicicleta.color = nuevo:color
+        this.color = nuevo_color;
+        console.log(this);
+    }
+}
+
+bicicleta.cambiaColor("azul");    
+~~~
+
+147.- descraga e instalacion de typescript
+
+149.- typescript debe compilarse para que pueda usarse, es como less o sass 
+asi que se debe ir a la ruta en la que esta y ejecutar el comando 
+~~~ cmd
+npx tsc archivo.ts
+~~~
+
+150.-
+para usar siempre el que cambia los cambios del codigo debe ser con 
+
+~~~ cmd
+npx tsc -w *.ts
+~~~
+
+151.- si se garega un nuevo archivos ts mientras el compilador esta ejecutandose este no creara el nuevo archivo, se tiene que parar el proceso con **ctr+c** y luego volver a correr el codigo anterior 
+~~~ typescript
+///////////////////Tipos de datos////////////////
+//string
+let cadena: string = "victorRoblesWeb";
+
+//numbre
+let numero: number = 12;
+
+//Boleano 
+let verdadero_falso: boolean = true;
+
+//Any
+let cualquiera: any = "hola"; //aqui entran cualquir tipo de datos como var
+
+//arrays
+var lenguajes: Array<string> = ["PHP", "JS", "CSS"]; //Array de strings 
+
+let years: number[] = [1,2,30]; //Arrasy de numeros 
+~~~
+
+152.- si se garega un nuevo archivos ts mientras el compilador esta ejecutandose este no creara el nuevo archivo, se tiene que parar el proceso con **ctr+c** y luego volver a correr el codigo anterior 
+~~~ typescript
+let echizo: string | number = "echizo"; //esta variable puede ser o string o numero, pero nada más
+echizo = 15;
+~~~
+
+153.-
+~~~ typescript
+type alfanumerico = string | number; //podemos crear nuestros propios tipos de variables
+let echizo: alfanumerico = "echizo"; //esta variable puede ser o string o numero, pero nada más
+echizo = 15;
+~~~
+
+154.- para que no este dando el error de **cannot redeclare block-scoped variable** lo mejor que se puede hacer es simplkemente cerrar el archivo que se compila en js en el editor de texto y deja de molestar 
+~~~ typescript
+//Let vs var 
+var numero1 = 10;
+var numero2 = 12;
+
+if(numero1 == 10){
+    let numero1 = 44; //el let solo llama a una variable aunque esta se llam a igual que una var, la usa y luego se destruye 
+    var numero2 = 55; //el var puede redefinir la variable que estamos ocupando
+
+    console.log(numero1, numero2);
+}
+console.log(numero1, numero2);
+~~~
+
+155.-
+~~~ typescript
+function getNumero(numero:number = 12): string{ //haciendo que solo acepte numeros
+    return "el numeroi es: "+numero;            //devuelva string 
+}
+~~~
+
+156.-
+~~~ typescript
+//clase (molde del objeto)
+class Camiseta{ //siempre intentar que se llame igual que el fichero 
+
+    //propiedades (caracteristicas del objeto)
+    private color: string;
+    private modelo: string;
+    private marca: string;
+    private talla: string;
+    private precio: number;
+
+    //Métodos (funciones o acciones del objeto)
+    public CambiarColor(color){
+        this.color = color;
+    }
+
+    public getColor(){
+        return this.color;
+    }
+}
+
+
+var camiseta = new Camiseta(); //creaando una nueva camiseta
+//camiseta.color = "verde"; //si la variable de la clase fuera publica puedo cambiarla
+camiseta.CambiarColor("rojo");
+
+console.log(camiseta);
+
+var playera = new Camiseta();
+playera.CambiarColor("azul");
+
+console.log(playera);
+
+
+~~~
+
+157.-
+~~~ typescript
+//Métodos (funciones o acciones del objeto)
+    constructor(color, modelo, marca, talla, precio){ //constructor
+        this.color = color;
+        this.modelo = modelo;
+        this.marca = marca;
+        this.talla = talla;
+        this.precio = precio;
+    }
+
+    public CambiarColor(color){
+        this.color = color;
+    }
+
+    public getColor(){
+        return this.color;
+    }
+}
+
+
+var camiseta = new Camiseta("rojo", "Manga Larga", "Nike", "L", 10); //usando un cronstructor
+
+console.log(camiseta);
+~~~
+
+158.-
+~~~ typescript
+export class Camiseta{ //linea que nos dice que podra ser exportado a otro tipo de archivos 
+
+import { Camiseta } from "./camiseta"; //importando el archivo
+~~~
+
+159.-
+~~~ typescript
+interface CamisetaBase{ //la interface nos dice que si o si deben existir estos metodos
+    setColor(color);
+    getColor();
+}
+~~~
+
+160.-
+~~~ typescript
+class Sudadera extends Camiseta{ //diciendo que es hija de camiseta
+    public capucha: boolean;
+
+    setCapucha(capucha){
+        this.capucha = capucha;
+    }
+
+    getCapucha():boolean{
+        return this.capucha;
+    }
+}
+~~~
+
+161.-
+~~~ typescript
+//Decorador
+function estampar(logo:string){ //adiciona una nueva funcion a una clase 
+    return function(target: Function){
+        target.prototype.estampacion = function():void{
+            console.log("camiseta estampada con el logo de: "+logo);
+        }
+    }
+}
+~~~
+
+### Angular
+
+
+
+
 
 
 
