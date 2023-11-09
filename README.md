@@ -1960,10 +1960,908 @@ function estampar(logo:string){ //adiciona una nueva funcion a una clase
 ~~~
 
 ### Angular
+166.- angular se instala con la consola 
+
+y.-[video de referencia](https://www.youtube.com/watch?v=giw1se-cddg)  cuando se sale de un proyecto de angular se deja de "compilar" en el cmd entonces lo que se debe hacer es compilarlo de nuevo para poder trabajar sobre el, porque aunque se corra el htmnl puro este no funcionara solo por ende se debe poner en el cmd cuando ya estemos dentro de la carpeta de angular ya creado  
+~~~ cmd
+ng serve 
+~~~
+luego el cmd nos arrojara que debemos ejecutar en el buscardor ***http://localhost:4200/*** y ahi se podra ver la pagina que estamos haciendo 
+
+170.- los componentes de angular se crearan en carpetas aparte de las que ya trae por defecto, para crear un nuevo componentes e hace asi 
+
+~~~ typescript
+import { Component } from "@angular/core";
+
+@Component({
+    selector: 'videojuego',
+    template: `
+    <h2>Componente de Videojuegos</h2>
+    <ul>
+        <li>GTA</li>
+        <li>Prince of Persia</li>
+        <li>Tekken</li>
+        <li>Mario</li>
+    </ul>
+    `
+})
+
+export class VideojuegoComponent{
+    constructor(){
+        console.log("se ha cargado el componente: videojuego.componente.ts")
+    }
+}
+~~~
+
+esto nos hara que cuando llamemos a este componente con html con una <videojuego></videojuego> cree lo que tiene en medio 
+
+tambien debe de ser llamado en los componentes que se usaran en **app.module.ts** se debe ver algo como esto:
+
+~~~ typescript
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+import { VideojuegoComponent } from './videojuego/videojuego.component'; //se debe importar 
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    VideojuegoComponent //y se declara 
+  ],
+  imports: [
+    BrowserModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+~~~
+
+el html se modificara en el archivo **app.component.html**
+
+171.- lo mejor es hacer que en el videjuego.component.ts se separe el html de el componente por eso se hace otro fichero llamado **videojuego.component.html** y ahi se le mete el html que tenia en 
+~~~ typescript
+import { Component } from "@angular/core";
+
+@Component({
+    selector: 'videojuego',
+    template: `
+    <h2>Componente de Videojuegos</h2>
+    <ul>
+        <li>GTA</li>
+        <li>Prince of Persia</li>
+        <li>Tekken</li>
+        <li>Mario</li>
+    </ul>
+    `
+})
+
+export class VideojuegoComponent{
+    constructor(){
+        console.log("se ha cargado el componente: videojuego.componente.ts")
+    }
+}
+~~~
+
+y se cambia por:
+~~~ typescript
+import { Component } from "@angular/core";
+
+@Component({
+    selector: 'videojuego',
+    templateUrl: './videojuego.component.html' 
+})
+
+export class VideojuegoComponent{
+    constructor(){
+        console.log("se ha cargado el componente: videojuego.componente.ts")
+    }
+}
+~~~
+
+haciendo que el fichero **videojuego.component.html** se vea asi:
+~~~ html
+<h2>Componente de Videojuegos</h2>
+<ul>
+    <li>GTA</li>
+    <li>Prince of Persia</li>
+    <li>Tekken</li>
+    <li>Mario</li>
+</ul>
+~~~
+
+tambien se pueden hacer variables que utilice el html videojuego para que las use asi:
+~~~ typescript
+import { Component } from "@angular/core";
+
+@Component({
+    selector: 'videojuego',
+    templateUrl: './videojuego.component.html' 
+})
+
+export class VideojuegoComponent{
+    public titulo: string;
+    public listado: string;
+
+    constructor(){
+        this.titulo = "Componente de Videojuegos"
+        this.listado = "Listado de los Videojuegos más populares"
+
+        console.log("se ha cargado el componente: videojuego.componente.ts")
+    }
+}
+~~~
+y en html se ve asi:
+~~~ html
+<h2>{{titulo}}</h2>
+<h4>{{listado}}</h4>
+<ul>
+    <li>GTA</li>
+    <li>Prince of Persia</li>
+    <li>Tekken</li>
+    <li>Mario</li>
+</ul>
+~~~
+
+172.- se pueden poner las etiquetas creadas y cargadas en otros html de los demas componentes y estas van a cargar de manera exitosa
+
+173.- para crear componentes por consola es necesario hacerlo con la consola nativa no emulada, con el comando 
+~~~ cmd
+ng generate component cursos
+~~~
+Aclaracion: cursos es el nombre del complemento
+esto hace que nops genere los archivos que ya habiamos generado anteriormente y ya los linkea para que no haya ningun tipo de error 
+
+174.-Los hooks son los eventos que se lanzan cuando un "elemento" de la pagina cambie  
+
+Implementando una funcion en el codigo de html de videojuego.component.html (la funcion esta en videojuego.component.ts)
+~~~ html
+<h2>{{titulo}}</h2>
+<h4>{{listado}}</h4>
+
+<button (click)="CambiarTitulo()">Cambiar Titulo</button>
+
+<ul>
+    <li>GTA</li>
+    <li>Prince of Persia</li>
+    <li>Tekken</li>
+    <li>Mario</li>
+</ul>
+~~~
+
+usando metodos y variables para hacer que se muestren o no secciones de la pagina 
+
+~~~ typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'aprendiendo-angular';
+  public mostrar_videojuegos: boolean = true;
+
+  OcultarVideojuegos(value: boolean){
+    this.mostrar_videojuegos = value;
+  }
+}
+~~~
+
+~~~ html
+<div>
+  <h1>
+    Bievenido al {{title}}
+  </h1>
+
+  <p>Vamos a aprender Angular juntos </p>
+
+  <button (click)="OcultarVideojuegos(false)" *ngIf="mostrar_videojuegos">Ocultar</button>
+  <button (click)="OcultarVideojuegos(true)" *ngIf="!mostrar_videojuegos">Mostrar</button>
+
+  <videojuego *ngIf="mostrar_videojuegos"></videojuego> <!--muestra esto si es verdadero-->>
+  <zapatillas></zapatillas>
+</div>
+~~~
+
+se pueden llamar diferentes funciones que se lanzaran como eventos que ocuerren cuando pazan cosas en la pagina 
+
+~~~ typescript
+import { Component, OnInit, DoCheck, OnDestroy } from "@angular/core";
+
+@Component({
+    selector: 'videojuego',
+    templateUrl: './videojuego.component.html' 
+})
+
+export class VideojuegoComponent implements OnInit, DoCheck, OnDestroy{
+    public titulo: string;
+    public listado: string;
+
+    constructor(){ // el constructor sera siempre el primer hook que se lanzara 
+        this.titulo = "Componente de Videojuegos";
+        this.listado = "Listado de los Videojuegos más populares";
+
+        console.log("se ha cargado el componente: videojuego.componente.ts");
+    }
+
+    ngOnInit(): void {
+        console.log("on init ejecutado"); //hook que se lanza cuando el componente se carga
+    }
+
+    ngDoCheck(): void {
+        console.log("docheck ejecutado");  //hook que se lanza cuando algo cambia dentro del codigo
+    }
+
+    ngOnDestroy(): void {
+        console.log("ondestroy ejecutado"); //hook que se lanza cuando el elemento deja de aparecer
+    }
+
+    CambiarTitulo(){
+        this.titulo = "Nuevo Titulo Del componente";
+    }
+}
+~~~
+
+175.- Se pueden crear elementos que son posibles de importar a otros scripts para ser usados en otras cosas, este objeto jason puede ser llamado y tomar sus datos 
+~~~ typescript
+export var Configuracion ={
+    color: "red",
+    fondo: "blue",
+    titulo: "aplicacion con angular",
+    descripcion: "Aprendiendo Angular con Victor Robles"
+};
+~~~
+usandolo asi:
+~~~ typescript
+import { Component } from '@angular/core';
+import { Configuracion } from './models/configuracion';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'aprendiendo-angular';
+  public mostrar_videojuegos: boolean = true;
+  public config = Configuracion;
+
+  constructor(){
+    this.title = Configuracion.titulo;
+  }
+
+  OcultarVideojuegos(value: boolean){
+    this.mostrar_videojuegos = value;
+  }
+}
+~~~
+
+176.- Los ***Models** son las bases o los __scriptableObjects__ ya que estos pueden ser muchos y solo cambian sus caracteristicas
+
+es la base o el pre modelo de como se construiran, tambien estas cuentan con un constructor para cuando sean credas las clases estas se llamen y se construllan como sea requerido 
+
+~~~ typescript
+export class Zapatilla{
+
+    //esto se puede hacer, es crear variables y darles valores en el constructor
+    /*
+    public nombre: string;
+    public marca: string;
+    public color: string;
+    public precio: number;
+    public stock: boolean;
+
+    constructor(nombre:string, marca:string, color:string, precio:number, stock:boolean){
+        this.nombre = nombre;
+        this.marca = marca;
+        this.color = color;
+        this.precio = precio;
+        this.stock = stock;
+    }
+    */
+
+    //pero se puede hacer esto tambien 
+    constructor(
+        public nombre:string,
+        public marca:string,
+        public color:string,
+        public precio:number,
+        public stock:boolean
+    ){}
+}
+~~~
+
+~~~ typescript
+import { Component, OnInit } from "@angular/core";
+import { Zapatilla } from "../models/zapatillas"; //importando la clase zapatillas
+
+@Component({
+    selector:'zapatillas',
+    templateUrl: './zapatillas.component.html'
+})
+
+export class ZapatillasComponent implements OnInit {
+    public titulo: string = 'componente de zapatillas'
+    public zapatillas: Array<Zapatilla>;
+
+    constructor(){
+        this.zapatillas = [
+            new Zapatilla("Nike Airmax", "Nike", "Rojas", 190, true),
+            new Zapatilla("Reebok Classic", "Reebok", "Blanco", 80, true),
+            new Zapatilla("Nike Runner MD", "Nike", "Negras", 60, true),
+            new Zapatilla("Adidas Yezzy", "Adidas", "Gris", 180, false),
+        ]
+    }
+
+    ngOnInit() {
+        console.log(this.zapatillas);
+    }
+}
+~~~
+
+~~~ html
+<h2>{{titulo}}</h2>
+<ul>
+    <li *ngFor="let deportiva of zapatillas"> <!--Directiva para hacer un for en html y angular-->
+        {{deportiva.nombre}} - <strong>{{deportiva.precio}}</strong>
+    </li>
+</ul>
+~~~
+
+#### Directivas en Angular
+Las directivas son como funciones extra que se le dan a html o a las etiquetas, haciendo que estas sean más poderosas y se peudan hacer muchas más cosas 
+
+178.- Directiva **ngIf**
+
+se pueden hacer condiconales en las etiquetas o si no en los estilos tambien, osease que se apliquen ciertos estilos si el if logra cumplirse 
+
+~~~ html
+<h2>{{titulo}}</h2>
+<ul>
+    <li *ngFor="let deportiva of zapatillas"> <!--Directiva para hacer un for en html y angular-->
+        {{deportiva.nombre}} - <strong>{{deportiva.precio}}</strong>
+        
+        <span *ngIf="deportiva.precio <= 80"
+                [style.background] = "deportiva.precio <= 80 ? 'green' : 'transparent' " 
+                [style.color] = "deportiva.precio <= 80 ? 'white' : 'black'"
+                > ¡EN OFERTA!</span>
+                <!--si deportiva es menor o igual que 80 el background pintalo de verde si no trasnparente-->
+                <!--si deportiva es menor o igual que 80 el color pintalo de blanco si no negro-->
+
+    </li>
+</ul>
+~~~
+
+179.- Directiva **ngFor**
+
+~~~ typescript
+import { Component, OnInit } from "@angular/core";
+import { Zapatilla } from "../models/zapatillas"; //importando la clase zapatillas
+
+@Component({
+    selector:'zapatillas',
+    templateUrl: './zapatillas.component.html'
+})
+
+export class ZapatillasComponent implements OnInit {
+    public titulo: string = 'componente de zapatillas'
+    public zapatillas: Array<Zapatilla>;
+    public marcas: string[];
+
+    constructor(){
+        this.marcas = Array(); //inicializando marcas 
+        this.zapatillas = [
+            new Zapatilla("Nike Airmax", "Nike", "Rojas", 190, true),
+            new Zapatilla("Reebok Classic", "Reebok", "Blanco", 80, true),
+            new Zapatilla("Reebok Spartan", "Reebok", "Negra", 180, true),
+            new Zapatilla("Nike Runner MD", "Nike", "Negras", 60, true),
+            new Zapatilla("Adidas Yezzy", "Adidas", "Gris", 180, false),
+        ]
+    }
+
+    ngOnInit() {
+        console.log(this.zapatillas);
+
+        this.getMarcas();
+    }
+
+    getMarcas(){
+        this.zapatillas.forEach((zapatilla, index) =>{ //añadiendo marcas a un string
+            if(this.marcas.indexOf(zapatilla.marca)<0){
+                this.marcas.push(zapatilla.marca);
+            }
+        });
+        console.log(this.marcas);
+    }
+}
+~~~
 
 
 
+~~~ html
+<h2>{{titulo}}</h2>
+<p>Compra las zapatillas de las mejores marcas</p>
+<ul>
+    <li *ngFor="let marca of marcas">{{marca}}</li>
+</ul>
 
+<p>Las zapatillas que tenemos disponibles son:</p>
+<ul>
+    <li *ngFor="let deportiva of zapatillas"> <!--Directiva para hacer un for en html y angular-->
+        <span [ngStyle]="{
+            'text-decoration': !deportiva.stock ? 'line-through' : 'none'
+        }"></span>
+        {{deportiva.nombre}} - <strong>{{deportiva.precio}}</strong>
+        
+        <span *ngIf="deportiva.precio <= 80"
+                [style.background] = "deportiva.precio <= 80 ? 'green' : 'transparent' " 
+                [style.color] = "deportiva.precio <= 80 ? 'white' : 'black'"
+                > ¡EN OFERTA!</span>
+                <!--si deportiva es menor o igual que 80 el background pintalo de verde si no trasnparente-->
+                <!--si deportiva es menor o igual que 80 el color pintalo de blanco si no negro-->
 
+    </li>
+</ul>
+~~~
 
+180.- Directiva **ngSwitch** el switch de toda la vida
 
+181.- Two way data Binding 
+es que algo resiva informacion y se comnunique de manera inmediata en angular, que puede ser el css de la pagina y el html en este caso se neceitan nuevas librerias para unirlas, estas se deben de poner en el app.component.ts 
+
+~~~ typescript
+import { FormsModule } from '@angular/forms';
+~~~
+esto es la libreria que nos dara más libertad en lso formularios 
+
+~~~ html
+<p>Añadir marca</p>
+<p>
+<input type="text" [(ngModel)] = "mi_marca" />
+</p>
+
+<p>{{mi_marca}}</p>
+~~~
+con esta linea de codigo es la conexion entre el css y el html haciendo que cada vez que se cambie las letras en el input de tipo texto estos se reflegen en lo que se escribe en el html
+
+~~~ typescript
+export class ZapatillasComponent implements OnInit {
+    public titulo: string = 'componente de zapatillas'
+    public zapatillas: Array<Zapatilla>;
+    public marcas: string[];
+    public color: string;
+    public mi_marca: string; //el campo marca tiene que estar inicializado antes en el ts
+
+    constructor(){
+        this.mi_marca = "Fila";
+        this.marcas = Array(); //inicializando marcas 
+        this.color = "blue";
+        this.zapatillas = [
+            new Zapatilla("Nike Airmax", "Nike", "Rojas", 190, true),
+            new Zapatilla("Reebok Classic", "Reebok", "Blanco", 80, true),
+            new Zapatilla("Reebok Spartan", "Reebok", "Negra", 180, true),
+            new Zapatilla("Nike Runner MD", "Nike", "Negras", 60, true),
+            new Zapatilla("Adidas Yezzy", "Adidas", "Gris", 180, false),
+        ]
+    }
+
+    ngOnInit() {
+        console.log(this.zapatillas);
+
+        this.getMarcas();
+    }
+
+    getMarcas(){
+        this.zapatillas.forEach((zapatilla, index) =>{ //añadiendo marcas a un string
+            if(this.marcas.indexOf(zapatilla.marca)<0){
+                this.marcas.push(zapatilla.marca);
+            }
+        });
+        console.log(this.marcas);
+    }
+}
+~~~
+
+evento click, pues cuando damos un click se llama uno de los metodos del archivo .ts
+~~~ html
+<p>Añadir marca</p>
+<p>
+<input type="text" [(ngModel)] = "mi_marca" />
+<button (click)="getMarca()">Mostrar marca</button> <!--Este-->
+</p>
+~~~
+
+~~~ typescript
+export class ZapatillasComponent implements OnInit {
+    public titulo: string = 'componente de zapatillas'
+    public zapatillas: Array<Zapatilla>;
+    public marcas: string[];
+    public color: string;
+    public mi_marca: string; //el campo marca tiene que estar inicializado antes en el ts
+
+    constructor(){
+        this.mi_marca = "Fila";
+        this.marcas = Array(); //inicializando marcas 
+        this.color = "blue";
+        this.zapatillas = [
+            new Zapatilla("Nike Airmax", "Nike", "Rojas", 190, true),
+            new Zapatilla("Reebok Classic", "Reebok", "Blanco", 80, true),
+            new Zapatilla("Reebok Spartan", "Reebok", "Negra", 180, true),
+            new Zapatilla("Nike Runner MD", "Nike", "Negras", 60, true),
+            new Zapatilla("Adidas Yezzy", "Adidas", "Gris", 180, false),
+        ]
+    }
+
+    ngOnInit() {
+        console.log(this.zapatillas);
+
+        this.getMarcas();
+    }
+
+    getMarcas(){
+        this.zapatillas.forEach((zapatilla, index) =>{ //añadiendo marcas a un string
+            if(this.marcas.indexOf(zapatilla.marca)<0){
+                this.marcas.push(zapatilla.marca);
+            }
+        });
+        console.log(this.marcas);
+    }
+
+    getMarca(){
+        alert(this.mi_marca) //metodo que lanza la alerta que tiene le valor de mi marca 
+    }
+}
+~~~
+
+183.- para quitar un elemento de las listas y este se vea correctamente reflejado en la pagina es necesario hacer:
+~~~ typescript
+    borrarMarca(index: any){
+        //delete this.marcas[index]; elimina el elemento pero lo deja indefinido 
+        this.marcas.splice(index,1); //quita el elemento totalmente 
+    }
+~~~
+
+184.- el evento blur se dispara cuando sales del recuadro o dejas de estar parado sobre el recuadro, tiene que tener un  punto y coma al final para que funcione, no se muy bien porque 
+~~~ html
+<input type="text" [(ngModel)] = "mi_marca" (blur)="onBlur();"/>
+~~~
+
+se puede detectar las teclas como en unity asi como se muestra:
+~~~ html
+<input type="text" [(ngModel)] = "mi_marca" (keyup.enter)="mostrarPalabra();"/>
+~~~
+
+185.- darle una clase a algo cuando algo se cumpla 
+
+si las zapatillas son mayores a 80 se les aplicara la clase altoPrecio
+~~~ html
+        <strong [class.altoPrecio]="deportiva.precio >= 80">
+            {{deportiva.precio}}
+        </strong>
+~~~
+
+**Hojas de estilo el CSS pa los compas** se puede hacer una hoja de estilos para cada uno de los elementos, pero en esta ocacion haremos uno global dentro de la carpeta __assets__ 
+
+los archivos css se agregan directamente a la hoja Index.html que aparece en las raices del programa, si este no carga correcatmente podemos ir directamente a cargarlo en angular.json en apartado styles 
+
+186.- con ngClass se le ponen las clases que queramos a las etiquetas 
+~~~ html
+        <strong [class.altoPrecio]="deportiva.precio >= 80"
+                class= "['fondoRojo','subrayado']">
+            {{deportiva.precio}}
+        </strong>
+~~~
+aunque es lo mismo que esto y más comprensible para los que leen el codigo:
+~~~ html
+        <strong [class.altoPrecio]="deportiva.precio >= 80"
+                class="fondoRojo subrayado">
+            {{deportiva.precio}}
+        </strong>
+~~~
+
+pero para lo que realmente nos sirve es para agregar varios tipos de clases a el html con condiciones, y no hacer un if para cada uno
+~~~ html
+        <strong [class.altoPrecio]="deportiva.precio >= 80"
+                [ngClass]="{
+                    'fondoRojo': deportiva.precio > 100,
+                    'subrayado': deportiva.marca == 'Nike'
+                }"
+                >
+            {{deportiva.precio}}
+        </strong>
+~~~
+
+187.- para poder _rootear_ la pagina de angular o "hacer que tenga más pestañas" es necesario que este tenga 
+~~~ html
+        <base href="/">
+~~~
+en el index html, si no no funcionara 
+
+se deber crear un documento que sera el encargado de el root de las paginas este lo llamaremos **app.routing.ts** este tendra toda la informacion de las rutas
+~~~ typescript
+//IMPORTAR LOS MODULOS DEL ROUTER DE ANGULAR
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+
+//IMPORTAR COMPONENTES 
+import { ZapatillasComponent } from "./zapatillas/zapatillas.component";
+import { VideojuegoComponent } from "./videojuego/videojuego.component";
+import { CursosComponent } from "./cursos/cursos.component";
+import { HomeComponent } from "./home/home.component";
+
+//ARRAY DE RUTAS
+const appRoutes: Routes=[
+    {path: '', component: HomeComponent},
+    {path: 'zapatillas', component: ZapatillasComponent},
+    {path: 'videojuego', component: VideojuegoComponent},
+    {path: 'cursos', component: CursosComponent},
+    {path: '**', component: HomeComponent}, //cuando no se ejecuta algo correcto
+];
+
+@NgModule({
+    imports: [RouterModule.forRoot(appRoutes)],
+    exports: [RouterModule]
+})
+
+//EXPORTAR EL MODULO DEL ROUTER
+export class appRoutingModule{}
+~~~
+
+luego dentro del **app.module.ts** vamos a cargar el archivo que se encargara de el root
+~~~ typescript
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { appRoutingModule } from './app.routing';
+
+import { AppComponent } from './app.component';
+import { VideojuegoComponent } from './videojuego/videojuego.component';
+import { ZapatillasComponent } from './zapatillas/zapatillas.component';
+import { CursosComponent } from './cursos/cursos.component';
+import { HomeComponent } from './home/home.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    VideojuegoComponent,
+    ZapatillasComponent,
+    CursosComponent,
+    HomeComponent
+  ],
+  imports: [
+    FormsModule,
+    BrowserModule,
+    appRoutingModule
+  ],
+  providers: [
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+~~~
+
+y al final de todo se debe imp´lementar en **app.component.html** con la etiqueta 
+~~~ html
+<router-outlet></router-outlet>
+~~~
+
+esto ya hace que podamos navegar entre los diferentes componentes de la pagina, cargando los elementos que sean necesarios o armando nuevos componentes que mostraran cosas especificas 
+
+188.- hacer barra de navegacion de angular 
+~~~ html
+<nav>
+    <a [routerLink]="['/home']" [routerLinkActive]="['active']">Home</a>
+    &nbsp;
+    <a [routerLink]="['/zapatillas']" [routerLinkActive]="['active']">zapatillas</a>
+    &nbsp;
+    <a [routerLink]="['/cursos']" [routerLinkActive]="['active']">cursos</a>
+    &nbsp;
+    <a [routerLink]="['/videojuego']" [routerLinkActive]="['active']">videojuego</a>
+    
+  </nav>
+~~~
+el [routerLinkActive]="['active']" nos dice que se se le aplicara la clase "active" a la pasteña y esta podra ser modificada en el css
+
+tambien es posible hacerlo de esta manera, que me gusta más
+**app.routing.ts**
+~~~ typescript
+//IMPORTAR LOS MODULOS DEL ROUTER DE ANGULAR
+import { ModuleWithProviders } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+
+//IMPORTAR COMPONENTES 
+import { ZapatillasComponent } from "./zapatillas/zapatillas.component";
+import { VideojuegoComponent } from "./videojuego/videojuego.component";
+import { CursosComponent } from "./cursos/cursos.component";
+import { HomeComponent } from "./home/home.component";
+
+//ARRAY DE RUTAS
+const appRoutes: Routes=[
+    {path: '', component: HomeComponent},
+    {path: 'home', component: HomeComponent},
+    {path: 'zapatillas', component: ZapatillasComponent},
+    {path: 'videojuego', component: VideojuegoComponent},
+    {path: 'cursos', component: CursosComponent},
+    {path: 'cursos/:nombre', component: CursosComponent},
+    {path: '**', component: HomeComponent}, //cuando no se ejecuta algo correcto
+];
+
+//EXPORTAR EL MODULO DEL ROUTER
+export const appRoutingProviders: any[] = [];
+export const routing: ModuleWithProviders<any> = RouterModule.forRoot(appRoutes);
+~~~
+
+**app.module.ts**
+~~~ typescript
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { routing, appRoutingProviders } from './app.routing';
+
+import { AppComponent } from './app.component';
+import { VideojuegoComponent } from './videojuego/videojuego.component';
+import { ZapatillasComponent } from './zapatillas/zapatillas.component';
+import { CursosComponent } from './cursos/cursos.component';
+import { HomeComponent } from './home/home.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    VideojuegoComponent,
+    ZapatillasComponent,
+    CursosComponent,
+    HomeComponent
+  ],
+  imports: [
+    FormsModule,
+    BrowserModule,
+    routing
+  ],
+  providers: [
+    appRoutingProviders
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+~~~
+
+-------------------------------------------------------------------------------------------------
+
+189.-
+pasar parametros por url, primero se necesita "crear" una ruta que pueda oibtener los datos asi:
+ **app.routing.ts**
+~~~ typescript
+//ARRAY DE RUTAS
+const appRoutes: Routes=[
+    {path: '', component: HomeComponent},
+    {path: 'home', component: HomeComponent},
+    {path: 'zapatillas', component: ZapatillasComponent},
+    {path: 'videojuego', component: VideojuegoComponent},
+    {path: 'cursos', component: CursosComponent},
+    {path: 'cursos/:nombre', component: CursosComponent},
+    {path: 'cursos/:nombre/:followers', component: CursosComponent},
+    {path: '**', component: HomeComponent}, //cuando no se ejecuta algo correcto
+];
+~~~
+estos pueden soportar "sobrecargas" de la pagina cursos, que obtendran los parametros "nombre y followers respectivamente"
+
+para poder capturarlos necesitamos inyectar el codigo que es capaz de obtener la informacion del html 
+
+~~~ typescript
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router'; //importar para poder usar la ruta 
+
+@Component({
+  selector: 'app-cursos',
+  templateUrl: './cursos.component.html',
+  styleUrls: ['./cursos.component.css']
+})
+export class CursosComponent {
+  public nombre: string = "";
+  public followers: number = 0; //variables que resiviran los valores del html
+
+  constructor(
+    private _route: ActivatedRoute, //inyeccion del codigo 
+    private _router: Router //inyeccion del codigo
+  ){}
+
+  ngOnInit(){
+    this._route.params.subscribe((params:Params) =>{ //cuando inicie el programa esto va a tomar los parametrso que vienen en el html
+    //el params es un tipo "json" que contiene los valores
+      this.nombre = params['nombre']; //aqui se obtienen los pedazos del html y se guardan 
+      this.followers = +params['followers']; //se le pone el "+" para que se vuelva de tipo numero
+      console.log(this.nombre); //si se le pasa algo por html lo toma y lo guarda 
+    })
+  }
+}
+~~~ 
+
+y estos valores se pueden usar en el html como siempre los hemos usado 
+~~~ html
+<h3 *ngIf="nombre">Bievenido {{nombre}}</h3>
+<h3 *ngIf="followers">Tienes: {{followers}} seguidores</h3>
+~~~ 
+
+191.- con esta liena de codigo podemos redirigir a el usuario, esto es importante ya que esta nos hara que cuando se ejecute algo, cuando entre a alguna condicion o alguna cosa similar esto pueda llevarlos a otra parte de la pagina 
+~~~ typescript
+    ngOnInit(){
+    this._route.params.subscribe((params:Params) =>{
+      this.nombre = params['nombre'];
+      this.followers = +params['followers'];
+      console.log(this.nombre); 
+
+      if(this.nombre == 'ninguno'){
+        this._router.navigate(['/home']); //redirigiendo si se cumple un if
+      }
+    })
+  }
+
+  redirigir(){
+    this._router.navigate(['/zapatillas']); //redirigiendo con un metodo
+  }
+~~~ 
+
+192.- para usar un else if se puede usar:
+~~~ html
+<h2>Pagina principal</h2>
+
+<div *ngIf="identificado; else noIdentificado">
+    <h3>Estas identificado en la aplicacion</h3>
+    <button (click)="unsetIdentificado()">Borrar Identificacion</button>
+</div>
+
+<ng-template #noIdentificado>
+    <p>No estas identificado, pulsa este boton para identificarte</p>
+    <button (click)="setIdentificado()">Identificarce</button>
+</ng-template>
+~~~ 
+
+y 
+
+~~~ typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
+})
+export class HomeComponent {
+  public identificado: boolean;
+
+  constructor(){
+    this.identificado = false;
+  }
+
+  setIdentificado(){
+    this.identificado = true;
+  }
+
+  unsetIdentificado(){
+    this.identificado = false;
+  }
+}
+~~~ 
+
+193.- una manera de tener mejor organizado el codigo cuando se hace un else e if es esta: donde se separa el codigo qeu mostrara de la logica 
+~~~ html
+<h2>Pagina principal</h2>
+
+<div *ngIf="identificado; then siIdentificado else noIdentificado"></div>
+
+<ng-template #siIdentificado>
+    <h3>Estas identificado en la aplicacion</h3>
+    <button (click)="unsetIdentificado()">Borrar Identificacion</button>
+</ng-template>
+
+<ng-template #noIdentificado>
+    <p>No estas identificado, pulsa este boton para identificarte</p>
+    <button (click)="setIdentificado()">Identificarce</button>
+</ng-template>
+~~~ 
+
+cambiando remplate para learning web  
