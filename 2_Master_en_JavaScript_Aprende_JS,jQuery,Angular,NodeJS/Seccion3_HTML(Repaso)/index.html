@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hola mundo</title>
+</head>
+
+<body>
+    <h1>Titulo de mi pagina</h1>
+    <h2>Bienvenidos a mi web</h2>
+
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas commodo pellentesque tristique. Suspendisse
+        vitae tincidunt ante. Duis sit amet venenatis dolor, quis suscipit est. Proin tincidunt nisi tellus. Praesent
+        suscipit eu nisi eu consequat. Ut lacus ante, pellentesque a tortor quis, bibendum imperdiet augue. Mauris id
+        orci pretium mauris varius lacinia. Vestibulum eget tincidunt eros. Proin luctus suscipit libero a imperdiet.
+        Maecenas dolor dolor, sodales et consequat at, molestie sodales massa. Mauris eu convallis dui. Donec aliquet
+        dapibus risus, luctus pulvinar sapien efficitur vitae. Cras eget mattis nisl. Curabitur pellentesque mauris
+        felis, ut iaculis eros aliquet a.
+    </p>
+
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas commodo pellentesque tristique. Suspendisse
+        vitae tincidunt ante. Duis sit amet venenatis dolor, quis suscipit est. Proin tincidunt nisi tellus. Praesent
+        suscipit eu nisi eu consequat. Ut lacus <br> <br/> ante, pellentesque a tortor quis, bibendum imperdiet augue. Mauris id
+        orci pretium mauris varius lacinia. Vestibulum eget tincidunt eros. Proin luctus suscipit libero a imperdiet.
+        Maecenas dolor dolor, sodales et consequat at, molestie sodales massa. Mauris eu convallis dui. Donec aliquet
+        dapibus risus, luctus pulvinar sapien efficitur vitae. Cras eget mattis nisl. Curabitur pellentesque mauris
+        felis, ut iaculis eros aliquet a.
+    </p>
+
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas commodo pellentesque tristique. Suspendisse
+        vitae tincidunt ante. Duis sit amet venenatis dolor, quis suscipit est. Proin tincidunt nisi tellus. Praesent
+        suscipit eu nisi eu consequat. Ut lacus ante, pellentesque a tortor quis, bibendum imperdiet augue. Mauris id
+        orci pretium mauris varius lacinia. Vestibulum eget tincidunt eros. Proin luctus suscipit libero a imperdiet.
+        Maecenas dolor dolor, sodales et consequat at, molestie sodales massa. Mauris eu convallis dui. Donec aliquet
+        dapibus risus, luctus pulvinar sapien efficitur vitae. Cras eget mattis nisl. Curabitur pellentesque mauris
+        felis, ut iaculis eros aliquet a.
+    </p>
+
+    <hr>
+
+    <h3>Tercer encabezado de la pagina</h3>
+
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas commodo pellentesque tristique. Suspendisse
+        vitae tincidunt ante. Duis sit amet venenatis dolor, quis suscipit est. Proin tincidunt nisi tellus. Praesent
+        suscipit eu nisi eu consequat. Ut lacus ante, <blockquote>
+            pellentesque a tortor quis, bibendum imperdiet augue. Mauris id
+        orci pretium mauris varius lacinia. Vestibulum eget tincidunt eros. Proin luctus suscipit libero a imperdiet.
+        Maecenas dolor dolor, sodales et consequat at, molestie sodales massa. Mauris eu convallis dui. Donec aliquet
+        dapibus risus, luctus pulvinar sapien efficitur vitae. Cras eget mattis nisl. Curabitur pellentesque mauris
+        felis, ut iaculis eros aliquet a.
+        </blockquote> 
+    </p>
+
+    <hr>
+
+    <h2>Imagenes en HTML</h2>
+
+    <img src="imagenes/lobo.jpg" alt="imagen de un lobo" title="foto de un lobo">
+
+    <hr>
+
+    <h3>Listado de frutas</h3>
+
+    <ul>
+        <li>Manzana
+            <ul>
+                <li>roja</li>
+                <li>verde</li>
+            </ul>
+        </li>
+        <li>Naranja</li>
+        <li>Pera</li>
+        <li>Sandia</li>
+
+    </ul>
+
+    <hr>
+
+    <h3>Tablas</h3>
+
+    <table border="1"> <!--Es necsario poner el border para que se vea la tabla como tabla-->
+        <tr>
+            <th>Nombre</th> <!--Estos son los encabezados de las tablas porque van primero-->
+            <th>Apellidos</th> <!--El th pone el texto en negritas cuando es una tabla-->
+            <th>Pais</th>
+        </tr>
+
+        <tr>
+            <td>Victor</td>
+            <td>Robles</td>
+            <td>España</td>
+        </tr>
+
+        <tr>
+            <td>Kevin</td>
+            <td colspan="2">Lopez</td> <!--El colspan nos dice que la tabla se expande-->
+        </tr>
+    </table>
+
+    <hr>
+
+    <h3>formulario</h3>
+
+    <form action="">
+        <p> <!--caja donde solo entra poca informacion-->
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" placeholder="Escribe tu nombre">
+        </p>
+        
+        <p> <!--Caja donde entra mucha informacion-->
+            <label for="descripcion">Descripcion</label>
+            <textarea name="descripcion" id="" cols="30" rows="10"></textarea>
+        </p>
+        
+        <!--Los radiobutons son las casillas que deben marcarse-->
+        <input type="radio" name="genero" value="hombre"> Hombre <br/>
+        <input type="radio" name="genero" value="mujer"> Mujer <br/>
+        <input type="radio" name="genero" value="nada"> Nada <br/>
+
+        <select name="" id=""> <!--Menu desplegable con las diferentes opciones-->
+            <option value="hombre">Hombre</option>
+            <option value="mujer">Mujer</option>
+            <option value="nada">Nada</option>
+        </select>
+        
+        <!--Boton de submit para cuando ya se termine de llenar el formulario-->
+        <input type="submit" value="Enviar formulario"/>
+
+    </form>
+
+</body>
+
+</html>
