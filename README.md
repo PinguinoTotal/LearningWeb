@@ -202,5 +202,7 @@ extras.-
 git push --mirror : sirve para poder subir todas las ramas que tengo en el repo localm asi teniendo todas las ramas en github
 git branch -a : muestra todas las ramas locales y remotas
 git pus origin -d "nombreDeRama" : borra la rama su ya esta borrada en local, ya que le indicamos que debe borrar esa rama en remoto ya que localmente ya fue borrada 
+ git push --set-upstream origin "nombre de la rama" : Si solo tienes la rama en local e intentas subir la rama se tiene que hacer esto para crearla y ya despues se sube 
+
 ~~~
 
