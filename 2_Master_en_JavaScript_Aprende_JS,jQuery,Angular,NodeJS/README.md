@@ -505,8 +505,612 @@ for(var i=0; i<=10; i++){
 
 ## 40.- Ejercicio8
 ~~~ javascript
+'use strict'
+
+/*
+Calculadorea
+- Pida dos numeros por pantalla
+- Si metemos mal un numero que nos los vuelva a pedir
+- En el cuerpo de la pagina, en una alerta y por consola el resultado de 
+sumar, restar, multiplicar y dividir esas dos cifras 
+*/
+
+do{
+    var numero1 = parseInt(prompt("introduce un numero: ",0));
+    var numero2 = parseInt(prompt("introduce otro numer numero: ",0));
+}while(isNaN(numero1) || isNaN(numero2))
+
+var suma = "la suma de "+ numero1 +" y " + numero2 +" es: " + (numero1+numero2);
+var resta = "la resta de "+ numero1 +" y " + numero2 +" es: " + (numero1-numero2);
+var multiplicacion = "la multiplicacion de "+ numero1 +" y " + numero2 +" es: " + (numero1*numero2);
+var division = "la division de "+ numero1 +" y " + numero2 +" es: " + (numero1/numero2);
+
+document.write("<p> "+suma+"</p>");
+document.write("<p> "+resta+"</p>");
+document.write("<p> "+multiplicacion+"</p>");
+document.write("<p> "+division+"</p>");
+
+alert(suma);
+alert(resta);
+alert(multiplicacion);
+alert(division);
+
+console.log(suma);
+console.log(resta);
+console.log(multiplicacion);
+console.log(division);
+~~~
+
+## 41.- Crear funciones
+~~~ javascript
+'use strict'
+
+//Funciones 
+//Una funcion es una garupacion reutilizable de un conjunto de instrucciones 
+
+function calculadora(){
+    console.log("Hola soy la calculadora");
+    console.log("si soy yo");
+
+    return "La calculadora" //regresa esto como un valor, esta funcion arroja un string
+}
+
+calculadora();
+~~~
+
+## 42.- Parametros
+~~~ javascript
+'use strict'
+
+//Funciones 
+//Una funcion es una garupacion reutilizable de un conjunto de instrucciones 
+//Es posible hacer que las funciones reciban parametros para que hagan más cosas dentro de ellas
+function calculadora(numero1,numero2){
+    console.log("Suma: "+(numero1+numero2));
+    console.log("Resta: "+(numero1-numero2));
+    console.log("Multiplicacion: "+(numero1*numero2));
+    console.log("Division: "+(numero1/numero2));
+    console.log("-------------------------------")
+}
+
+/*
+calculadora(10,4);
+calculadora(50,30);
+*/
+
+for(var i=1; i<=10; i++){
+    console.log(i);
+    calculadora(i,8);
+}
 
 ~~~
 
+## 43.- Parametros opcionales
+~~~ javascript
+'use strict'
+
+//Funciones 
+//hay funciones que se le spuede dar un valor por default y no es necesario
+//darle otro valor cuando se invoca
+function calculadora(numero1, numero2, mostrar = false) {
+    if (!mostrar) {
+        console.log("Suma: " + (numero1 + numero2));
+        console.log("Resta: " + (numero1 - numero2));
+        console.log("Multiplicacion: " + (numero1 * numero2));
+        console.log("Division: " + (numero1 / numero2));
+        console.log("-------------------------------")
+    } else {
+        document.write("Suma: " + (numero1 + numero2) + "</br>");
+        document.write("Resta: " + (numero1 - numero2) + "</br>");
+        document.write("Multiplicacion: " + (numero1 * numero2) + "</br>");
+        document.write("Division: " + (numero1 / numero2) + "</br>");
+        document.write("-------------------------------" + "</br>")
+    }
+
+}
+
+for (var i = 1; i <= 10; i++) {
+    console.log(i);
+    calculadora(i, 8, true);
+}
+~~~
+
+## 44.- Funciones dentro de funciones
+~~~ javascript
+'use strict'
+
+//Funciones 
+function porConsola(numero1, numero2) {
+    console.log("Suma: " + (numero1 + numero2));
+    console.log("Resta: " + (numero1 - numero2));
+    console.log("Multiplicacion: " + (numero1 * numero2));
+    console.log("Division: " + (numero1 / numero2));
+    console.log("-------------------------------")
+}
+
+function porPantalla(numero1, numero2) {
+    document.write("Suma: " + (numero1 + numero2) + "</br>");
+    document.write("Resta: " + (numero1 - numero2) + "</br>");
+    document.write("Multiplicacion: " + (numero1 * numero2) + "</br>");
+    document.write("Division: " + (numero1 / numero2) + "</br>");
+    document.write("-------------------------------" + "</br>")
+}
+
+function calculadora(numero1, numero2, mostrar = false) {
+    if (!mostrar) {
+        porConsola(numero1, numero2);
+    } else {
+        porPantalla(numero1, numero2);
+    }
+
+}
+
+for (var i = 1; i <= 10; i++) {
+    console.log(i);
+    calculadora(i, 8, true);
+}
+~~~
+
+## 45.- Parametros rest y spread
+~~~ javascript
+'use strict'
+
+//parametros REST y SPREAD
+
+function listadoDeFrutas(fruta1, fruta2,...restoDeFrutas){
+    console.log("Fruta1: ", fruta1);
+    console.log("Fruta2: ", fruta2);
+    console.log(restoDeFrutas);
+}
+
+listadoDeFrutas("Naranja","Manzana","Sandia","Pera","Melon","Coco");
+
+/*
+los parametros REST o el "...restoDeFrutas", se definen con ..., estos almacenaran
+los datos que desbordan a la funcion y estos los mete en una lista
+*/
+
+var frutas=["Naranja","Manzana"]
+listadoDeFrutas(...frutas,"Sandia","Pera","Melon","Coco");
+/*
+los valores SPREAD son arrays que se meten dentro de una funcion pero colocando
+los ... delante del array hacemos que se "desdoble" y meta correctamente los datos
+de manera ordenada como si lo metieramos (array[0], array[1])
+*/
+~~~
+
+## 46.- Funciones anonimas y callbacks
+~~~ javascript
+'use strict'
+
+//Funciones anonimas
+//Es una funcion que no tiene nombre 
+
+var pelicula = function(nombre){
+    console.log("la Pelicula es: "+nombre);
+}
+
+//los callbacks son funciones anonimas que se les pasan como parametros a otras
+//funciones y esa funcion dentro de ella se ejecuta 
+function sumame(numero1,numero2, sumaYmuestra, sumaPorDos){
+    var sumar = numero1 + numero2;
+
+    sumaYmuestra(sumar);
+    sumaPorDos(sumar);
+} 
+
+sumame(4,10,function(dato){
+    /*esta es la funcion llamada "suma y muestra" que declaramos en la funcion
+    pero esta se la estamos apsando como parametro
+    el dato nos lo esta dando dentro de la funcion*/
+    console.log("la suma es: " + dato);
+},function(dato){
+    /*esta es la funcion llamada "suma por dos" que declaramos en la funcion
+    pero esta se la estamos apsando como parametro
+    el dato nos lo esta dando dentro de la funcion*/
+    console.log("la suma multiplciada por dos es: "+ dato)
+})
+~~~
+
+## 47.- Funciones de flecha 
+~~~ javascript
+    sumame(4,10,dato=>{
+    //la flecha es quitar el "function" por una flecha, 
+    //si es más de un parametro sid ebe ir entre parentesis
+    console.log("la suma es: " + dato);
+    },dato=>{
+    console.log("la suma multiplciada por dos es: "+ dato)
+    })
+~~~
+
+## 48.- Ambito de las variables 
+~~~ javascript
+'use strict'
+
+function holaMundo(texto){
+    var hola_mundo = "Texto dentro de funcion"
+    console.log(hola_Mundo);
+    /*esta variable no podra ser llamada fuera de la funcion ya que es local */
+    console.log(texto);
+    console.log(numero.toString());
+    /*aunque "numero" no esta sindo introducido al llamar al metodo, este puede leerlo 
+    toString es una funcion aplicada a un objeto, este lo vuelve un string */
+}
+
+var numero = 12;
+var texto = "hola mundo soy una variable global"
+holaMundo(texto);
+~~~
+
+## 49.- Metodos para procesar textos 
+~~~ javascript
+'use strict'
+
+//Transformacion de textos
+var numero = 444;
+var texto1 = "Bienvenidos al curso de JavaScript de Victor Robles";
+var texto2 = "es muy buen curso";
+
+var dato = numero.toString(); //convertir numero a un string
+    dato = texto1.toUpperCase(); //convertir letras en mayusculas
+    dato = texto1.toLocaleLowerCase(); //convertir letras en minusculas
+
+console.log(dato);
+
+// CALCULAR LONGITUD
+var nombre = "";
+
+console.log(nombre.length); //nos dice que tan lago es un texto, sirve para contar cosas
+//cuenta cuantas cosa hay dentro de un array o cuantas letras tiene un string 
+
+// CONCATENAR - UNIR TEXTOS
+
+var textoTotal = texto1 + texto2;
+var textoTotal = texto1.concat(" "+ texto2); //esto es lo mismo que lo de arriba 
+console.log(textoTotal);
+~~~
+
+## 50.- Metodos de busqueda
+~~~ javascript
+'use strict'
+
+//Transformacion de textos
+var numero = 444;
+var texto1 = "Bienvenidos al curso de JavaScript de Victor Robles";
+var texto2 = "es muy buen curso";
+
+var busqueda = texto1.indexOf("curso");
+//encuentra la primer coincidencia donde empieza la palabra 
+
+    busqueda = texto1.search("curso");
+    //lo mismo de arriba, arrola "-1" si no encuentra la palabra
+
+    busqueda = texto1.match("curso");
+    //busca la primer coincidencia y arroja mucha informacion sobre donde lo encontro
+
+    busqueda = texto1.match(/curso/gi);
+    //busca todas las coinbcidencias y arroja mucha informacion sobre su ubicacion
+
+    busqueda = texto1.substring(14,5);
+    //saca un pedazo de texto determinado por el index y cuantos caracteres
+
+    busqueda = texto1.charAt(44); 
+    //saca la letra que esta en la posicion 44
+
+    busqueda = texto1.startsWith("Bi");
+    //arroja true o false si el string completo inicia con lo que pongamos 
+
+    busqueda = texto1.endsWith("es");
+    //arroja true o false si el string completo termina con lo que pongamos
+
+    busqueda = texto1.includes("JavaScript");
+    //esta es keysensitive (diferncia entre M y m), dice si existe o no lo que buscamos en el string
+console.log(busqueda);
+~~~
+
+## 51.- Funciones de reemplazo
+~~~ javascript
+'use strict'
+
+//Transformacion de textos
+var numero = 444;
+var texto1 = "Bienvenidos al curso de JavaScript de Victor Robles";
+var texto2 = "es muy buen curso";
+
+var busqueda = texto1.replace("JavaScript", "Symfony");
+    //reemplaza lo que tenemos con lo que queremos
+
+    busqueda = texto1.slice(14);
+    //corta los caracteres antes del 14 y deja lo que sobra en el string
+
+    busqueda = texto1.slice(14,22);
+    //corta los caracteres del 14 al 22
+
+    busqueda = texto1.split(" ");
+    //separa el string por espacios y lo mete en un array
+
+    busqueda = texto1.trim();
+    //quita espacios por delante y por detras de los strings
+console.log(busqueda);
+~~~
+
+## 52.- Plantillas de Texto en Javascript 
+~~~ javascript
+'use strict'
+
+var nombre = prompt("Mete tu nombre");
+var apellidos = prompt("Mete tus apellidos");
+
+//las comillas invertidas van con alt + 96
+var texto = `
+    <h1>Hola que tal</h1>
+    <h3>Mi nombre es: ${nombre}</h3>
+    <h3>Mis apellidos son es: ${apellidos}</h3>
+`;
+
+document.write(texto);
+~~~
+
+## 53.- Arrays basicos
+~~~ javascript
+'use strict'
+
+//Arrays, Arreglos, Matrices
+
+var nombres = ["Victor", "Pedro", "Pablo", "Arturo", 52, true];
+//coleccion de datos agrupados, pueden ser diferentes datos
+
+var lenguajes = new Array("PHP", "JS", "GO", "JAVA");
+
+console.log(nombres);
+console.log(lenguajes);
+console.log(nombres[2]);
+~~~
+
+## 54.- Arrays Avanzados 
+~~~ javascript
+'use strict'
+
+//Arrays, Arreglos, Matrices
+
+var nombres = ["Victor", "Pedro", "Pablo", "Arturo", 52, true];
+//coleccion de datos agrupados, pueden ser diferentes datos
+
+var lenguajes = new Array("PHP", "JS", "GO", "JAVA");
+
+console.log(nombres.length); //saber cuantos elementos tiene metido
+
+var elemento = parseInt(prompt("Que numero de elemento queires sacar del array??",0));
+
+if(elemento >= nombres.length){
+    alert("Introduce el numero correcto menor que: "+nombres.length);
+}else{
+    alert("El usuario seleccionado es: "+nombres[elemento])
+}
+
+document.write("<h1>Lenguajes de programacion del 2018</h1>");
+document.write("<ul>");
+for(var i=0; i<=lenguajes.length; i++){
+    document.write("<li>"+lenguajes[i]+"</li>")
+}
+document.write("</ul>");
+~~~
+
+## 55.- Recorrer arrays: for, forEach 
+~~~ javascript
+document.write("<h1>Lenguajes de programacion del 2018</h1>");
+document.write("<ul>");
+
+lenguajes.forEach((elemento, indice)=>{
+    document.write("<li>"+indice+"-"+elemento+"</li>")
+});
+
+document.write("</ul>");
+~~~
+
+## 56.- Arrays multidimensionales 
+~~~ javascript
+'use strict'
+
+var categorias = ["accion","terror","comedias"];
+var peliculas = ["la vida es bella","amar te duele","gran torino"];
+
+var cine = [categorias,peliculas];
+
+console.log(cine[0][1]);
+//asi se accede a un elemento de un array mutidimencional
+~~~
+
+## 57.- Operaciones con arrays 
+~~~ javascript
+'use strict'
+
+var categorias = ["accion","terror","comedias"];
+var peliculas = ["la vida es bella","amar te duele","gran torino"];
+
+var cine = [categorias,peliculas];
 
 
+peliculas.push("Batman");
+//añade un elemento a un array existente
+
+peliculas.pop();
+//elimina el ultimo elemento de un array
+
+
+console.log(peliculas);
+
+peliculas.splice(2,1);
+//elimina el elemento que seleccione
+//de la posicion 2 borrame 1 elemento, osease solo borrame el 2
+
+
+var pelis = peliculas.join();
+//el array lo vuelve un string dividido por comas 
+~~~
+
+## 58.- Convertir un string en un array 
+~~~ javascript
+var cadena = "texto1, texto2, texto3";
+var cadema_array = cadena.split(", ")
+//vuelve un string a array ceparandolo como querramos
+~~~
+
+## 59.- Ordenar arreglos 
+~~~ javascript
+
+peliculas.sort(); //ordena de forma alfabetica el array 
+
+peliculas.reverse(); //darle la vuelta al array en el orden inverso
+~~~
+
+## 60.- Recorrer arreglos: for in 
+~~~ javascript
+document.write("<h1>Lenguajes de programacion del 2018</h1>");
+document.write("<ul>");
+
+for(let lenguaje in lenguajes){
+    document.write("<li>"+lenguajes[lennguaje]+"</li>")
+    //lenguaje es el index
+}
+
+document.write("</ul>");
+~~~
+
+## 61.- Buscar en array 
+~~~ javascript
+//Busquedas
+var lenguajes = new Array("PHP", "JS", "GO", "JAVA");
+var precios = [10,20,50,80,12];
+
+var busqueda = lenguajes.find(function(lenguaje){
+    return lenguaje == "PHP7"; //haciendo una busqueda en el array
+});
+
+var busqueda = lenguajes.find(lenguaje=> lenguaje == "PHP7");
+//esto es lo mismo que arriba pero de una manera más compacta
+
+var busqueda = lenguajes.findIndex(lenguaje=> lenguaje == "PHP7");
+//nos dice el indice en el cual se encuentra ese elemento en el array
+
+var busqueda = precios.some(precio => precio >= 50);
+//nos dice si si o no, existen precios mayores o iguales a 50
+~~~
+
+## 62.- Ejercicios de Arrays y Funciones
+~~~ javascript
+'use strict'
+
+/*
+1.- Pida 6 numeros por pantalla y los meta en un array
+2.- Mostrar el array entero (todos sus elementos) en el cuerpo de la pagina y en la consola
+3.- Ordenarlo y mostrarlo
+4.- Invertir su orden y mostrarlo
+5.- Mostrar cuantos elementos tiene el array 
+6.- Busqueda de un valor introducido por el usuario, que nos diga si lo encuentra y su indice
+(se valorara el uso de funciones)
+*/
+
+var numeros = [];
+
+function mostrarPorPantalla(Texto){
+    document.write("<h1>"+Texto+"</h1>");
+    document.write("<ul>");
+    for (let i = 0; i < numeros.length; i++) {
+        document.write("<li>"+numeros[i]+"</li>");
+    }
+    document.write("</ul>");
+}
+
+function mostrarPorConsola(){
+    console.log(numeros);
+}
+
+for (let i = 0; i < 6; i++) {
+    let numero = parseInt(prompt("Introduce un numero",0));
+    numeros.push(numero);  
+}
+
+mostrarPorPantalla("Lista de numeros");
+mostrarPorConsola();
+
+//ordenarlos
+
+numeros.sort((a,b) => a-b); //ordenarlo de manera numerica
+mostrarPorPantalla("Lista ordenada");
+
+//invertir 
+numeros.reverse();
+mostrarPorPantalla("Invertidos");
+
+//contar cuantos elementos tiene el array 
+document.write("<h1>el array tiene: "+numeros.length+" dentro</h1>");
+
+
+
+//buscar en el array
+var buscando = parseInt(prompt("Cual numero buscas?",0));
+var busqueda = numeros.indexOf(buscando);
+
+if(busqueda!=-1){
+    document.write("<h1>Numero encontrado, esta en la posicion: "+busqueda+" del array</h1>");
+}else{
+    document.write("<h1>Numero no encontrado en el array</h1>");
+}
+~~~ 
+
+## 63.- JavasCript moderno en profundidad- ¿Que aprendere?
+~~~ javascript
+
+~~~
+
+## 64.- Introduccion al DOM- Document Object Model en JavaScript
+~~~ javascript
+
+~~~
+
+## 65.- Seleccionar y modificar elementos de la pagina
+~~~ javascript
+
+~~~
+
+## 66.- Practicando con el DOM - Query Selector, getElementBYld, getElementNyClassName
+~~~ javascript
+
+~~~
+
+## 67.- Query Selector All
+~~~ javascript
+
+~~~
+
+## 68.- Manipular el navegador y obtener datos con JavaScript
+~~~ javascript
+
+~~~
+
+## 69.- ¿Que es un evento?+Eventos de raton
+~~~ javascript
+
+~~~
+
+## 70.- Eventos de teclado y foco, etc
+~~~ javascript
+
+~~~
+
+## 71.- Evento Load
+~~~ javascript
+
+~~~
+
+## 72.- Timers
+~~~ javascript
+
+~~~
+
+*****************************************************
+## XX.- 
+~~~ javascript
+
+~~~
