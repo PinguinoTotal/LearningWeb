@@ -1057,56 +1057,339 @@ if(busqueda!=-1){
 }else{
     document.write("<h1>Numero no encontrado en el array</h1>");
 }
-~~~ 
-
-## 63.- JavasCript moderno en profundidad- ¿Que aprendere?
-~~~ javascript
-
 ~~~
 
 ## 64.- Introduccion al DOM- Document Object Model en JavaScript
-~~~ javascript
+~~~ HTML
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hola mundo javaScript</title>
+    
+        
+    </script>
+</head>
+<body>
+    <h1>Curso javaScript victorRoblesweb</h1>
+    <p>Nuestro primer script en JS</p>
 
+    <div id="miCaja">Esta es mi caja</div>
+
+    <script type="text/javascript" src="js/28.-Dom.js"></script>
+</body>
+</html>
+~~~
+
+~~~ javascript
+'use strict'
+//ojo, el dom debe ser cargado despues de el html si no no podra hacer uso del codigo html
+//ya que este no "existe" aun
+
+//Dom
+//sirve para modificar el html de la pagina a traves de javascript
+
+var caja = document.querySelector("#miCaja");
+//seleccionando la caja que tenemos en html de otra manera como si fuera css 
+
+var caja = document.getElementById("miCaja"); 
+//Seleccionando la caja que tenemos en el html
+//con innerHTML se saca el HTML que tiene dentro la caja
+
+caja.innerHTML = "Texto desde JavaScript"; //cambiando lo uqe hay dentro del HMTL
+caja.style.background = "red"; //cambiando el color a traves de javascript
+caja.style.padding = "20px"; 
+caja.style.color = "white";
+
+caja.className = "hola hola2";//cambiando la clase de una etiqueta desde javascript
+
+console.log(caja);
 ~~~
 
 ## 65.- Seleccionar y modificar elementos de la pagina
 ~~~ javascript
+'use strict'
+//ojo, el dom debe ser cargado despues de el html si no no podra hacer uso del codigo html
+//ya que este no "existe" aun
 
+//Dom
+//sirve para modificar el html de la pagina a traves de javascript
+
+var caja = document.querySelector("#miCaja");
+//seleccionando la caja que tenemos en html de otra manera como si fuera css 
+
+var caja = document.getElementById("miCaja"); 
+//Seleccionando la caja que tenemos en el html
+//con innerHTML se saca el HTML que tiene dentro la caja
+
+caja.innerHTML = "Texto desde JavaScript"; //cambiando lo uqe hay dentro del HMTL
+caja.style.background = "red"; //cambiando el color a traves de javascript
+caja.style.padding = "20px"; 
+caja.style.color = "white";
+
+caja.className = "hola hola2";//cambiando la clase de una etiqueta desde javascript
+
+//CONSEGUIR ELEMENTOS POR SU ETIQUETA 
+var todosLosDivs = document.getElementsByTagName("div");
+//obteniendo todas las etiquetas que sean divs
+//esto mete todos los divs en un array y se entra a ellos de manera norma
+
+var valor;
+for(valor in todosLosDivs){
+    if(typeof(todosLosDivs[valor].textContent) == 'string'){
+        var parrafo = document.createElement("p"); //creando un parrafo en html
+        var texto = document.createTextNode(todosLosDivs[valor].textContent);
+        parrafo.appendChild(texto);
+        //tambien puede utilizarse prepend, para que se coloque antes en el html 
+        //agrega algo dentro de un elemento de html
+        document.querySelector("#miSeccion").appendChild(parrafo);
+    }
+    
+}
+
+//CONSEGUIR ELEMENTOS POR SU CLASE
 ~~~
 
 ## 66.- Practicando con el DOM - Query Selector, getElementBYld, getElementNyClassName
 ~~~ javascript
+'use strict'
+//ojo, el dom debe ser cargado despues de el html si no no podra hacer uso del codigo html
+//ya que este no "existe" aun
 
-~~~
+//Dom
+//sirve para modificar el html de la pagina a traves de javascript
 
-## 67.- Query Selector All
-~~~ javascript
+var caja = document.querySelector("#miCaja");
+//seleccionando la caja que tenemos en html de otra manera como si fuera css 
 
+var caja = document.getElementById("miCaja"); 
+//Seleccionando la caja que tenemos en el html
+//con innerHTML se saca el HTML que tiene dentro la caja
+
+caja.innerHTML = "Texto desde JavaScript"; //cambiando lo uqe hay dentro del HMTL
+caja.style.background = "red"; //cambiando el color a traves de javascript
+caja.style.padding = "20px"; 
+caja.style.color = "white";
+
+caja.className = "hola hola2";//cambiando la clase de una etiqueta desde javascript
+
+//CONSEGUIR ELEMENTOS POR SU ETIQUETA 
+var todosLosDivs = document.getElementsByTagName("div");
+//obteniendo todas las etiquetas que sean divs
+//esto mete todos los divs en un array y se entra a ellos de manera norma
+
+var valor;
+for(valor in todosLosDivs){
+    if(typeof(todosLosDivs[valor].textContent) == 'string'){
+        var parrafo = document.createElement("p"); //creando un parrafo en html
+        var texto = document.createTextNode(todosLosDivs[valor].textContent);
+        parrafo.appendChild(texto);
+        //tambien puede utilizarse prepend, para que se coloque antes en el html 
+        //agrega algo dentro de un elemento de html
+        document.querySelector("#miSeccion").appendChild(parrafo);
+    }
+    
+}
+
+//CONSEGUIR ELEMENTOS POR SU CLASE
+
+var divsRojos = document.querySelectorAll('#rojo')
+console.log(divsRojos);
+var div;
+for (div in divsRojos) {
+    if(divsRojos[div].className == "rojo"){
+        divsRojos[div].style.background = "red";
+    }
+    
+}
+
+//console.log(todosLosDivs);
 ~~~
 
 ## 68.- Manipular el navegador y obtener datos con JavaScript
 ~~~ javascript
+'use strict'
 
+//Browser objct model
+
+console.log(window.innerHeight);//saber la altura de la pagina web
+console.log(window.innerWidth); //saber lo ancho de la pagina web
+console.log(screen.height);//saber la altura de la pantalla
+console.log(screen.width); //saber lo ancho de la pantalla
+console.log(window.location.href); //saber en uqe url nos encontramos 
+
+//window.location.href = url //redirige hacia donde querramos ir
+
+//window.open(url) //abre una nueva pestaña que te manda a la url que queremos 
 ~~~
 
 ## 69.- ¿Que es un evento?+Eventos de raton
-~~~ javascript
+~~~ HTML
+<p>
+    <button id="boton" onclick="cambiaColor();">Presioname</button>
+    <!--Cuando le damos click al boton el html llama a una funcion de javaScript-->
+    </p>
 
+    <p>
+    <button id="boton" ondblclick="cambiaColor();">Presioname</button>
+    <!--Cuando le damos doble click al boton el html llama a una funcion de javaScript-->
+    </p>
+~~~
+
+no es lo mejor hacerlo en la parte de html para que no tengamos un codigo "sucio" o un codigo espagueti
+
+~~~ javascript
+'use strict'
+
+//Eventos de raton
+
+function cambiaColor(){
+    var bg = boton.style.background;
+    if(bg == "green"){
+        boton.style.background = "red";
+    }else{
+        boton.style.background = "green";
+    }
+}
+
+var boton = document.querySelector("#boton");
+
+//captura el evento click
+boton.addEventListener('click', function(){
+    cambiaColor();
+});
+ 
+//mouse over 
+boton.addEventListener('mouseover', function(){
+    boton.style.background = "#ccc";
+});
+
+//mouse out
+boton.addEventListener('mouseout', function(){
+    boton.style.background = "black";
+});
 ~~~
 
 ## 70.- Eventos de teclado y foco, etc
 ~~~ javascript
+'use strict'
 
+//Eventos de raton
+
+function cambiaColor(){
+    var bg = boton.style.background;
+    if(bg == "green"){
+        boton.style.background = "red";
+    }else{
+        boton.style.background = "green";
+    }
+}
+
+var boton = document.querySelector("#boton");
+
+//captura el evento click
+boton.addEventListener('click', function(){
+    cambiaColor();
+});
+ 
+//mouse over 
+boton.addEventListener('mouseover', function(){
+    boton.style.background = "#ccc";
+});
+
+//mouse out
+boton.addEventListener('mouseout', function(){
+    boton.style.background = "black";
+});
+
+//focus
+var input = document.querySelector("#campo_nombre");
+input.addEventListener('focus',function(){
+    console.log("[focus] estas dentro del input");
+});
+
+//blur 
+input.addEventListener('blur',function(){
+    console.log("[blur] estas fuera del input");
+});
+
+//keydown 
+input.addEventListener('keydown',function(event){
+    console.log("[keydown] Pulsando la tecla: ", String.fromCharCode(event.KeyCode));
+});
+
+//keypress
+input.addEventListener('keypress',function(event){
+    console.log("[keypress] Tecla presionada: ", String.fromCharCode(event.KeyCode));
+});
+
+//keyup
+input.addEventListener('keyup',function(event){
+    console.log("[keyup] Tecla levantada: ", String.fromCharCode(event.KeyCode));
+});
 ~~~
 
 ## 71.- Evento Load
 ~~~ javascript
-
+window.addEventListener('load', ()=>{
+    //aqui se debe de poner todo el codigo que accede al dom, ya que esto se va a ejecutar despues
+    //de que la pagina ya cargue de manera correcta
+});
 ~~~
 
 ## 72.- Timers
 ~~~ javascript
+'use strict'
 
+//Timers
+
+function intervalo(){
+    var tiempo = setInterval(function(){
+        console.log("set interval ejecutado");
+        var encabezado = document.querySelector("h1");
+        if(encabezado.style.fontSize == "50px"){
+            encabezado.style.fontSize ="20px";
+        }else{
+            encabezado.style.fontSize = "50px";
+        }
+    }, 500); 
+
+    return tiempo;
+}
+
+var tiempo = intervalo();
+
+//esto se ejecutara cada 3 segundos
+
+/*
+var tiempo = setTimeout(function(){
+    console.log("set interval ejecutado");
+    var encabezado = document.querySelector("h1");
+    if(encabezado.style.fontSize == "50px"){
+        encabezado.style.fontSize ="20px";
+    }else{
+        encabezado.style.fontSize = "50px";
+    }
+}, 100);
+*/
+//esto hace que solo se ejecute una vez 
+
+var stop = document.querySelector("#stop");
+
+stop.addEventListener("click",function(){
+    clearInterval(tiempo);
+    alert("Has parado el intervalo en bucle");
+});
+//deteniendo el timer que teniamos 
+
+var start = document.querySelector("#start");
+
+start.addEventListener("click",function(){
+    intervalo();
+    alert("Has iniciado el intervalo en bucle");
+});
+//comenzando el timer que teniamos, esto realmente e4s llamar a la funcion que crea el intervalo
 ~~~
 
 *****************************************************
