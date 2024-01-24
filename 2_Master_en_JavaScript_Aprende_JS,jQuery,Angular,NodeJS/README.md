@@ -1392,6 +1392,572 @@ start.addEventListener("click",function(){
 //comenzando el timer que teniamos, esto realmente e4s llamar a la funcion que crea el intervalo
 ~~~
 
+## 73.- Ejercicio completo con el DOM, Eventos y funciones
+~~~ html
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+    <script type="text/javascript" src="js/32-ejercicio-dom.js"></script>
+    <!--
+        1. Formulario campos: Nombre, Apellidos y edad
+        2. Boton de enviar el formulario: evntos submit
+        3. Mostrar datos por pantalla
+        4. Tener un boton que al darle click nos muestra datos actuales del formulario
+    -->
+
+    <h1>Ejercicio DOM, Eventos y funciones</h1>
+    <div class="box">
+        <form action="#" id="formulario" onsubmit="return false">
+            <!--con el return false hacemos que la pagina no reediriga-->
+            <label for="nombre">Nombre</label></br>
+            <input type="text" name="nombre" id="nombre"> </br>
+
+
+            <label for="apellidos">Apellidos</label> </br>
+            <input type="text" name="nombre" id="apellidos"> </br>
+
+
+            <label for="edad">Edad</label> </br>
+            <input type="number" name="edad" id="edad"> </br>
+
+
+            <input type="submit" value="Enviar" id="submit">
+        </form>
+    </div>
+
+    <div class="box dashed">
+        <h3>Información del usuario</h3>
+        <hr>
+    </div>
+</body>
+</html>
+~~~
+~~~ css
+.box{
+    width: 250px;
+    float: left;
+    margin: 20px;
+    height: 250px;
+}
+
+.dashed{
+    border: 3px dashed black;
+    padding: 5px;
+}
+~~~
+~~~ javascript
+'use strict'
+
+window.addEventListener('load', function(){
+    console.log("dom cargado");
+
+    var formulario = document.querySelector("#formulario");
+    var box_dashed = document.querySelector(".dashed");
+    box_dashed.style.display = "none"; //ocultar algo por codigo javascript
+
+    //capturar evento submit
+    formulario.addEventListener('submit',function(){
+        console.log("enviando formulario")
+
+        var nombre = document.querySelector("#nombre").value;
+        var apellidos = document.querySelector("#apellidos").value;
+        var edad = document.querySelector("#edad").value;
+        //con el value sacamos o obtenemos la inbformacion que esta dentro de 
+        //el formulario
+
+        box_dashed.style.display = "block";
+
+        var datos_usuario = [nombre,apellidos,edad];
+
+        var indice;
+        for (indice  in datos_usuario) {
+            var parrafo = document.createElement("p");
+            parrafo.append(datos_usuario[indice]);
+            box_dashed.append(parrafo);
+        }
+    });
+});
+~~~
+
+## 74.- Validar formulario con JavaScript puro
+~~~ javascript
+'use strict'
+
+window.addEventListener('load', function(){
+    console.log("dom cargado");
+
+    var formulario = document.querySelector("#formulario");
+    var box_dashed = document.querySelector(".dashed");
+    box_dashed.style.display = "none"; //ocultar algo por codigo javascript
+    
+    var error_nombre = document.querySelector("#error_nombre");
+    error_nombre.style.display = "none";
+
+    //capturar evento submit
+    formulario.addEventListener('submit',function(){
+        console.log("enviando formulario")
+
+        var nombre = document.querySelector("#nombre").value;
+        var apellidos = document.querySelector("#apellidos").value;
+        var edad = parseInt(document.querySelector("#edad").value);
+
+        //con el value sacamos o obtenemos la inbformacion que esta dentro de 
+        //el formulario
+
+        if (nombre == null || nombre.trim().length == 0){
+            alert("el nombre no es valido");
+            error_nombre.style.display = "block";
+            return false;
+        }
+
+        if (apellidos == null || apellidos.trim().length == 0){
+            alert("los apellidos no son valido");
+            return false;
+        }
+
+        if (edad == null || edad <=0 || isNaN(edad) ){
+            //is Nan nos diec que no es un numero
+            alert("la edad no es valida");
+            return false;
+        }
+
+        box_dashed.style.display = "block";
+
+        var datos_usuario = [nombre,apellidos,edad];
+
+        var indice;
+        for (indice  in datos_usuario) {
+            var parrafo = document.createElement("p");
+            parrafo.append(datos_usuario[indice]);
+            box_dashed.append(parrafo);
+        }
+    });
+});
+~~~
+
+## 75.- Operador this
+el operador dthis hace referencia en el elemento que estoy haciendo click en ese momento o en el cual estoy en su evento 
+~~~ javascript
+//mouse out
+boton.addEventListener('mouseout', function(){
+    boton.style.background = "black";
+});
+
+//puedo poner:
+boton.addEventListener('mouseout', function(){
+    this.style.background = "black";
+});
+~~~
+
+## 76.- JSON - ¿Que es y como usar los objetos?
+~~~ javascript
+'use strict'
+
+// JSON - JavaScript Object Notation
+
+var pelicula = {
+    titulo: "Batman vs Superman",
+    year: 2017,
+    pais: "Estados Unidos" 
+}
+
+console.log(pelicula.titulo); //accedemos a la informacion de esta manera
+
+var peliculas = [
+    {titulo: "la verdad duele", year: 2016, pais: "francia"},
+    pelicula
+];
+//se pueden meter json dentro de los json 
+
+console.log(peliculas);
+var caja_Peliculas = document.querySelector("#peliculas");
+var index;
+for (index in peliculas) {
+    var p = document.createElement("p");
+    p.append(peliculas[index].titulo + " - " + peliculas[index].year);
+    caja_Peliculas.append(p);
+}
+~~~
+
+## 77.- Como trabajar con el LocalStorage
+~~~ javascript
+'use strict'
+
+//el local storage es una memoria que almacena por unos momentos en el navegador
+//en cada pagina web tenemos un lcoal storage diferentre
+
+//comprobar disponibilidad del local storage
+if (typeof(Storage) != 'undefined') {
+    console.log("local storage disponible");
+}else{
+    console.log("local storage no disponible");
+}
+
+//guardar datos en el local storage 
+localStorage.setItem("titulo","Curso de Symfony de Victor Robles");
+//titulo es la key como se llama donde guardamos la info
+//se guarda en almacenamiento/almacenamiento local
+
+//Recuperar elemento
+var valor = localStorage.getItem("titulo");
+document.querySelector("#peliculas").innerHTML = valor;
+
+//Guardar objetos
+var usuario = {
+    nombre: "victor",
+    email: "victor@victor.com",
+    web: "victor@victor.com"
+};
+
+// para guardar datos o mandarlos es combertirlo en string
+localStorage.setItem("usuario",JSON.stringify(usuario));
+
+//recuperar objetos
+var userJS = JSON.parse(localStorage.getItem("usuario"));
+console.log(userJS);
+
+document.querySelector("#peliculas").append(" " + userJS.nombre);
+~~~
+
+## 78.- Ejercicio completo con el LocalStorage
+~~~ HTML
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso de JS</title>
+</head>
+<body>
+    
+
+    <h1>Añade tu pelicula</h1>
+    <form action="" id="formPeliculas">
+        <input type="text" name="addpelicula" id="addpelicula">
+        <input type="submit" value="Guardar">
+    </form>
+
+    <h2>Peliuclas</h2>
+    <div id="peliculas">
+        <ul id="peliculas-list">
+
+        </ul>
+    </div>
+
+
+    <h1>Borra tu pelicula</h1>
+    <form action="" id="formBorrarPeliculas">
+        <input type="text" name="borrarPelicula" id="borrarPelicula">
+        <input type="submit" value="Borrar">
+    </form>
+
+    <script type="text/javascript" src="js/35.-ejercicioLocalStorage.js"></script>
+</body>
+</html>
+~~~
+
+
+~~~ javascript
+//formulario que nos permita añadir peliculas
+
+var formulario = document.querySelector("#formPeliculas");
+formulario.addEventListener('submit',function(){
+    var titulo = document.querySelector("#addpelicula").value;
+    if (titulo.length >= 1) {   
+        localStorage.setItem(titulo,titulo);
+    }
+});
+
+var formularioBorrar = document.querySelector("#formBorrarPeliculas");
+formularioBorrar.addEventListener('submit',function(){
+    var eraseKey = document.querySelector("#borrarPelicula").value;
+    if (eraseKey.length >= 1) {   
+        //eliminar elemento que este en el local storage
+        localStorage.removeItem(eraseKey);
+        // para eliminar el elemento debemos saber su key 
+    }
+})
+
+
+var peliculas_list = document.querySelector("#peliculas-list")
+var index;
+for (index in localStorage) {
+    if(typeof localStorage[index] == 'string'){
+        var li = document.createElement("li");
+        li.append(localStorage[index]);
+        peliculas_list.append(li);
+    }
+}
+~~~
+
+## 79.- Fetch y peticiones asincronas
+para hacer peticiones necesitamos una API que nos mande los datos, utilizamos: [REQRES](https://reqres.in)
+~~~ HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consumo servicio rest con fetch</title>
+</head>
+<body>
+    <h1>Listado de usuarios</h1>
+    <div id="usuarios">
+        <span class="loading">Cargando... </span>
+    </div>
+
+    <!--Fetch es la manera de hacer peticiones a un backend-->
+    
+    <script type="text/javascript" src="js/36.-Fetch.js"></script>
+</body>
+</html>
+~~~
+
+~~~ javascript
+'use strict'
+//fetch y peticiones a servicios / apis rest
+//fecth es una manera de pedir informacion a un backend
+
+var div_usuarios = document.querySelector("#usuarios");
+
+var usuarios = [];
+//el fetch accede a un servicio remoto, hace la peticion
+fetch("https://reqres.in/api/users?page=1")
+    .then(data => data.json()) //obten datos y pasalo a json 
+    .then(users => {
+        usuarios = users.data;
+        console.log(usuarios);
+
+        usuarios.map((user,i) =>{
+            let nombre = document.createElement("h3");
+            nombre.innerHTML = i+" " + user.first_name + " " + user.last_name;
+            div_usuarios.append(nombre);
+            document.querySelector(".loading").style.display = "none";
+        })
+    });
+~~~
+## 80.- Promesas y fetch
+como fetch regresa una promesa podemos encadenarlas para que se hagan una despues de la otra de esta manera
+~~~ javascript
+'use strict'
+//fetch y peticiones a servicios / apis rest
+//fecth es una manera de pedir informacion a un backend
+
+var div_usuarios = document.querySelector("#usuarios");
+var div_janet = document.querySelector("#janet");
+
+var usuarios = [];
+//el fetch accede a un servicio remoto, hace la peticion
+
+getUsuarios()
+    .then(data => data.json()) //obten datos y pasalo a json 
+    .then(users => {
+        listadoUsuarios(users.data);
+
+        return getJanet();
+    })
+    .then(data => data.json())
+    .then(user => mostrarJanet(user.data));
+
+
+
+function getUsuarios(){
+    return fetch("https://reqres.in/api/users?page=1");
+}    
+
+function getJanet(){
+    return fetch("https://reqres.in/api/users/2");
+}
+
+function listadoUsuarios(usuarios){
+    usuarios.map((user,i) =>{
+        let nombre = document.createElement("h3");
+        
+        nombre.innerHTML = i+" " + user.first_name + " " + user.last_name;
+        div_usuarios.append(nombre);
+        document.querySelector(".loading").style.display = "none";
+    })
+}
+
+function mostrarJanet(user){
+    console.log(user);
+        let nombre = document.createElement("h4");
+        let avatar = document.createElement("img");
+        avatar.src= user.avatar;
+        nombre.innerHTML = user.first_name + " " + user.last_name;
+        div_janet.append(nombre);
+        div_janet.appendChild(avatar);
+        document.querySelector("#janet .loading").style.display = "none";
+}
+~~~
+
+## 81.- Como crear Promesas
+~~~ HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consumo servicio rest con fetch</title>
+</head>
+<body>
+    <h1>Listado de usuarios</h1>
+    <div id="usuarios">
+        <span class="loading">Cargando datos globales... </span>
+    </div>
+
+    <hr>
+    <div id="profesor">
+        Cargando profesor
+    </div>
+    <hr>
+    <div id="janet">
+        <span class="loading">Cargando usuario... </span>
+    </div>
+
+    <!--Fetch es la manera de hacer peticiones a un backend-->
+    
+    <script type="text/javascript" src="js/36.-Fetch.js"></script>
+</body>
+</html>
+~~~
+
+~~~ javascript
+'use strict'
+//fetch y peticiones a servicios / apis rest
+//fecth es una manera de pedir informacion a un backend
+
+var div_usuarios = document.querySelector("#usuarios");
+var div_janet = document.querySelector("#janet");
+var div_profesor = document.querySelector("#profesor");
+
+var usuarios = [];
+//el fetch accede a un servicio remoto, hace la peticion
+
+getUsuarios()
+    .then(data => data.json()) //obten datos y pasalo a json 
+    .then(users => {
+        listadoUsuarios(users.data);
+
+        return getInfo();
+    })
+    .then(data => {
+        div_profesor.innerHTML = data;
+
+        return getJanet();
+    })
+    .then(data => data.json())
+    .then(user => {
+        mostrarJanet(user.data);
+    })
+    
+
+
+
+function getUsuarios(){
+    return fetch("https://reqres.in/api/users?page=1");
+}    
+
+function getJanet(){
+    return fetch("https://reqres.in/api/users/2");
+}
+
+//haciendo una promesa
+function getInfo(){
+    
+    var profesor = {
+        nombre: "victor",
+        apellidos: "robles",
+        url: "https://victorroblesweb.es"
+    }
+
+    return new Promise((resolve, reject)=>{
+        var profesor_string = JSON.stringify(profesor);
+        setTimeout(function(){
+            profesor_string = JSON.stringify(profesor);
+            
+            if(typeof profesor_string != "string" || profesor_string == "")return reject("error 1");
+            //la consola imprimira error 1 porque es lo que debe de decir si falla
+        
+            return resolve(profesor_string);
+            //haciendo que la promesa tarde 3 minutos
+        }, 3000);
+    })
+}
+
+function listadoUsuarios(usuarios){
+    usuarios.map((user,i) =>{
+        let nombre = document.createElement("h3");
+        
+        nombre.innerHTML = i+" " + user.first_name + " " + user.last_name;
+        div_usuarios.append(nombre);
+        document.querySelector(".loading").style.display = "none";
+    })
+}
+
+function mostrarJanet(user){
+    console.log(user);
+        let nombre = document.createElement("h4");
+        let avatar = document.createElement("img");
+        avatar.src= user.avatar;
+        nombre.innerHTML = user.first_name + " " + user.last_name;
+        div_janet.append(nombre);
+        div_janet.appendChild(avatar);
+        document.querySelector("#janet .loading").style.display = "none";
+}
+~~~
+
+## 82.- Capturar error en las promesas
+~~~ javascript
+'use strict'
+//fetch y peticiones a servicios / apis rest
+//fecth es una manera de pedir informacion a un backend
+
+var div_usuarios = document.querySelector("#usuarios");
+var div_janet = document.querySelector("#janet");
+var div_profesor = document.querySelector("#profesor");
+
+var usuarios = [];
+//el fetch accede a un servicio remoto, hace la peticion
+
+getUsuarios()
+    .then(data => data.json()) //obten datos y pasalo a json 
+    .then(users => {
+        listadoUsuarios(users.data);
+
+        return getInfo();
+    })
+    .then(data => {
+        div_profesor.innerHTML = data;
+
+        return getJanet();
+    })
+    .then(data => data.json())
+    .then(user => {
+        mostrarJanet(user.data);
+    })
+    //atrapando el error que se genera
+    //cuando este caido el fetch, o que no haya internet y asi 
+    .catch(error=>{
+        console.log(error)
+    });
+    
+~~~
+
+## 83.- Capturar errores
+~~~ javascript
+
+~~~
+
+
 *****************************************************
 ## XX.- 
 ~~~ javascript

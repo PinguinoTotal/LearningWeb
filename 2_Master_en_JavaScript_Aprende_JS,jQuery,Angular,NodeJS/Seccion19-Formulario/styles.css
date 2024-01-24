@@ -1,0 +1,15 @@
+.box{
+    width: 250px;
+    float: left;
+    margin: 20px;
+    height: 250px;
+}
+
+.dashed{
+    border: 3px dashed black;
+    padding: 5px;
+}
+
+#error_nombre{
+    color: red;
+}
