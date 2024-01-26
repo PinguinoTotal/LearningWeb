@@ -1954,10 +1954,284 @@ getUsuarios()
 
 ## 83.- Capturar errores
 ~~~ javascript
+'use strict'
 
+try {
+    /*en este pedazo de codigo pondremos el codigo 
+    que pueda llegar a fallar y querramos atrapar el error*/
+
+    var year = 2019;
+    alert (yea);
+    //asi el porgrama no colapsa y solo como "encapsula los errores"
+} catch (error) {
+    //atrapo el error
+    console.log(error);
+}
 ~~~
 
+## 84.- Fechas en JavaScript
+~~~ javascript
+'use strict'
 
+//obtener la fecha que es en ese momento
+var fecha = new Date();
+
+var year = fecha.getFullYear(); // obtener le año
+
+var mes = fecha.getMonth(); //obtener el mes, el mes 0 es enero
+
+var dia = fecha.getDate(); //obtener el dia
+
+var hour = fecha.getHours(); //obtener la hora
+
+var textoHora = `
+    El año es: ${year}
+    El mes es: ${mes}
+    El dia es: ${dia}
+    La hora es: ${hour}
+`;
+
+console.log(textoHora);
+~~~
+
+## 85.- Funciones matemáticas en JS
+para usar las funciones matematicas es necesario usar la libreria **math** [Referencia](https://www.w3schools.com/js/js_math.asp)
+~~~ javascript
+console.log(Math.random());
+~~~
+
+---
+hasta este momento solo he visto javascript de manera nativa sin ningun tipo de libreria que nutra el javascript
+---
+
+## 87.- jQuery - ¿Que aprenderé?
+es una libreria para javascript 
+
+## 89.- Integrar jQuery
+~~~ javascript
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprendiendo jQuery</title>
+</head>
+<body>
+    <h1>Aprendiendo jQuery con Victor Robles WEB</h1>
+    <p>Ejercicios de jQuery</p>
+
+    <!--Cargando o integrando jQuery a los proyectos-->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!--Es importante decir que se puede de dos maneras:
+        copiar el link y introducirlo como si fuera un script como lo hago ahora
+        o descargar todo lo que tiene ese url pegarlo en un archivo de js y 
+        luego cargarlo como cualquier archivo de javaScript
+    -->
+
+    <script>
+        $(document).ready(function(){
+            console.log("jQuery y la WEB cargados");
+        });
+    </script>
+</body>
+</html>
+~~~
+
+## 90.- Diferencias entre jQuery 1, 2 y 3 - Que cambian en las diferentes versiones
+la compatibilidad con buscadores antiguos
+
+## 91.- Selector de ID
+~~~ javascript
+'use strict'
+
+//con esto podemos saber si ya esta listo el jQuery
+//el objeto dolar se refiera a jquery
+$(document).ready(function(){
+    
+    //selector de ID
+    var rojo = $("#rojo");
+
+    //con la funcion css puedo cambiar el css desde javaScript
+    rojo.css("background","red")
+        .css("color","white"); 
+
+    $("#amarillo").css("background","yellow")
+                  .css("color","green");  
+
+    $("#verde").css("background","green")
+               .css("color","white");
+
+})
+~~~
+
+## 92.- Selectores de Clases
+~~~ javascript
+//selector de Clase
+    //seleccionar las cosas como si fueran css
+    var mi_clase = $(".zebra");
+    console.log(mi_clase);
+
+    //le pone este css a todos los elementos que esten en mi_clase
+    mi_clase.css("border","5px dashed black")
+
+    $(".sin_borde").click(function(){
+        console.log("click dado");
+    });
+~~~
+
+## 93.- Seleccionar etiquetas
+~~~ javascript
+//selectores de etiqueta
+    var parrafos = $("p");
+
+    parrafos.click(function(){// usando evento click
+        $(this).removeClass("zebra");
+    });
+~~~
+
+## 94.- Selector de Atributo
+~~~ HTML
+    <ul>
+        <li><a href="#" title="google">Ir a Google</a></li>
+        <li><a href="#" title="facebook">Ir a facebook</a></li>
+        <li><a href="#"></a></li>
+        <li><a href="#"></a></li>
+        <li><a href="#"></a></li>
+    </ul>
+~~~
+
+~~~ javascript
+//selector de atributo
+    //seleccionamos loq ue es su titulo tengan...
+    $('[title="google"]').css("background","yellow");
+~~~
+
+## 95.- Find y parent
+~~~ javascript
+//otros
+    $('p,a').addClass("margen_superior"); //seleccionar varias cosas
+
+    //dentro de el div caja busca coincidencias con resaltado
+    var busqueda = $("#caja").find(".resaltado");
+
+    //sal de la caja donde estas y busca fuera del anidamiento que ya tiene 
+    var busqueda = $("#caja").eq(0).parent().parent().parent().find(".resaltado");
+    console.log(busqueda);
+~~~
+
+## 96.- Eventos Mouse y Hover
+~~~ javascript
+    //Mouse over y Mouse out
+    var caja = $("#caja");
+
+    caja.mouseover(function(){ //pasar sobre esta cosa
+        $(this).css("background","red");
+    });
+
+    caja.mouseout(function(){ //salir de esta cosa
+        $(this).css("background","green");
+    });
+~~~
+
+## 97.- Hover
+~~~ javascript
+function cambiaRojo(){ //pasar sobre esta cosa
+        $(this).css("background","red");
+    }
+
+    function cambiaVerde(){ //salir de esta cosa
+        $(this).css("background","green");    
+    }
+
+    //Hover
+    caja.hover(cambiaRojo,cambiaVerde);
+    //cuando entramos usa cambia rojo y cuando sales usa cambia verde
+~~~
+
+## 98.- Click y doble click
+~~~ javascript
+//click, DobleClick
+    caja.click(function(){
+        $(this).css("background","blue")
+               .css("color","white");  
+    });
+
+    caja.dblclick(function(){
+        $(this).css("background","pink")
+               .css("color","yellow");  
+    });
+~~~
+
+## 99.- Blur y focus
+~~~ javascript
+    //fous y blur
+    //cuando me enfoco la caja 
+    var nombre = $("#nombre");
+
+    nombre.focus(function(){
+        $(this).css("border","2px solid green")
+    });
+
+    nombre.blur(function(){
+        $(this).css("border","1px solid #ccc")
+        $(this).val(); //saber lo que hay dentro de una caja de texto
+        $("#datos").text($(this).val()).show(); //mostrando algo que apague por display none
+
+    });
+~~~
+
+## 100.- Mouse move y más ejemplos
+~~~ javascript
+//MouseMove
+    //este metodo como que persigue al raton o dice las coordenadas 
+    //que tien el raton en la pantalla
+    
+    $(document).mousemove(function(){
+        console.log(event.clientX);
+        console.log(event.clientY);
+        $("#sigueme").css("left",event.clientX);
+    });
+~~~
+
+## 101.- Trabajar con el DOM y los textos
+~~~ javascript
+$(document).ready(function(){
+    reloadLinks();
+    $("#addButton").removeAttr('disabled') //quitar un atributo
+        .click(function(){
+        var linkAnadido = $("#addLink").val();
+        $("#menu").append('<li><a href= "'+linkAnadido+'"></a></li>');
+        //con el metodo html puedo incrustar codigo dengro del html de las cosas que programo
+            //pero machaca lo que ya tene,os dentro 
+        //con append lo añado al final de la lista 
+        //prepend me lo añade al inicio de la lista
+        //before lo añade antes del pedazo de codigo al que le estamos incustando 
+        $("#addLink").val() = ''; //borra lo que hay dentro del campo de texto
+        reloadLinks();
+    })
+
+});
+
+function reloadLinks(){
+    $('a').each(function(index){ //each es un for each de jQuery
+        var enlace = $(this).attr("href");//obtener el atributo de algo
+        var that = $(this);
+
+        that.attr('target','_black');//añade el atributo target con valor _blanck
+        //(abre en una nueva pesataña)
+        //al objeto en el cual estoy trabajando
+
+        that.removeAttr()
+
+        that.text(enlace);
+    });
+}
+~~~
+
+## 102.- Efectos en jQuery
+~~~ javascript
+
+~~~
 *****************************************************
 ## XX.- 
 ~~~ javascript
