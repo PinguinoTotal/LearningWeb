@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Estilos css-->
+    <link type="text/css" rel="stylesheet" href="css/styles.css">
+    <link id="theme" type="text/css" rel="stylesheet" href="css/green.css">
+
+    <!--JQuery-->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- Cargando los estilos css de jQueryUI-->
+    <script type="text/javaScript" src="js/jquery-ui-1.13.2/jquery-ui.min.js"></script>
+
+    <link rel="stylesheet" href="js/jquery-ui-1.13.2/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="js/jquery-ui-1.13.2/jquery-ui.structure.min.css"/>
+    <link rel="stylesheet" href="js/jquery-ui-1.13.2/jquery-ui.theme.min.css"/>
+    
+
+    <!--Mis scripts-->
+    <script type="text/javascript" src="js/comon.js"></script>
+    <script type="text/javaScript" src="js/about.js"></script>
+
+    <title>Proyecto con JavaScript</title>
+</head>
+
+<body>
+    <div id="selector-theme">
+        <div id="to-green"></div>
+        <div id="to-red"></div>
+        <div id="to-blue"></div>
+    </div>
+
+
+    <section id="global">
+        <!--Cabecera-->
+        <header>
+            <div id="logo">
+                <h1>Proyecto JS</h1>
+            </div>
+
+            <div class="clearfix"></div>
+            <nav id="menu">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="reloj.html">Reloj</a></li>
+                    <li><a href="about.html">Sobre mi</a></li>
+                    <li><a href="contact.html">Contacto</a></li>
+                </ul>
+            </nav>
+        </header>
+
+
+        <!--Contenido-->
+        <div id="content">
+            <div id="box">
+                <h2>Sobre mi </h2>
+                <!--cargar el acordeon-->
+                <div id="acordeon">
+                    <h3>¿Quienes somos?</h3>
+                    <div>
+                        <p>
+                            Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+                            ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+                            amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+                            odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+                        </p>
+                    </div>
+                    <h3>¿Servicios?</h3>
+                    <div>
+                        <p>
+                            Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+                            ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+                            amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+                            odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+                        </p>
+                    </div>
+                    <h3>¿Clientes?</h3>
+                    <div>
+                        <p>
+                            Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+                            ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+                            amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+                            odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <aside id="sidebar">
+                <div id="about">
+                    <h4><span>¿Quien soy?</span></h4>
+                    <img src="img/caracol.jpg" alt="foto de caracol">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur et condimentum tellus. In
+                        suscipit quam a lacus ultrices laoreet. Vivamus lacinia, dui eget volutpat lacinia, diam dolor
+                        vulputate metus, at tempus sapien risus vitae lacus. Aliquam erat volutpat. Vestibulum lobortis
+                        facilisis orci, et ultrices urna imperdiet nec. Nam tellus mauris, viverra sed euismod et,
+                        imperdiet ut nulla.
+                    </p>
+                </div>
+
+                <div id="login">
+                    <h4><span>Identificate</span></h4>
+                    <form action="">
+                        <label for="name">Nombre</label><br>
+                        <input type="text" name="name" id="form_name">
+                        <br>
+                        <label for="email">Correo</label><br>
+                        <input type="text" name="email">
+                        <br>
+                        <label for="paswword">Contraseña</label><br>
+                        <input type="password" name="password">
+                        <br>
+                        <input type="submit" value="Entrar">
+                    </form>
+                </div>
+            </aside>
+            <div class="clearfix"></div>
+        </div>
+    </section>
+
+    <footer>
+        Master en JavaScript
+
+        <a href="#" class="subir">Ir arriba</a>
+    </footer>
+
+
+</body>
+
+</html>

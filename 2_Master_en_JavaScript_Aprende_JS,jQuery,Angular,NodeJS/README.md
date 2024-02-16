@@ -2230,8 +2230,416 @@ function reloadLinks(){
 
 ## 102.- Efectos en jQuery
 ~~~ javascript
+$(document).ready(function(){
+    var caja = $("#caja");  
+    var botonMostrar = $("#mostrar");
+    var botonOcultar = $("#ocultar");
+
+    botonMostrar.hide();
+
+    botonMostrar.click(function(){
+        $(this).hide();
+        botonOcultar.show();
+        caja.fadeTo('slow',1);
+        //la opacidad va de algo a otro
+
+        //slide up para bajarlo
+        
+        //caja.fadeIn('fast');
+        //lo muestra con un degradado
+
+
+        //caja.show('fast'); //muestra cosas
+        //para que no sea tan brusco el cambio se le puede poner a que velocidad queremos
+        //que algo aparezca o desaparezca
+        //fast, normal, slow
+    });
+
+    botonOcultar.click(function(){
+        $(this).hide();
+        botonMostrar.show();
+        caja.fadeTo('slow',0);
+        //slide up para subirlo
+
+        //caja.fadeOut('fast');
+        //lo oculta con un degradado
+
+        //caja.hide('fast'); //oculta cosas
+    });
+
+    $("#todoEnUno").click(function(){
+        caja.slideToggle("fast");
+        //slideToggle
+        //fadeToggle
+        //lo muestra y lo oculta de manera automatica
+    })
+});
+~~~
+
+## 103.- Animaciones personalizadas
+~~~ javascript
+$("#animame").click(function () {
+        caja.animate({
+            marginLeft: '500px',
+            fontSize: '40px',
+            height: '110px'
+            }, 'slow')
+            .animate({
+                borderRadius: '900px',
+                marginTop: '80px'
+            }, 'slow')// podemos cambiar la velocidad de las animaciones si las 
+            //encadenamos 
+            .animate({
+                borderRadius: '0px',
+                marginLeft: '0px'
+            }, 'slow') 
+            .animate({
+                borderRadius: '100px',
+            }, 'slow');
+        //asi podemos animar las cosas de una manera 
+        //más facil, pero debemos escribir como el css que querramos que cambie 
+        //tambien colocando a la velocidad que queremos que se haga
+    });
+~~~
+
+## 104.- Callback en efectos
+~~~ javascript
+            .animate({
+                borderRadius: '0px',
+                marginLeft: '0px'
+            }, 'slow', function(){
+                console.log("la animacion 3 ha terminado");
+            }) //asi se hace para poder lanzar eventos mientras se ejecuta una animacion
+            //o que el evento espere a que se haga la animacion 
+~~~
+
+## 105.- Load - Ajax
+~~~ javascript
+$(document).ready(function(){
+    //load
+     $("#datos").load('https://reqres.in');
+     //cargar html's que pedimos en done queramos 
+});
+~~~
+
+## 106.- Método Get - Ajax
+~~~ javascript
+    //Get
+    //consegurir el json con jquery, parecido a fetch 
+    $.get("https://reqres.in/api/users", {page: 2},function(response){
+        console.log(response);
+        response.data.forEach((element, index) =>{
+            $("#datos").append("<p>"+element.first_name+" "+ element.last_name+"</p>");
+        });
+    });
+~~~
+
+## 107.- Método Post - Ajax
+~~~ HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="css/styles_ajax.css">
+    <title>Aprendiendo AJAX</title>
+</head>
+<body>
+    <h1>Aprendiendo AJAX con Victor Robles WEB - AJAX</h1>
+
+    <form action="https://reqres.in/api/users" method="POST" id="formulario">
+        Nombre: <input type="text" name="name"> </br>
+        Web: <input type="text" name="web"></br>
+        <input type="submit" value="registrar">
+
+    </form>
+
+
+    <div id="datos">
+        soy los datos
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javaScript" src="js/05-Ajax.js"></script>
+</body>
+</html>
+~~~
+
+~~~ javascript
+    //POST
+    //el metodo post es para mandar valores a un servidor 
+    $("#formulario").submit(function(e){
+        e.preventDefault();
+        var usuario = {
+            name: $('input[name="name"]').val(),
+            web: $('input[name="web"]').val()
+        };
+
+        //tomamos la url para hacer el post desde el html
+        $.post($(this).attr("action"), usuario, function(response){
+            console.log(response)
+        })
+        return false;
+    });
+~~~
+
+## 108.- Método $.ajax
+~~~ javascript
+$.ajax({
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'aplication/json',
+            url: $(this).attr("action"),
+            data: usuario,
+            beforeSend: function(){
+                console.log("Enviando el usuario")
+                //antes de mandarlo corre este codigo
+            },
+            success: function(response){
+                console.log(response);
+                //coore esro si logra mandar la peticion
+            },
+            error: function(){
+                //corre esto si pasa un error
+                console.log("ha ocurrido un error");
+            },
+            setTimeout: 2000 //cuanto tiempo quiero que se tarde la peticion como maximo
+        });
+~~~
+"es dificil que una pagina web no lleve algo de jQuery dentro de ella" palabras dichas por el instructor
+
+## 109.- ¿Que es jQuery UI y para que sirve?
+~~~ HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .elemento{
+            width: 300px;
+            height: 200px;
+            border: 4px solid black;
+            background-color: lightblue;
+            float: left;
+            margin: 20px;
+        }
+    </style>
+    <title>Aprendiendo JqueryUI</title>
+</head>
+<body>
+    <h1>Aprendiendo JqueryUI</h1>
+
+    <div class="elemento">
+        Hola soy un elemnto 1 de la web
+    </div>
+    <div class="elemento">
+        Hola soy un elemnto 2 de la web
+    </div>
+    <div class="elemento">
+        Hola soy un elemnto 3 de la web
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javaScript" src="js/jquery-ui-1.13.2/jquery-ui.min.js"></script>
+    <script type="text/javaScript" src="js/06-interface.js"></script>
+</body>
+</html>
+~~~
+
+~~~ javascript
+$(document).ready(function(){
+    $(".elemento").draggable();
+    /* volviendo los elementos que se pueden tomar y poner donde sea, es importnate
+    decir que antes debemos poner la libreria jQueryUI para que los elementos puedan
+    ser implementados de manera facil y correcta*/
+});
+~~~
+
+## 110.- Incluir jQuery UI
+para incluir jquery en el documento solo es necesario tener los documentos descargados de jquery y cargarlos en los scripts de la pagina 
+o tambien puede incruirse directamente de la url 
+~~~ javascript
 
 ~~~
+
+## 111.- Draggable
+~~~ javascript
+    $(".elemento").draggable();
+    /* volviendo los elementos que se pueden tomar y poner donde sea, es importante
+    decir que antes debemos poner la libreria jQueryUI para que los elementos puedan
+    ser implementados de manera facil y correcta*/
+~~~
+
+## 112.- Resizable
+~~~ javascript
+    //Resizable
+    $(".elemento").resizable();
+    /* volviendo los elementos que se puedan hacer mas grandes o pqueños
+    es importante cargar los css min de la carpeta jQueryUI*/
+~~~
+
+## 113.- Selectable
+el selectable trabaja con elementos que pueden ser seleccionados y con css ya que se necesita determinar que pasara cuando el elemento seleccionable sea presionado y otro cuando sea seleccionado
+~~~ javascript
+//Seleccionar elementos
+    $(".lista_seleccionable").selectable();
+~~~
+
+~~~ css
+    /*lo vuelve azul cuando esta siendo presionado y verde cuando ya se suelta*/  
+    ul .ui-selecting {background: green;}
+    ul .ui-selected {background: blue;}
+~~~
+
+## 114.- Sortable
+~~~ javascript
+    //Seleccionar y ordenar los elementos 
+    $(".lista_seleccionable").sortable({
+        update: function(event,ui){
+            console.log("ha cambiado la lista");
+            //esto hace que cada vez que cambiemos la lista salte esta 
+            //funcion para poder implementarla en más cosas
+        }
+    });
+    //este nos deja tomar los elementos y arreglarlos como nosotros querramos
+    //como un drag and dropp pero utilizando una "lista"
+
+
+    //es importante decir que cuando se utiliza este metodo no se puede usar el
+    //selectable ya que interfiere en algunas cosillas
+~~~
+
+## 115.- Droppable
+~~~ javascript
+    //Drop
+    $("#elemento-movido").draggable(); //hacemos que este elemento se pueda tomar
+    $("#area").droppable({
+        drop: function(){
+            console.log("has soltado dentro del area");
+        }
+    });//hacemos que este elemento sea una cajita que le puedan meter cosas
+~~~
+
+## 116.- Efectos de jQuery UI
+~~~ javascript
+//Efectos
+    $("#mostrar").click(function(){
+        $(".caja-efectos").toggle("shake", 4000); //4 segundos
+        //$(".caja-efectos").toggle("shake", "slow");
+            //a los efectos se les puede dar la duracion especifica que querramos
+            //ya sea en palabra o en segundos  
+        //$(".caja-efectos").toggle("scale");
+        //$(".caja-efectos").toggle("puff");
+        //$(".caja-efectos").toggle("fall");
+        //$(".caja-efectos").toggle("drop");
+        //$(".caja-efectos").toggle("slide");
+        //$(".caja-efectos").toggle("blind");
+        //$(".caja-efectos").toggle("explode");
+        //$(".caja-efectos").toggle("fade");
+    });
+~~~
+
+## 117.- Tooltips
+~~~ HTML
+    <h3>Tooltip</h3>
+    <a href="#" title="Acceder a la pagina1">Pagina 1</a>
+    <a href="#" title="Acceder a la pagina2">Pagina 2</a>
+    <a href="#" title="Acceder a la pagina3">Pagina 3</a>
+~~~
+
+~~~ javascript
+    $(document).tooltip();
+    // este nos muestra el "title" que tiene un enlace en la pagina
+    // se pueden agregar más tipos buscando por internet 
+~~~
+
+## 118.- Cuadros de dialogo
+~~~ HTML
+    <div id="popup" title="¿Estas seguro?" style="display: none;">
+        <p>
+            si continuas en el curso aprenderas mucho de javaScript
+        </p>
+    </div>
+~~~
+~~~ javascript
+    //basicamente son pequeños pop ups
+    $("#lanzar-popup").click(function(){
+        $("#popup").dialog();
+        //crea el cuadro de dialogo
+    })
+~~~
+
+## 119.- Calendario
+~~~ HTML
+    <h3>Calendario</h3>
+    <input type="text" id="calendario"> 
+~~~
+
+~~~ javascript
+    //date picker
+    $("#calendario").datepicker();
+~~~
+
+## 120.- Tabs
+~~~ HTML
+    <h3>Pestañas</h3>
+    <div id="pestanas">
+        <ul>
+            <li><a href="#tabs-1"></a>Pestaña 1</li>
+            <!--se le pone ese nombre ya que se le debe poner un ancla-->
+            <li><a href="#tabs-2"></a>Pestaña 2</li>
+            <li><a href="#tabs-3"></a>Pestaña 3</li>
+        </ul>
+        <div id="tabs-1">
+            Hola soy la primera pestaña
+            <!--aqui ya se le puede poner todo el html por complejo que sea-->
+        </div>
+        <div id="tabs-2">
+            Hola soy la segunda pestaña
+            <!--aqui ya se le puede poner todo el html por complejo que sea-->
+        </div>
+        <div id="tabs-3">
+            Hola soy la tercera pestaña
+            <!--aqui ya se le puede poner todo el html por complejo que sea-->
+        </div>
+    </div>
+~~~
+
+~~~ javascript
+    //Tabs
+    $("#pestanas").tabs();
+~~~
+
+
+## 125.- Estructura HTML
+~~~ javascript
+
+~~~
+
+## 126.- Maquetacion de cabecera
+~~~ javascript
+
+~~~
+
+## 127.- Maquetacion del menú (css)
+~~~ javascript
+
+~~~
+
+## 132.- 
+En la pagina que se contstruyo se ve como desde un json se le puede dar formato a la pagina o sacarlo kde un json y hacer que se vea formateado de forma correcta en la pagina 
+
+## 133.-
+Para cambiar el tema de color se pueden usar diferentes tipos de css en el ejecricio de la maquetacion de lapina se usaron 3 colores diferentes de css 
+
+## 136.-
+haciendo un pequeño rememoro de la clase de JqueryUI es importnate cargar todos los archivos de Jquery UI, siendo estos principalmente:
+<ul>
+    <li>Jquery (es la base de JqueryUI)</li>
+    <li>El script de Jquery UI que nos dara acceso a las funciones</li>
+    <li>Los estilos css de Jquery UI</li>
+</ul>
 *****************************************************
 ## XX.- 
 ~~~ javascript

@@ -1,0 +1,16 @@
+body{
+    background-image: url('../img/hojas.jpg'); /*poniendo una imagen*/
+    background-attachment: fixed;
+}
+
+#logo{
+    background-color: #275D3D;
+}
+
+#menu ul li:hover{
+    background-color: #275D3D;
+}
+
+.button-more{
+    background-color: #275D3D;
+}
