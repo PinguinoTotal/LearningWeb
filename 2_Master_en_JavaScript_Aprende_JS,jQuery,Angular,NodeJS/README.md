@@ -2640,8 +2640,305 @@ haciendo un pequeño rememoro de la clase de JqueryUI es importnate cargar todos
     <li>El script de Jquery UI que nos dara acceso a las funciones</li>
     <li>Los estilos css de Jquery UI</li>
 </ul>
+
+## 143.- Introduccion POO y TypeScript
+es un paradigma de la programacion y typescript le pone un tipado fuerte, nosotros escribimos el codigo en typescript pero se compila al final en java script
+
+## 144.- Objetos con JSON 
+~~~ javascript
+'use strict'
+
+//las clases nos hacen hacer objetos que pueden ser echas a la medidada que nos permite hacer
+//mas objetos del mismo tipo
+
+var bicicleta = {
+    color: 'Rojo',
+    modelo: 'BMX',
+    frenos: 'De disoc',
+    velocidadMaxima: '60KM',
+    //es posible tener funciones dentro de los objetos 
+    cambiaColor: function(nuevo_Color){
+        this.color = nuevo_Color;
+        //se hace referencia al color que ya teniamos registro
+        console.log(this);
+        //se hace referencia a todo el objeto en si, no solo a un atributo
+    }
+}
+
+bicicleta.cambiaColor("azul")
+~~~
+
+## 145.- ¿Que es typeScript?
+es un superset para javascript desarrollado por microsoft, compila typescript, pero al final este lenguaje se transcribe a javascript 
+
+## 146.- Instalar una terminal de comandos (opcional)
+instalacion de cyging (este ya lo tenia)
+
+## 147.- Instalar NodeJS y TypeScript
+con **node -- version** podemos ver la version que tenemos de node js
+
+## 149.- Hola Mundo con TypeScript
+como ya se habia dicho es necesario "transcirbir" el typescript en javascript esto se hace mediante la ventana de comandos, se debe colorar en la carpeta donde esta el archivo con terminadion **.ty** y ejecutar el comando **tsc archivo.ts** (con typescript y node js ya instalados previamente), esto generara un archivo js que este sera el que incorporemos a la pagina web
+
+## 150.- Compilación/Transpilación automática
+para que se genere ese archivo js es necesario refrescar el comando, **O se puede poner la consola en modo watch** esto hace que todos los archivos con terminacion ts se esten transcribiendo continuamente apra que no sea necesario volver a lanzar el comando, siendo que el comando para lanzar el modo watch es *** tsc -w *.ts***, para cortar la ejecución de este comando es con **ctrl + c**
+
+## 151.- Variables y tipos de datos en TS
+es importante decir quer los archivos nuevos no son reconocidos si la consola ya esta en modo watch
+//string 
+~~~ typescript
+let cadena: string = "datos en cadena";
+
+//number
+let numero: number = 12;
+
+//boolean
+let verdadero_falso: boolean = true;
+
+//any 
+let cualquiera: any = "hola";
+cualquiera = 7;
+//la variable any hace que reconozaca cualquier tipo de dato
+
+//Arrays
+var lenguajes: Array<string> = ["PHP","JS","CSS"];
+
+let years: number[] = [12,15,14]; //otra manera de tener arrays
+
+console.log(cadena,numero,verdadero_falso,cualquiera,lenguajes);
+~~~
+
+## 152.- Múltiples tipos de datos 
+~~~ typescript
+//decimos que esta variable pueed aceptar strings y numeros, pero no otros
+let cadena: string | number = "datos en cadena";
+cadena = 15;
+~~~
+
+## 153.- Tipos de datos personalizados
+~~~ typescript
+//haciendo un typo de dato personalizado que solo acepta strings y numeros
+type alfanumerico = string|number;
+let cosa: alfanumerico = "alfa"
+cosa = 5;
+~~~
+
+## 154.- Let vs Var en TS
+~~~ typescript
+//Let vs var
+//vemos que las variables let son "variables nuevas"
+//creadas con el mismo nombre
+var numero1 = 10;
+var numero2 = 12;
+
+if (numero1 == 10) {
+    let numero1 = 44;
+    var numero2 = 55;
+
+    console.log(numero1, numero2); //44 55
+}
+console.log(numero1, numero2); //10 55
+~~~
+
+## 155.- Funciones y tipado fuerte
+~~~ typescript
+//funcion en la cual entra un numero y debe salir un string
+function getNumero(numero:number):string{
+    return "El numero es: "+numero
+}
+
+console.log(getNumero(55));
+~~~
+
+## 156.- Clases
+~~~ typescript
+// Clase (molde del objeto)
+class Camiseta{
+    //Propiedades(Caracteristicas del obejto)
+    public color: string;
+    public modelo: string;
+    public marca: string;
+    public talla: string;
+    public precio: number;
+
+    //PUBLIC
+    /*Podemos accesar a esta clase desde cualquier lugar de el codigo */
+    //PROTECTEC
+    //solo entran miembros de la familia 
+    //PRIVATE
+    //solo dentro de la clase 
+
+    //Métodos (funciones o acciones del objeto4)
+    public setrColor(color){
+        this.color = color;
+    }
+
+    public getColor(){
+        return this.color;
+    }
+}
+
+var camiseta = new Camiseta();
+/* Creamos una camiseta con los parametros anteriores*/ 
+/*Si los campos fueran privados no podriamos hacer esto*/ 
+camiseta.color = "Rojo";
+camiseta.modelo = "Manga Larga"
+camiseta.marca = "nike"
+camiseta.talla = "L"
+camiseta.precio = 10;
+
+var playera = new Camiseta();
+//si es privado deben hacerse seters y geters para poder cambiar y acceder
+//a sus parametros
+playera.setrColor("Azul");
+~~~
+
+## 157.- Constructores 
+~~~ typescript
+// Clase (molde del objeto)
+class Camiseta{
+    //Propiedades(Caracteristicas del obejto)
+    public color: string;
+    public modelo: string;
+    public marca: string;
+    public talla: string;
+    public precio: number;
+
+    //PUBLIC
+    /*Podemos accesar a esta clase desde cualquier lugar de el codigo */
+    //PROTECTEC
+    //solo entran miembros de la familia 
+    //PRIVATE
+    //solo dentro de la clase 
+
+    //CREANDO EL CONSTRUCTOR PARA DESPUES USARLO
+    //Métodos (funciones o acciones del objeto4)
+    constructor(color, modelo, marca, talla, precio){
+        this.color = color;
+        this.modelo = modelo;
+        this.marca = marca;
+        this.talla = talla;
+        this.precio = precio;
+    }
+
+    public setrColor(color){
+        this.color = color;
+    }
+
+    public getColor(){
+        return this.color;
+    }
+}
+
+var camiseta = new Camiseta("Rojo","Manga Larga","nike","L",10);
+
+camiseta.setrColor("verde");
+
+console.log(camiseta);
+~~~
+
+## 158.- Introducción a los imports y exports
+para "traer" clases que se encuentren en otros scripts es importante hacer un export y un import, pára hacer que la clase que queremos ocupar sea posible ocuparla primero se hace un export desde el archivo que se enecuentra y donde se quiere usar usamos un import y le decimos desde que ruta queremos que se importe 
+~~~ typescript
+export class Camiseta{
+    //Propiedades(Caracteristicas del obejto)
+    public color: string;
+    public modelo: string;
+    public marca: string;
+    public talla: string;
+    public precio: number;}
+~~~
+~~~ typescript
+import { Camiseta } from "./camiseta";
+~~~
+
+## 159.- Interfaces
+las interfaces son las cosas que deben tener para que funcione correctamente 
+~~~ typescript
+//Interface
+//la interface obliga a la clase a tener estas funciones 
+interface CamisetaBase{
+    setColor(color);
+    getColor();
+}
+
+// Clase (molde del objeto)
+class Camiseta implements CamisetaBase{
+    //Propiedades(Caracteristicas del obejto)
+    public color: string;
+    public modelo: string;
+    public marca: string;
+    public talla: string;
+    public precio: number;
+
+    //PUBLIC
+    /*Podemos accesar a esta clase desde cualquier lugar de el codigo */
+    //PROTECTEC
+    //solo entran miembros de la familia 
+    //PRIVATE
+    //solo dentro de la clase 
+
+    //Métodos (funciones o acciones del objeto4)
+    constructor(color, modelo, marca, talla, precio){
+        this.color = color;
+        this.modelo = modelo;
+        this.marca = marca;
+        this.talla = talla;
+        this.precio = precio;
+    }
+
+    public setColor(color){
+        this.color = color;
+    }
+
+    public getColor(){
+        return this.color;
+    }
+~~~
+
+## 160.- Herencia
+una clase hija hereda las caracteristicas de una clase padre 
+~~~ typescript
+class Sudadera extends Camiseta{ 
+    //asi se escribe que herede de la clase camiseta 
+    public capucha: boolean;
+
+    setCapucha(capucha:boolean){
+        this.capucha = capucha;
+    }
+
+    getCapucha():boolean{
+        return this.capucha;
+    }
+}
+
+var sudadera_nike = new Sudadera("Rojo","Manga Larga","nike","L",10);
+//tiene el constructor de la camiseta porque es su hija
+sudadera_nike.setColor("verde");
+//tiene la funcion set color porque lo hereda de su padre camiseta
+sudadera_nike.capucha = true;
+// y tiene us propias variables 
+~~~
+
+## 166.- Instalar Angular
+angular es un framework para javascript que nos va a ayudar a hacer aplicaciones spa, que no se recargan y que estan separadas del backend, haciendo que estos se comuniquen por peticiones ajax y comunicacion asincrona
+
+para lanzar un proyecto nuevo es necesario 
+<ul>
+    <li>Instalar angular (si ya lo tienes pues ya no)</li>
+    <li>Colocarse en la carpeta que vamos a hacer el proyecto, en la terminal de comandos</li>
+    <li>Lanzar el comando **ng new nombreDelProyecto**</li>
+    <li>Seleccionar el tipo de CSS que se va a utilizar</li>
+    <li>Dar permisos y ya se comenzara a crear el angular</li>
+    <li>Entrar a la carpeta o proyecto que acaba de crear</li>
+    <li>Ejecutar **ng serve** (lanzara un servidor interno para ver la pagina)</li>
+</ul>
 *****************************************************
 ## XX.- 
 ~~~ javascript
+
+~~~
+
+~~~ typescript
 
 ~~~
