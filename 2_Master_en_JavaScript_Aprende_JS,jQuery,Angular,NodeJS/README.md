@@ -2611,22 +2611,6 @@ el selectable trabaja con elementos que pueden ser seleccionados y con css ya qu
     $("#pestanas").tabs();
 ~~~
 
-
-## 125.- Estructura HTML
-~~~ javascript
-
-~~~
-
-## 126.- Maquetacion de cabecera
-~~~ javascript
-
-~~~
-
-## 127.- Maquetacion del menú (css)
-~~~ javascript
-
-~~~
-
 ## 132.- 
 En la pagina que se contstruyo se ve como desde un json se le puede dar formato a la pagina o sacarlo kde un json y hacer que se vea formateado de forma correcta en la pagina 
 
@@ -2933,6 +2917,2028 @@ para lanzar un proyecto nuevo es necesario
     <li>Entrar a la carpeta o proyecto que acaba de crear</li>
     <li>Ejecutar **ng serve** (lanzara un servidor interno para ver la pagina)</li>
 </ul>
+
+## 170.- Crear componentes
+los componentes tienen que tener un elemento copmponante para ser agregados a la pagina **.ts** y otro que sea la vista de como se vera **.html**
+
+**Videojuego.component.ts**
+~~~ typescript
+//todo esto define un componente
+import {Component} from '@angular/core';
+
+@Component({
+    selector: 'videojuego',
+    template: `
+        <h2>Componente de videojuego</h2>
+        <ul>
+            <li>GTA</li>
+            <li>Prince of Persia</li>
+            <li>Tekken</li>
+            <li>Mario</li>
+        </ul>
+    `
+})
+export class VideojuegoComponent{
+    //recordemos que el constructor es como se construlle el objeto cuando lo llamamos o instanciamos
+    constructor(){
+        console.log("se ha cargado el componente: videojuego.component.ts")
+    }
+}
+~~~
+
+ahora que ya tenemos nuestro componente creado ahora debemos cargarlo a la pagina en **app.module.ts**
+
+~~~ typescript
+import { NgModule } from '@angular/core';
+import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+
+//Importando nuestro componente que ya habiamos echo
+import { VideojuegoComponent } from './Videojuego/videojuego.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    VideojuegoComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule
+  ],
+  providers: [
+    provideClientHydration()
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+~~~
+
+y por ultimo hacemos uso de el en la pagian principal de **app.component.html**
+
+~~~ html
+<div>
+  <h1>Bienvenido al {{title}}</h1>
+  <p>
+  vamos a aprender Angular juntos
+  </p>
+
+  <!--Esta etiqueta nosotros la hemos creado como un componente anteriormente y ahora podemos usarla-->
+  <videojuego></videojuego>
+
+  <videojuego></videojuego>
+
+  <videojuego></videojuego>
+</div>
+
+~~~
+
+## 171.- Plantillas y propiedades
+Anteriormente definicmos nuestra plantilla en linea en el template pero ahora lo pondremos por separado para que sea más legible
+~~~ html
+<h2>Componente de videojuego</h2>
+    <ul>
+        <li>GTA</li>
+        <li>Prince of Persia</li>
+        <li>Tekken</li>
+        <li>Mario</li>
+    </ul>
+~~~
+y ahora lo cargamos como un template
+~~~ typescript
+//todo esto define un componente
+import {Component} from '@angular/core';
+
+@Component({
+    selector: 'videojuego',
+    //cargando el template desde una pagina html
+    templateUrl: './videojuego.component.html'
+})
+export class VideojuegoComponent{
+    //recordemos que el constructor es como se construlle el objeto cuando lo llamamos o instanciamos
+    constructor(){
+        console.log("se ha cargado el componente: videojuego.component.ts")
+    }
+}
+~~~
+
+ahora haremos que se puedan interpolar las variable sy usar las variables que tenemos en los componentes dentro de nuestro html, primero creando las variables y dandoles un valor en **videojuego.component.ts**
+~~~ typescript
+import {Component} from '@angular/core';
+
+@Component({
+    selector: 'videojuego',
+    templateUrl: './videojuego.component.html'
+})
+export class VideojuegoComponent{
+    //creando las variables
+    public titulo: string;
+    public listado: string;
+
+    constructor(){
+        
+        this.titulo = "componente de videojuegos";
+        this.listado= "listado de los juegos más populares";
+        
+        console.log("se ha cargado el componente: videojuego.component.ts")
+    }
+}
+~~~
+
+y ahora las integramos en el html de la vista del componente en **videojuego.component.html**
+~~~ html
+<h2>{{titulo}}</h2>
+<p>{{listado}}</p>
+    <ul>
+        <li>GTA</li>
+        <li>Prince of Persia</li>
+        <li>Tekken</li>
+        <li>Mario</li>
+    </ul>
+~~~
+
+## 172.- Multiples/ Varios componentes
+tambien se puede declarar y dar valor a las variables de esta manera:
+~~~ typescript
+import { Component } from "@angular/core";
+
+@Component({
+    selector: 'zapatillas',
+    templateUrl: './zapatillas.component.html'
+})
+export class ZapatillasComponent{
+    //creando y dando valor a la variable
+    public titulo: string = "Copmponente de zapatillas";
+}
+~~~
+
+y tambien es posible llamar a un elemento desde el html de otro elemento **videojuego.component.html** como asi:
+~~~ html
+<h2>{{titulo}}</h2>
+<p>{{listado}}</p>
+    <ul>
+        <li>GTA</li>
+        <li>Prince of Persia</li>
+        <li>Tekken</li>
+        <li>Mario</li>
+    </ul>
+
+<zapatillas></zapatillas>
+~~~
+
+
+## 173.- Generar componentes con la consola
+para generar elementos por consola solo se ejecuta **ng generate component nombre** esto crea los elementos de manera más rapida y los vincula de una manera por default para que podamos hacer usod e ellos de manera inmediata
+
+## 174.- Hooks/Eventos ciclo de vida
+en esta clase vimos muchas cosas ya que para que salten algunos eventos las paginas deben ser preparadas para pdoer crear el ecosistema en donde salten los eventos (que seran los ultimos que se veran en esta seccion)
+
+**app.component.html**
+~~~ html
+<div>
+  <h1>Bienvenido al {{title}}</h1>
+  <p>
+  vamos a aprender Angular juntos
+  </p>
+  <button (click)="ocultarVideojuegos(false)" *ngIf="mostrar_videojuegos">Ocultar</button>
+  <button (click)="ocultarVideojuegos(true)"*ngIf="!mostrar_videojuegos">Mostrar</button>
+
+  <!--Utilizando el if dentro de angular-->
+  <videojuego *ngIf="mostrar_videojuegos"></videojuego>
+  <cursos></cursos>
+</div>
+~~~
+**app.component.ts**
+~~~ typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
+})
+export class AppComponent {
+  title = 'Master en JavaScript y Angular';
+  public mostrar_videojuegos: boolean = true;
+
+  //resiviendo valores desde el html
+  ocultarVideojuegos(valor:boolean){
+    this.mostrar_videojuegos = valor;
+  }
+}
+~~~
+**videojuego.component.html**
+~~~ html
+<h2>{{titulo}}</h2>
+<p>{{listado}}</p>
+<!--Implementando el click de un boton--->
+<button (click) = "cambiarTitulo()">CambiarTitulo</button>
+    <ul>
+        <li>GTA</li>
+        <li>Prince of Persia</li>
+        <li>Tekken</li>
+        <li>Mario</li>
+    </ul>
+
+<zapatillas></zapatillas>
+~~~
+**videojuego.component.ts**
+~~~ typescript
+//Importando el hook OnInit, DoCheck, OnDestroy
+import {Component, OnInit, DoCheck,OnDestroy} from '@angular/core';
+
+@Component({
+    selector: 'videojuego',
+    templateUrl: './videojuego.component.html'
+})
+
+//aclarando al codigo que se debe implementar este hook
+export class VideojuegoComponent implements OnInit, DoCheck, OnDestroy{
+    //creando las variables
+    public titulo: string;
+    public listado: string;
+
+    constructor(){
+        
+        this.titulo = "componente de videojuegos";
+        this.listado= "listado de los juegos más populares";
+        
+        console.log("se ha cargado el componente: videojuego.component.ts")
+    }
+
+    ngOnInit(){
+        //primero se ejecuta el constructor y luego se ejecuta el OnInit
+        console.log("OnInit ejecutado!!!!!!!!!");
+    }
+
+    ngDoCheck(): void {
+        // se lanza cuando se detecta que ha cambiado el copdigo de alguna manera
+        console.log("DoCheck ejecutado");
+    }
+
+    ngOnDestroy(): void {
+        //sirve antes de destruir el componente, este componente
+        console.log("OnDestroy ejecutado");
+    }
+
+    //asi se hacen funciones 
+    cambiarTitulo(){
+        this.titulo = "nuevo titulo del componente"
+    }
+}
+~~~
+
+## 175.- Importar y exportar
+creando un objeto para poder crear objetos de ese tipo en angular 
+
+se peude exportar una variable oc ualquier cosa en javascript siempre y cuando lo indiquemos
+
+**configuracion.ts**
+~~~ typescript
+export var Configuracion = {
+    color: "red",
+    fondo: "#ccc",
+    titulo: "Master en JavaScript",
+    descripcion: "Aprendiendo angular con Victor Robles"
+}
+~~~
+importando la variable configuarcion
+**app.component.ts**
+~~~ typescript
+import { Component } from '@angular/core';
+//importandoi la variable configuarcion
+import { Configuracion } from './models/configuracion';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
+})
+export class AppComponent {
+  public title = 'Master en JavaScript y Angular';
+  public descripcion: string;
+  public mostrar_videojuegos: boolean = true;
+  public config;
+
+  constructor(){
+    this.config = Configuracion;
+    this.title = Configuracion.titulo;
+    this.descripcion = Configuracion.descripcion;
+  }
+
+  ocultarVideojuegos(valor:boolean){
+    this.mostrar_videojuegos = valor;
+  }
+}
+~~~
+**app.component.html**
+~~~ html
+<!--directivas de atributo ngstyle-->
+<div [ngStyle]="{
+                'background':config.fondo,
+                'padding': '20px',
+                'border': '5px solid black',
+                'border-color': config.color
+                }">
+  <h1>Bienvenido al {{title}}</h1>
+  <p>{{descripcion}}</p>
+  <button (click)="ocultarVideojuegos(false)" *ngIf="mostrar_videojuegos">Ocultar</button>
+  <button (click)="ocultarVideojuegos(true)"*ngIf="!mostrar_videojuegos">Mostrar</button>
+
+  <videojuego *ngIf="mostrar_videojuegos"></videojuego>
+  <cursos></cursos>
+</div>
+~~~
+
+## 176.- Modelos en Angular
+para poder usar un modelo en angular primerod ebemos definir las variables que estaran en ese modelo
+**zapatilla.ts** le pusimos de nombre "zapatilla" en singular ya que estas seran las caracteristicas de cada una de las zapatillas
+~~~ typescript
+export class zapatilla{
+    /*
+    public nombre: string;
+    public marca: string;
+    public color: string;
+    public precio: number;
+    public stock: boolean;
+
+    constructor(nombre:string, marca:string, color:string, precio:number, stock:boolean){
+        this.nombre = nombre;
+        this.marca = marca;
+        this.color = color;
+        this.precio = precio;
+        this.stock = stock;
+    }
+    */
+
+    //esto es lo mismo qeu arriba pero puesto de manera rapida
+    constructor(
+        public nombre: string,
+        public marca: string,
+        public color: string,
+        public precio: number,
+        public stock: boolean
+    ){
+
+    }
+}
+~~~
+
+luego importamos el modelo y lo usamos dentro del constructor para generar las diferentes zapatillas que tendremos 
+**zapatillas.component.ts**
+~~~ typescript
+import { Component, OnInit } from "@angular/core";
+//importando la clase
+import { zapatilla } from "../models/zapatilla";
+
+@Component({
+    selector: 'zapatillas',
+    templateUrl: './zapatillas.component.html'
+})
+export class ZapatillasComponent implements OnInit{
+    public titulo: string = "Copmponente de zapatillas";
+
+    public zapatillas: Array<zapatilla>;
+
+    constructor(){
+        this.zapatillas = [
+            new zapatilla('Nike Airmax','Nike','Rojas',190,true),
+            new zapatilla('Reebook Clasic','Reebook','Blanco',80,true),
+            new zapatilla('Nike Runner MD','Nike','Negras',60,true),
+            new zapatilla('Adidas Yezzy','Adidas','Gris',180,false)
+        ]
+    }
+
+    ngOnInit(): void {
+        console.log(this.zapatillas);
+    }
+}
+~~~
+
+al final podemos hacer uso de esta lista que ya tenemos definida en el archivo ts, en el html en odene la usaremos se hace uso de una directiva for para poder hacer más rapido el proceso de poner las diferentes zapatillas y sus precios
+**zapatillas.component.html**
+~~~ html
+<h2>{{titulo}}</h2>
+<ul>
+    <!--usando una directiva for-->
+    <li *ngFor="let deportiva of zapatillas">
+        {{deportiva.nombre}} - <strong>{{deportiva.precio}}</strong></li>
+</ul>
+~~~
+
+## 177.- ¿Que es una directiva?
+pequeña funcionalidad en las pistas o las plantillas **zapatillas.component.html**
+~~~ html
+<h2>{{titulo}}</h2>
+<ul>
+    <li *ngFor="let deportiva of zapatillas">
+        {{deportiva.nombre}} - <strong>{{deportiva.precio}}$</strong>
+        <!--usando una directiva if-->
+        <!--si es menor a 80 el background se pone verde, si no transparente-->
+        <span *ngIf="deportiva.precio<80"
+         [style.background]="deportiva.precio<80 ? 'green' : 'transparent'"
+         [style.color]="deportiva.precio<80 ? 'white' : 'black'"> !EN OFERTA¡</span>
+    </li>
+</ul>
+~~~
+
+## 178.- Directiva condicional nglf
+**zapatillas.component.html**
+~~~ html
+<h2>{{ titulo }}</h2>
+<p>Compra las zapatillas de las mejores marcas</p>
+<ul>
+  <li *ngFor="let marca of marcas; let indice = index">{{indice + ' ' + marca }}</li>
+</ul>
+<p>Las zapatillas que tenemos disponibles son:</p>
+<ul>
+  <li *ngFor="let deportiva of zapatillas">
+    <!--si la zapatilla no esta en stock raya el nombre y l precio-->
+    <span [ngStyle]="{
+        'text-decoration': !deportiva.stock ? 'line-through' : 'none'
+      }">
+      {{ deportiva.nombre }} - <strong>{{ deportiva.precio }}$</strong>
+    </span>
+    <!--usando una directiva if-->
+    <!--si es menor a 80 el background se pone verde, si no transparente-->
+    <span
+      *ngIf="deportiva.precio < 80"
+      [style.background]="deportiva.precio < 80 ? 'green' : 'transparent'"
+      [style.color]="deportiva.precio < 80 ? 'white' : 'black'"
+    >!EN OFERTA¡</span>
+  </li>
+</ul>
+~~~
+
+## 179.- Directiva bucle mgFor
+**zapatillas.components.ts**
+~~~ typescript
+import { Component, OnInit } from "@angular/core";
+import { zapatilla } from "../models/zapatilla";
+
+@Component({
+    selector: 'zapatillas',
+    templateUrl: './zapatillas.component.html'
+})
+export class ZapatillasComponent implements OnInit{
+    public titulo: string = "Copmponente de zapatillas";
+
+    public zapatillas: Array<zapatilla>;
+    public marcas: String[];
+
+    constructor(){
+        this.marcas = new Array();
+        this.zapatillas = [
+            new zapatilla('Nike Airmax','Nike','Rojas',40,true),
+            new zapatilla('Reebook Clasic','Reebook','Blanco',80,true),
+            new zapatilla('Reebook Spartan','Reebook','Negra',180,true),
+            new zapatilla('Nike Runner MD','Nike','Negras',60,true),
+            new zapatilla('Adidas Yezzy','Adidas','Gris',180,false)
+        ]
+    }
+
+    ngOnInit(): void {
+        //console.log(this.zapatillas);
+
+        this.getMarcass();
+    }
+
+    //usando el forEach
+    getMarcass(){
+        this.zapatillas.forEach((zapatilla, index) =>{
+            //buscando que las marcas no se repitan
+            if (this.marcas.indexOf(zapatilla.marca) < 0) {
+                this.marcas.push(zapatilla.marca)
+            }
+        });
+        console.log(this.marcas);
+    }
+}
+~~~
+**zapatillas.components.html**
+~~~ html
+<h2>{{ titulo }}</h2>
+<p>Compra las zapatillas de las mejores marcas</p>
+<ul>
+  <li *ngFor="let marca of marcas; let indice = index">{{indice + ' ' + marca }}</li>
+</ul>
+<p>Las zapatillas que tenemos disponibles son:</p>
+<ul>
+  <li *ngFor="let deportiva of zapatillas">
+    <!--si la zapatilla no esta en stock raya el nombre y l precio-->
+    <span [ngStyle]="{
+        'text-decoration': !deportiva.stock ? 'line-through' : 'none'
+      }">
+      {{ deportiva.nombre }} - <strong>{{ deportiva.precio }}$</strong>
+    </span>
+    <!--usando una directiva if-->
+    <!--si es menor a 80 el background se pone verde, si no transparente-->
+    <span
+      *ngIf="deportiva.precio < 80"
+      [style.background]="deportiva.precio < 80 ? 'green' : 'transparent'"
+      [style.color]="deportiva.precio < 80 ? 'white' : 'black'"
+    >!EN OFERTA¡</span>
+  </li>
+</ul>
+~~~
+
+## 180.- Directiva ngSwitch
+~~~ html
+<h2>{{ titulo }}</h2>
+<p>añadir marca</p>
+<p>
+  <!--el ng model nos ayuda a poer llevar los datos introducidos a variables ya establecidas
+  que y se refresca isntantaneamente cuando le metenos parametros
+  -->
+<input type="text" [(ngModel)]="mi_marca"/>
+
+<button (click)="getMarca()">Muestra marca</button>
+<button (click)="addMarca()">Añadir marca</button>
+</p>
+<p>{{mi_marca}}</p>
+
+<p>Compra las zapatillas de las mejores marcas</p>
+<ul>
+  <li *ngFor="let marca of marcas; let indice = index">{{indice + ' ' + marca }}</li>
+</ul>
+<p>Las zapatillas que tenemos disponibles son:</p>
+<ul>
+  <li *ngFor="let deportiva of zapatillas">
+
+    <span [ngStyle]="{
+        'text-decoration': !deportiva.stock ? 'line-through' : 'none'
+      }">
+      {{ deportiva.nombre }} - <strong>{{ deportiva.precio }}$</strong>
+    </span>
+
+    <span
+      *ngIf="deportiva.precio < 80"
+      [style.background]="deportiva.precio < 80 ? 'green' : 'transparent'"
+      [style.color]="deportiva.precio < 80 ? 'white' : 'black'"
+    >!EN OFERTA¡</span>
+  </li>
+</ul>
+
+<p>El color de la mayoria de nuestras zapatillas es:</p>
+
+<!--directiva swicth-->
+<ul [ngSwitch]="color">
+    <li *ngSwitchCase="'yellow'">
+        El color predominante es el <span [ngStyle]="{'background': color}">amarillo</span>
+    </li>
+    <li *ngSwitchCase="'red'">
+        El color predominante es el <span [ngStyle]="{'background': color}">rojo</span>
+    </li>
+    <li *ngSwitchCase="'blue'">
+        El color predominante es el <span [ngStyle]="{'background': color}">azul</span>
+    </li>
+    <li *ngSwitchCase="'orange'">
+        El color predominante es el <span [ngStyle]="{'background': color}">naranja</span>
+    </li>
+</ul>
+~~~
+
+
+## 181.- Two way data-binding y evento click
+el two way data binding nos dice que las paginas con angular son reactivas y cambian de manera instantanea cuando se estan inclusive metiendo datos, siendo asi que mientras nosotros escribimos en un input de tipo texto en el html se va escribiendo a la par, tambien en esta leccion vimos como importar las librerias para hacer fomularios, ya que estos nos ayuda a obtener los datos de los formularios y pasarlos a variables
+
+**app.module.ts**
+~~~ javascript
+import { AppComponent } from './app.component';
+
+//Importando nuestro componente que ya habiamos echo
+import { VideojuegoComponent } from './Videojuego/videojuego.component';
+import { ZapatillasComponent } from './Zapatillas/zapatillas.component';
+import { CursosComponent } from './cursos/cursos.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    VideojuegoComponent,
+    ZapatillasComponent,
+    CursosComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    //agregando la libreria a nuestro proyecto
+    FormsModule
+  ],
+  providers: [
+    provideClientHydration()
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+~~~
+**zapatillas.component.ts**
+~~~ javascript
+import { Component, OnInit } from "@angular/core";
+import { zapatilla } from "../models/zapatilla";
+
+@Component({
+    selector: 'zapatillas',
+    templateUrl: './zapatillas.component.html'
+})
+export class ZapatillasComponent implements OnInit{
+    public titulo: string = "Copmponente de zapatillas";
+
+    public zapatillas: Array<zapatilla>;
+    public marcas: String[];
+    public color: string;
+
+    public mi_marca:string = "fila";
+
+    constructor(){
+        this.mi_marca = "fila"
+        this.color = 'yellow';
+        this.marcas = new Array();
+        this.zapatillas = [
+            new zapatilla('Nike Airmax','Nike','Rojas',40,true),
+            new zapatilla('Reebook Clasic','Reebook','Blanco',80,true),
+            new zapatilla('Reebook Spartan','Reebook','Negra',180,true),
+            new zapatilla('Nike Runner MD','Nike','Negras',60,true),
+            new zapatilla('Adidas Yezzy','Adidas','Gris',180,false)
+        ]
+    }
+
+    ngOnInit(): void {
+
+        this.getMarcass();
+    }
+
+    getMarcass(){
+        this.zapatillas.forEach((zapatilla, index) =>{
+            if (this.marcas.indexOf(zapatilla.marca) < 0) {
+                this.marcas.push(zapatilla.marca)
+            }
+        });
+        console.log(this.marcas);
+    }
+
+    getMarca(){
+        alert(this.mi_marca)
+    }
+
+    addMarca(){
+        if(this.marcas.indexOf(this.mi_marca)<0){
+            this.marcas.push(this.mi_marca);
+        }
+    }
+}
+~~~
+
+**zapatillas.component.html**
+~~~ html
+<h2>{{ titulo }}</h2>
+<p>añadir marca</p>
+<p>
+  <!--el ng model nos ayuda a poer llevar los datos introducidos a variables ya establecidas
+  que y se refresca isntantaneamente cuando le metenos parametros
+  -->
+<input type="text" [(ngModel)]="mi_marca"/>
+
+<button (click)="getMarca()">Muestra marca</button>
+<button (click)="addMarca()">Añadir marca</button>
+</p>
+<p>{{mi_marca}}</p>
+
+<p>Compra las zapatillas de las mejores marcas</p>
+<ul>
+  <li *ngFor="let marca of marcas; let indice = index">{{indice + ' ' + marca }}</li>
+</ul>
+<p>Las zapatillas que tenemos disponibles son:</p>
+<ul>
+  <li *ngFor="let deportiva of zapatillas">
+
+    <span [ngStyle]="{
+        'text-decoration': !deportiva.stock ? 'line-through' : 'none'
+      }">
+      {{ deportiva.nombre }} - <strong>{{ deportiva.precio }}$</strong>
+    </span>
+
+    <span
+      *ngIf="deportiva.precio < 80"
+      [style.background]="deportiva.precio < 80 ? 'green' : 'transparent'"
+      [style.color]="deportiva.precio < 80 ? 'white' : 'black'"
+    >!EN OFERTA¡</span>
+  </li>
+</ul>
+
+<p>El color de la mayoria de nuestras zapatillas es:</p>
+
+<!--directiva swicth-->
+<ul [ngSwitch]="color">
+    <li *ngSwitchCase="'yellow'">
+        El color predominante es el <span [ngStyle]="{'background': color}">amarillo</span>
+    </li>
+    <li *ngSwitchCase="'red'">
+        El color predominante es el <span [ngStyle]="{'background': color}">rojo</span>
+    </li>
+    <li *ngSwitchCase="'blue'">
+        El color predominante es el <span [ngStyle]="{'background': color}">azul</span>
+    </li>
+    <li *ngSwitchCase="'orange'">
+        El color predominante es el <span [ngStyle]="{'background': color}">naranja</span>
+    </li>
+</ul>
+~~~
+
+## 183.- Evento Click
+en esta clase vimos como se pasa un parametro por la funcion y se elimina una marca seleccionada
+**zapatillas.component.html**
+~~~ html
+<h2>{{ titulo }}</h2>
+<p>añadir marca</p>
+<p>
+<input type="text" [(ngModel)]="mi_marca"/>
+
+<button (click)="getMarca()">Muestra marca</button>
+<button (click)="addMarca()">Añadir marca</button>
+</p>
+<p>{{mi_marca}}</p>
+
+<p>Compra las zapatillas de las mejores marcas</p>
+<ul>
+  <li *ngFor="let marca of marcas; let indice = index">{{indice + ' ' + marca }}
+  <button (click)="borrarMarca(indice)">BorrarMarca</button></li>
+</ul>
+<p>Las zapatillas que tenemos disponibles son:</p>
+<ul>
+  <li *ngFor="let deportiva of zapatillas">
+
+    <span [ngStyle]="{
+        'text-decoration': !deportiva.stock ? 'line-through' : 'none'
+      }">
+      {{ deportiva.nombre }} - <strong>{{ deportiva.precio }}$</strong>
+    </span>
+
+    <span
+      *ngIf="deportiva.precio < 80"
+      [style.background]="deportiva.precio < 80 ? 'green' : 'transparent'"
+      [style.color]="deportiva.precio < 80 ? 'white' : 'black'"
+    >!EN OFERTA¡</span>
+  </li>
+</ul>
+
+<p>El color de la mayoria de nuestras zapatillas es:</p>
+<input type="text" [(ngModel)]="color">
+
+<ul [ngSwitch]="color">
+    <li *ngSwitchCase="'yellow'">
+        El color predominante es el <span [ngStyle]="{'background': color}">amarillo</span>
+    </li>
+    <li *ngSwitchCase="'red'">
+        El color predominante es el <span [ngStyle]="{'background': color}">rojo</span>
+    </li>
+    <li *ngSwitchCase="'blue'">
+        El color predominante es el <span [ngStyle]="{'background': color}">azul</span>
+    </li>
+    <li *ngSwitchCase="'orange'">
+        El color predominante es el <span [ngStyle]="{'background': color}">naranja</span>
+    </li>
+</ul>
+
+~~~
+**zapatillas.component.ts**
+~~~ javascript
+import { Component, OnInit } from "@angular/core";
+import { zapatilla } from "../models/zapatilla";
+
+@Component({
+    selector: 'zapatillas',
+    templateUrl: './zapatillas.component.html'
+})
+export class ZapatillasComponent implements OnInit{
+    public titulo: string = "Copmponente de zapatillas";
+
+    public zapatillas: Array<zapatilla>;
+    public marcas: String[];
+    public color: string;
+
+    public mi_marca:string = "fila";
+
+    constructor(){
+        this.mi_marca = "fila"
+        this.color = 'yellow';
+        this.marcas = new Array();
+        this.zapatillas = [
+            new zapatilla('Nike Airmax','Nike','Rojas',40,true),
+            new zapatilla('Reebook Clasic','Reebook','Blanco',80,true),
+            new zapatilla('Reebook Spartan','Reebook','Negra',180,true),
+            new zapatilla('Nike Runner MD','Nike','Negras',60,true),
+            new zapatilla('Adidas Yezzy','Adidas','Gris',180,false)
+        ]
+    }
+
+    ngOnInit(): void {
+
+        this.getMarcass();
+    }
+
+    getMarcass(){
+        this.zapatillas.forEach((zapatilla, index) =>{
+            if (this.marcas.indexOf(zapatilla.marca) < 0) {
+                this.marcas.push(zapatilla.marca)
+            }
+        });
+        console.log(this.marcas);
+    }
+
+    getMarca(){
+        alert(this.mi_marca)
+    }
+
+    addMarca(){
+        if(this.marcas.indexOf(this.mi_marca)<0){
+            this.marcas.push(this.mi_marca);
+        }
+    }
+
+    borrarMarca(index:number){
+        //borarr elemento de un array 
+        //delete this.marcas[index];
+
+        //eliminando el elemento del array 
+        this.marcas.splice(index,1);
+    }
+}
+~~~
+
+## 184.- Evento Blur y Keyup
+el evento blur es cuando salimos de un cuadro de texto o lo "desenfocamos" que es lo mismo y el keyup es cuando levantamos la tecla
+
+~~~ html
+<h2>{{ titulo }}</h2>
+<p>añadir marca</p>
+<p>
+  <!--implementando el blur y detectando cuando se pulsa la letra enter-->
+<input type="text" [(ngModel)]="mi_marca" (blur)="OnBlur()" (keyup.enter)="mostrarPalabra()"/>
+
+<button (click)="getMarca()">Muestra marca</button>
+<button (click)="addMarca()">Añadir marca</button>
+</p>
+<p>{{mi_marca}}</p>
+
+<p>Compra las zapatillas de las mejores marcas</p>
+<ul>
+  <li *ngFor="let marca of marcas; let indice = index">{{indice + ' ' + marca }}
+  <button (click)="borrarMarca(indice)">BorrarMarca</button></li>
+</ul>
+<p>Las zapatillas que tenemos disponibles son:</p>
+<ul>
+  <li *ngFor="let deportiva of zapatillas">
+
+    <span [ngStyle]="{
+        'text-decoration': !deportiva.stock ? 'line-through' : 'none'
+      }">
+      {{ deportiva.nombre }} - <strong>{{ deportiva.precio }}$</strong>
+    </span>
+
+    <span
+      *ngIf="deportiva.precio < 80"
+      [style.background]="deportiva.precio < 80 ? 'green' : 'transparent'"
+      [style.color]="deportiva.precio < 80 ? 'white' : 'black'"
+    >!EN OFERTA¡</span>
+  </li>
+</ul>
+
+<p>El color de la mayoria de nuestras zapatillas es:</p>
+<input type="text" [(ngModel)]="color">
+
+<ul [ngSwitch]="color">
+    <li *ngSwitchCase="'yellow'">
+        El color predominante es el <span [ngStyle]="{'background': color}">amarillo</span>
+    </li>
+    <li *ngSwitchCase="'red'">
+        El color predominante es el <span [ngStyle]="{'background': color}">rojo</span>
+    </li>
+    <li *ngSwitchCase="'blue'">
+        El color predominante es el <span [ngStyle]="{'background': color}">azul</span>
+    </li>
+    <li *ngSwitchCase="'orange'">
+        El color predominante es el <span [ngStyle]="{'background': color}">naranja</span>
+    </li>
+</ul>
+~~~
+
+## 185.- ngClass en atributos
+le asigamos a un elemento una clase cuando se cumpla una condicion 
+~~~ html
+<h2>{{ titulo }}</h2>
+<p>añadir marca</p>
+<p>
+<input type="text" [(ngModel)]="mi_marca" (blur)="OnBlur()" (keyup.enter)="mostrarPalabra()"/>
+
+<button (click)="getMarca()">Muestra marca</button>
+<button (click)="addMarca()">Añadir marca</button>
+</p>
+<p>{{mi_marca}}</p>
+
+<p>Compra las zapatillas de las mejores marcas</p>
+<ul>
+  <li *ngFor="let marca of marcas; let indice = index">{{indice + ' ' + marca }}
+  <button (click)="borrarMarca(indice)">BorrarMarca</button></li>
+</ul>
+<p>Las zapatillas que tenemos disponibles son:</p>
+<ul>
+  <li *ngFor="let deportiva of zapatillas">
+
+    <span [ngStyle]="{
+        'text-decoration': !deportiva.stock ? 'line-through' : 'none'
+      }">
+      <!--Le ponemos la clase "alto precio si"-->
+      {{ deportiva.nombre }} - <strong [class.altoPrecio]="deportiva.precio>=80">{{ deportiva.precio }}$</strong>
+    </span>
+
+    <span
+      *ngIf="deportiva.precio < 80"
+      [style.background]="deportiva.precio < 80 ? 'green' : 'transparent'"
+      [style.color]="deportiva.precio < 80 ? 'white' : 'black'"
+    >!EN OFERTA¡</span>
+  </li>
+</ul>
+
+<p>El color de la mayoria de nuestras zapatillas es:</p>
+<input type="text" [(ngModel)]="color">
+
+<ul [ngSwitch]="color">
+    <li *ngSwitchCase="'yellow'">
+        El color predominante es el <span [ngStyle]="{'background': color}">amarillo</span>
+    </li>
+    <li *ngSwitchCase="'red'">
+        El color predominante es el <span [ngStyle]="{'background': color}">rojo</span>
+    </li>
+    <li *ngSwitchCase="'blue'">
+        El color predominante es el <span [ngStyle]="{'background': color}">azul</span>
+    </li>
+    <li *ngSwitchCase="'orange'">
+        El color predominante es el <span [ngStyle]="{'background': color}">naranja</span>
+    </li>
+</ul>
+~~~
+para enlazar un css debemos ir a el documento index y cargar la hoja css que tenemos, las hojas css deben ser creadas en la carpeta asstes
+
+## 186.- Directiva ngClass
+~~~ html
+<h2>{{ titulo }}</h2>
+<p>añadir marca</p>
+<p>
+<input type="text" [(ngModel)]="mi_marca" (blur)="OnBlur()" (keyup.enter)="mostrarPalabra()"/>
+
+<button (click)="getMarca()">Muestra marca</button>
+<button (click)="addMarca()">Añadir marca</button>
+</p>
+<p>{{mi_marca}}</p>
+
+<p>Compra las zapatillas de las mejores marcas</p>
+<ul>
+  <li *ngFor="let marca of marcas; let indice = index">{{indice + ' ' + marca }}
+  <button (click)="borrarMarca(indice)">BorrarMarca</button></li>
+</ul>
+<p>Las zapatillas que tenemos disponibles son:</p>
+<ul>
+  <li *ngFor="let deportiva of zapatillas">
+
+    <span [ngStyle]="{
+        'text-decoration': !deportiva.stock ? 'line-through' : 'none'
+      }">
+      <!--con el ngclass le ponemos diferentes clases siempre y cuando pasen un if"-->
+      {{ deportiva.nombre }} - 
+      <strong 
+        [class.altoPrecio]="deportiva.precio>=80"
+        [ngClass]="{
+          'fondo rojo':deportiva.precio>100,
+          'subrayado' : deportiva.marca == 'nike'
+          }"
+        >
+        {{ deportiva.precio }}$</strong>
+    </span>
+
+    <span
+      *ngIf="deportiva.precio < 80"
+      [style.background]="deportiva.precio < 80 ? 'green' : 'transparent'"
+      [style.color]="deportiva.precio < 80 ? 'white' : 'black'"
+    >!EN OFERTA¡</span>
+  </li>
+</ul>
+
+<p>El color de la mayoria de nuestras zapatillas es:</p>
+<input type="text" [(ngModel)]="color">
+
+<ul [ngSwitch]="color">
+    <li *ngSwitchCase="'yellow'">
+        El color predominante es el <span [ngStyle]="{'background': color}">amarillo</span>
+    </li>
+    <li *ngSwitchCase="'red'">
+        El color predominante es el <span [ngStyle]="{'background': color}">rojo</span>
+    </li>
+    <li *ngSwitchCase="'blue'">
+        El color predominante es el <span [ngStyle]="{'background': color}">azul</span>
+    </li>
+    <li *ngSwitchCase="'orange'">
+        El color predominante es el <span [ngStyle]="{'background': color}">naranja</span>
+    </li>
+</ul>
+
+~~~
+
+## 187.- Configurar el routing de Angular
+se puede hacer que cada componente sea en si una pagfina y navegar entre los diferentes componentes 
+
+es importante verificar que el **<base href="/">** se encuentre en el index
+
+despues se puede utlizar el **app-routing.module.ts** haciendo sus imports correspondientes 
+
+~~~ typescript
+//importar modulos del router de angular
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+//importar componentes 
+import { ZapatillasComponent } from './Zapatillas/zapatillas.component';
+import { VideojuegoComponent } from './Videojuego/videojuego.component';
+import { CursosComponent } from './cursos/cursos.component'; 
+import { HomeComponent } from './home/home.component';
+
+//Array de rutas
+const appRoutes: Routes = [
+  //esto es hacia donde debe ir la pagina por default
+  {path:'', component: HomeComponent},
+  {path:'zapatillas', component: ZapatillasComponent},
+  {path:'videojuego', component: VideojuegoComponent},
+  {path:'cursos', component: CursosComponent},
+  //Ruta 404 siempore debe ir al ultimo cuando no se encuentra la ruta
+  {path: '**', component: HomeComponent}
+];
+
+
+@NgModule({
+  imports: [RouterModule.forRoot(appRoutes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+~~~
+
+despues de esto se debe importar la libreria al **app.module.ts** pero ay venia puesto por defecto 
+~~~ typescript
+import { NgModule } from '@angular/core';
+import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+//ya se carga las rutas por default
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+
+//Importando nuestro componente que ya habiamos echo
+import { VideojuegoComponent } from './Videojuego/videojuego.component';
+import { ZapatillasComponent } from './Zapatillas/zapatillas.component';
+import { CursosComponent } from './cursos/cursos.component';
+import { HomeComponent } from './home/home.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    VideojuegoComponent,
+    ZapatillasComponent,
+    CursosComponent,
+    HomeComponent
+  ],
+  imports: [
+    BrowserModule,
+    //ya se importa de manera automatica
+    AppRoutingModule,
+    FormsModule
+  ],
+  providers: [
+    provideClientHydration()
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+~~~
+
+y se lenecita poner al final del **app.component.html** la siguiente linea para que "separe" las rutas que tenemos 
+~~~ html
+<router-outlet></router-outlet>
+~~~
+
+## 188.- Crear un menú de navegacion instantaneo
+pues es lo mismo que hacer una barra de navegacion como siempre solo que ahora ocupamos lo que ya habiamos echo en el app-routing.ts y usamos esto para el menu de navegacion:
+~~~ html
+<nav>
+    <ul>
+      <li><a [routerLink]="['/']">Home</a></li>
+      <li><a [routerLink]="['/zapatillas']">Zapatillas</a></li>
+      <li><a [routerLink]="['/cursos']">Cursos</a></li>
+      <li><a [routerLink]="['/videojuego']">Videojuegos</a></li>
+    </ul>
+  </nav>
+~~~
+## 189.- Resaltar página actual en el menu
+~~~ html
+<nav>
+    <ul>
+      <!--le ponmemos la clase active al url en donde estamos-->
+      <li><a [routerLink]="['/home']" [routerLinkActive]="['active']">Home</a></li>
+      <li><a [routerLink]="['/zapatillas']" [routerLinkActive]="['active']">Zapatillas</a></li>
+      <li><a [routerLink]="['/cursos']" [routerLinkActive]="['active']">Cursos</a></li>
+      <li><a [routerLink]="['/videojuego']" [routerLinkActive]="['active']">Videojuegos</a></li>
+    </ul>
+  </nav>
+~~~
+
+## 190.-Parametros por la url
+**app-routing.module.ts**
+~~~ typescript
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+import { ZapatillasComponent } from './Zapatillas/zapatillas.component';
+import { VideojuegoComponent } from './Videojuego/videojuego.component';
+import { CursosComponent } from './cursos/cursos.component'; 
+import { HomeComponent } from './home/home.component';
+
+const appRoutes: Routes = [
+  {path:'', component: HomeComponent},
+  {path:'home', component: HomeComponent},
+  {path:'zapatillas', component: ZapatillasComponent},
+  {path:'videojuego', component: VideojuegoComponent},
+  //primero debemos hacer que la ruta exista creandola
+  {path:'cursos', component: CursosComponent},
+  //pasando datos a traves del url, asi ponemos que pasar el nombre sea opcional
+  {path:'cursos/:nombre/:followers', component: CursosComponent},
+  {path: '**', component: HomeComponent}
+];
+
+
+@NgModule({
+  imports: [RouterModule.forRoot(appRoutes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+~~~
+luego capturamos los valores por **cursos.components.ts**
+~~~ typescript
+import { Component,OnInit } from '@angular/core';
+//importar rutas
+import { Router, ActivatedRoute, Params } from '@angular/router';
+
+@Component({
+  selector: 'cursos',
+  templateUrl: './cursos.component.html',
+  styleUrl: './cursos.component.css'
+})
+export class CursosComponent implements OnInit {
+  public nombre: string = "";
+  public followers: number = 0;
+ 
+  constructor(
+    //haciendo el constructor
+    private _route: ActivatedRoute,
+    private _router: Router
+  ) { }
+ 
+  ngOnInit() {
+    this._route.params.subscribe((params: Params) => {
+      //guardandolo en la variable 
+      this.nombre = params['nombre'];
+      //se le pone el + para convertir el string en un numero
+      this.followers = +params['followers'];
+    })
+  }
+}
+~~~
+y al final somos capaces de mostrar las variables en el html
+~~~ html
+<h1>Componente de cursos</h1>
+<!--esto solo lo mostrara cuando tenga algo en nombre-->
+<h3 *ngIf="nombre">Bienvenido {{nombre}}</h3>
+<h3 *ngIf="followers">Tus seguidores son: {{followers}}</h3>
+~~~
+
+## 191.- Redirecciones router navigate
+un link y una redireccionb no son lo mismo
+las redirecciones corren en el codigo ts y nos mandan a diferentes lugares si se cumplen los parametros que marcamos o si los ejecutamos en una funcion 
+**cursos.component.ts**
+~~~ typescript
+import { Component,OnInit } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+
+@Component({
+  selector: 'cursos',
+  templateUrl: './cursos.component.html',
+  styleUrl: './cursos.component.css'
+})
+export class CursosComponent implements OnInit {
+  public nombre: string = "";
+  public followers: number = 0;
+ 
+  constructor(
+    private _route: ActivatedRoute,
+    private _router: Router
+  ) { }
+ 
+  ngOnInit() {
+    this._route.params.subscribe((params: Params) => {
+      this.nombre = params['nombre'];
+      this.followers = +params['followers'];
+
+      if(this.nombre == 'ninguno'){
+        //redirige si el nombre es ninguno
+        this._router.navigate(['/home'])
+      }
+    })
+  }
+
+  redirigir(){
+    //redireccionando atraves de codigo, esto es cuando a traves de codigo mandamos a otra pagian
+    this._router.navigate(['/videojuego'])
+  }
+
+}
+
+~~~
+
+## 192.- ngTemplate - if y else en las vistas
+**home.component.html**
+~~~ html
+<h2>Pagina Principal</h2>
+<!--haciendo un ejercicio de if-esle-->
+<div *ngIf="identificado; else noIdentificado">
+    <h3>Estas identificado en la aplicaion</h3>
+    <button (click)="unsetIdentificado()">Borra identificacion</button>
+</div>
+
+<ng-template #noIdentificado>
+    <p>No estas identificado, pulsa este boton para identificarte</p>
+    <button (click)="setIdentificado()">identificarce</button>
+</ng-template>
+~~~
+**home.component.ts**
+~~~ typescript
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.css'
+})
+export class HomeComponent implements OnInit {
+  public identificado:boolean = false;
+
+  constructor(){
+
+  }
+
+  ngOnInit(): void {
+    
+  }
+
+  setIdentificado(){
+    this.identificado = true;
+  }
+
+  unsetIdentificado(){
+    this.identificado = false;
+  }
+}
+~~~
+
+## 193.- ngTemplate - Then - If else
+hacer que el codigo sea más legible
+**home.component.ts**
+~~~ html
+<h2>Pagina Principal</h2>
+<!--haciendo un ejercicio de if-esle-then, esta es un amejor manera de organizar el codigo-->
+<!--si indetificado== true entonces llama a siIdentificado si no a noIdentificado-->
+<div *ngIf="identificado; then siIdentificado else noIdentificado"></div>
+
+<ng-template #siIdentificado>
+    <h3>Estas identificado en la aplicaion</h3>
+    <button (click)="unsetIdentificado()">Borra identificacion</button>
+</ng-template>
+
+<ng-template #noIdentificado>
+    <p>No estas identificado, pulsa este boton para identificarte</p>
+    <button (click)="setIdentificado()">identificarce</button>
+</ng-template>
+~~~
+## 194.- Crear servicios
+clases que tienen metodos que hacen peticiones ajax, modeelos de condcuta 
+
+creamos la carpeta **services** en el **src/app** ahi guardaremos los servicios que crearemos, dentro de esa carpeta creamos el servicio de las zapatillas llamado **zapatillas.service.ts**
+
+~~~ typescript
+//importar el injectable para poder inyectarlo en el codigo
+import { Injectable } from "@angular/core";
+//importar la base con lo que lo usamos
+import { zapatilla } from "../models/zapatilla";
+
+@Injectable()
+export class ZapatillaService{
+    public zapatillas: Array<zapatilla>;
+    constructor(){
+        this.zapatillas = [
+            new zapatilla('Nike Airmax','Nike','Rojas',40,true),
+            new zapatilla('Reebook Clasic','Reebook','Blanco',80,true),
+            new zapatilla('Reebook Spartan','Reebook','Negra',180,true),
+            new zapatilla('Nike Runner MD','Nike','Negras',60,true),
+            new zapatilla('Adidas Yezzy','Adidas','Gris',180,false)
+        ]
+    }
+
+    getTexto(){
+        return "Hola mundo desde un servicio";
+    }
+
+    getZapatillas(): Array<zapatilla>{
+        return this.zapatillas;
+    }
+}
+~~~
+despues ya solo necesitamos utilizarlo en donde se usara el servicio 
+~~~ typescript
+import { Component, OnInit } from "@angular/core";
+import { zapatilla } from "../models/zapatilla";
+//importnado el servicio de zapatilla 
+import { ZapatillaService } from "../services/zapatillas.service";
+
+@Component({
+    selector: 'zapatillas',
+    templateUrl: './zapatillas.component.html',
+    //inyectamos nuestro servicio
+    providers: [ZapatillaService]
+})
+export class ZapatillasComponent implements OnInit{
+    public titulo: string = "Copmponente de zapatillas";
+
+    public zapatillas: Array<zapatilla> = [];
+    public marcas: String[];
+    public color: string;
+
+    public mi_marca:string;
+
+    constructor(
+        //creamos el objeto de zapatillaService
+        public _zapatillaService: ZapatillaService
+    ){
+        this.mi_marca = "fila"
+        this.color = 'yellow';
+        this.marcas = new Array();
+        //ya le quitamos el array de zapatillas que teniamos
+
+        //utilizando el servicio para obtener la lista de zapatillas que ya teniamos
+        this.zapatillas = _zapatillaService.getZapatillas();
+    }
+
+    ngOnInit(){
+        //utilizando el servicio para obtener la lista de zapatillas que ya teniamos
+        this.zapatillas = this._zapatillaService.getZapatillas();
+        //utilizando el servicio para obtener un texto
+        alert(this._zapatillaService.getTexto());
+        this.getMarcass();
+    }
+
+    getMarcass(){
+        this.zapatillas.forEach((zapatilla, index) =>{
+            if (this.marcas.indexOf(zapatilla.marca) < 0) {
+                this.marcas.push(zapatilla.marca)
+            }
+        });
+    }
+
+    getMarca(){
+        alert(this.mi_marca)
+    }
+
+    addMarca(){
+        if(this.marcas.indexOf(this.mi_marca)<0){
+            this.marcas.push(this.mi_marca);
+        }
+    }
+
+    borrarMarca(index:number){
+        this.marcas.splice(index,1);
+    }
+
+    OnBlur(){
+        console.log("has salido de el cuadro de texto");
+    }
+
+    mostrarPalabra(){
+        alert(this.mi_marca)
+    }
+}
+~~~
+## 195.- Servicios y HttpClient
+primero cargamso las librerias para que peudan cargarse los servicios ajax
+**app.module.ts**
+~~~ typescript
+import { NgModule } from '@angular/core';
+import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+//importamos la libreria necesaria para las peticiones ajax, si no no servira
+import { HttpClientModule } from '@angular/common/http';
+
+import { VideojuegoComponent } from './Videojuego/videojuego.component';
+import { ZapatillasComponent } from './Zapatillas/zapatillas.component';
+import { CursosComponent } from './cursos/cursos.component';
+import { HomeComponent } from './home/home.component';
+import { ExternoComponent } from './externo/externo.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    VideojuegoComponent,
+    ZapatillasComponent,
+    CursosComponent,
+    HomeComponent,
+    ExternoComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    //lo importamos para su uso
+    HttpClientModule
+  ],
+  providers: [
+    provideClientHydration()
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+~~~
+
+luego creamos el servicio que hara posible el per los datos a un api res 
+**peticiones.service.ts**
+~~~ typescript
+//importar el injectable para poder inyectarlo en el codigo
+import { Injectable } from "@angular/core";
+//modulos para hacer peticiones ajax auna url externa
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+//modulo observable, recoge informacion del api res cuando se hace una peticion
+import { Observable } from "rxjs";
+
+@Injectable()
+export class PeticionesService{
+    public url: string;
+    
+    constructor(
+        public _http: HttpClient
+    ){
+        this.url = "https://reqres.in";
+    }
+
+    //pasandole el user ID de externo.component.ts
+    getUser(userId:string): Observable<any>{
+        return this._http.get(this.url+"/api/users/"+userId)
+    }
+}
+
+~~~
+
+luego implementamos el servicio en la parte del codigo que lo vamos a utilizar en este caso en:
+**externo.component.ts**
+~~~ typescript
+import { Component, OnInit } from '@angular/core';
+//importando el servicio de peticiones
+import { PeticionesService } from '../services/peticiones.service';
+import { error } from 'console';
+
+@Component({
+  selector: 'app-externo',
+  templateUrl: './externo.component.html',
+  styleUrl: './externo.component.css',
+  //cargandolo en los providers  
+  providers: [PeticionesService]
+})
+export class ExternoComponent implements OnInit {
+  public user: any;
+  public userId: any;
+
+  constructor(
+    //creamos el objeto de las peticiones 
+    private _peticionesService: PeticionesService
+  ){
+    this.userId = 1;
+  }
+
+  ngOnInit(){
+    this.cargaUsuario();
+  }
+
+  cargaUsuario(){
+    //como esto regresa un observable esta ya tiene el metodo subscribe
+    this._peticionesService.getUser(this.userId).subscribe(
+      result => {
+        //esto es el resultado que saca de la peticion ajax
+        this.user = result.data;
+        console.log(this.user);      },
+      error => {
+        console.log(<any>error)
+      }
+
+    )
+  }
+}
+
+~~~
+
+por ultimo incorporamos todo el html para que se pueda mostrar y pedir valores que se necesitan
+**externo.component.html**
+~~~ html
+<input type="text" [(ngModel)]="userId" (keyup.enter)="cargaUsuario()"/>
+<div *ngIf="user">
+    <img src="{{user.avatar}}" width="200px" alt="foto de janet">
+    <h2>{{user.first_name + ' ' + user.last_name}}</h2>
+</div>
+~~~
+## 196.- Efecto de carga
+primero se pone un codigo de html que nos muestre le texto "cargando" en **externo.component.html**
+~~~ html
+<input type="text" [(ngModel)]="userId" (keyup.enter)="cargaUsuario()"/>
+
+<!--si no hay user se muestra el cargando-->
+<div *ngIf="!user">
+    Cargando...
+</div>
+
+<div *ngIf="user">
+    <img src="{{user.avatar}}" width="200px" alt="foto de janet">
+    <h2>{{user.first_name + ' ' + user.last_name}}</h2>
+</div>
+
+~~~
+
+luego se ajusta la variable en el **externo.component.ts**
+~~~ typescript
+import { Component, OnInit } from '@angular/core';
+import { PeticionesService } from '../services/peticiones.service';
+import { error } from 'console';
+
+@Component({
+  selector: 'app-externo',
+  templateUrl: './externo.component.html',
+  styleUrl: './externo.component.css',
+  providers: [PeticionesService]
+})
+export class ExternoComponent implements OnInit {
+  public user: any;
+  public userId: any;
+
+  constructor(
+    private _peticionesService: PeticionesService
+  ){
+    this.userId = 1;
+  }
+
+  ngOnInit(){
+    this.cargaUsuario();
+  }
+
+  cargaUsuario(){
+    //hacer que sea false para que se "limpie la variable y aparezca cargando"
+    this.user = false;
+    this._peticionesService.getUser(this.userId).subscribe(
+      result => {
+        this.user = result.data;
+        console.log(this.user);      
+      },
+      error => {
+        console.log(<any>error)
+      }
+
+    )
+  }
+}
+
+~~~
+## 197.- ¿Que es una Pipe o Filtro?
+Una pequeña funcion que nos permite procesar informacion o hacer algo pequeño, una pequeña funcionalidad
+## 198.-Pipes de fechas
+~~~ html
+<!--al usar el | estamos usando una pipe-->
+{{fecha | date:'dd/MM/YY'}} <br/>
+{{fecha | date: 'fullDate'}}
+<hr>
+<input type="text" [(ngModel)]="userId" (keyup.enter)="cargaUsuario()"/>
+
+<div *ngIf="!user">
+    Cargando...
+</div>
+
+<div *ngIf="user">
+    <img src="{{user.avatar}}" width="200px" alt="foto de janet">
+    <h2>{{user.first_name + ' ' + user.last_name}}</h2>
+</div>
+
+~~~
+## 199.-Filtros de transformación de textos
+~~~ html
+{{fecha | date:'dd/MM/YY'}} <br/>
+<!--lower uper case-->
+{{fecha | date: 'fullDate' | uppercase}} <br/>
+{{ 'Hola mundo usando pipes' | lowercase}}
+<hr>
+<input type="text" [(ngModel)]="userId" (keyup.enter)="cargaUsuario()"/>
+
+<div *ngIf="!user">
+    Cargando...
+</div>
+
+<div *ngIf="user">
+    <img src="{{user.avatar}}" width="200px" alt="foto de janet">
+    <h2>{{user.first_name + ' ' + user.last_name}}</h2>
+</div>
+
+~~~
+## 200.- Pipes personalizados
+hacer una carpeta en el **src/app** llamada **pipes** y ahi hacer un archivo llamdo **calculadora.pipe.ts**
+~~~ typescript
+//importando las librerias para hacer pipes
+import { Pipe, PipeTransform } from "@angular/core";
+
+//poniendole nombre a la pipe
+@Pipe({
+    name: 'calcualdora'
+})
+//la clase que vamos a exportar
+export class CalculadoraPipe implements PipeTransform{
+    //dato | calcularoa: otroDato
+    //param1             param2
+    transform(value: any, value_two: any) {
+        let operaciones = `
+        Suma: ${value+value_two} -
+        Resta: ${value-value_two} -
+        Multiplicacion: ${value*value_two} -
+        Division: ${value/value_two}
+        `;
+
+        return operaciones;
+    }
+}
+~~~
+
+luego se importa en el **app.module.ts**
+~~~ typescript
+import { NgModule } from '@angular/core';
+import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
+
+import { VideojuegoComponent } from './Videojuego/videojuego.component';
+import { ZapatillasComponent } from './Zapatillas/zapatillas.component';
+import { CursosComponent } from './cursos/cursos.component';
+import { HomeComponent } from './home/home.component';
+import { ExternoComponent } from './externo/externo.component';
+
+//cargando nuestra pipe personalizada
+import { CalculadoraPipe } from './pipes/calculadora.pipe';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    VideojuegoComponent,
+    ZapatillasComponent,
+    CursosComponent,
+    HomeComponent,
+    ExternoComponent,
+    //la declaramos par ausarla 
+    CalculadoraPipe
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule
+  ],
+  providers: [
+    provideClientHydration()
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+~~~
+
+y ya solo se implementa en nuestro html
+~~~ html
+{{fecha | date:'dd/MM/YY'}} <br/>
+{{fecha | date: 'fullDate' | uppercase}} <br/>
+{{ 'Hola mundo usando pipes' | lowercase}}
+<!--y hacemos uso de la pipe que hicimos-->
+{{4 | calcualdora: 2}}
+<hr>
+<input type="text" [(ngModel)]="userId" (keyup.enter)="cargaUsuario()"/>
+
+<div *ngIf="!user">
+    Cargando...
+</div>
+
+<div *ngIf="user">
+    <img src="{{user.avatar}}" width="200px" alt="foto de janet">
+    <h2>{{user.first_name + ' ' + user.last_name}}</h2>
+</div>
+
+~~~
+
+## 202.- Crear formularios
+creamos un componente contacto y lo unimos a la pagina como todos los demas
+
+creamos el formulario en html y lo volvemos un formulario de angular
+**contacto.component.html**
+~~~ html
+<h2>Contacto</h2>
+
+<!--para hacer que este sea un formulario de angular se hace todo esto-->
+<form #formContacto="ngForm" (ngSubmit)="onSubmit()">
+    <label for="nombre">Nombre</label> <br/>
+    <input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="usuario.nombre"> <br/>
+
+    <label for="apellidos">Apellidos</label> <br/>
+    <input type="text" name="apellidos" #apellidos="ngModel" [(ngModel)]="usuario.apellidos"> <br/>
+
+    <label for="email">Email</label> <br/>
+    <input type="email" name="email" #email="ngModel" [(ngModel)]="usuario.email"> <br/>
+
+    <label for="Mensaje">Mensaje</label> <br/>
+    <textarea name="Mensaje" #mensaje="ngModel" [(ngModel)]="usuario.mensaje"></textarea> <br/>
+
+    <input type="submit" value="enviar">
+</form>
+
+~~~
+
+luego dentro del ts y con el two data binding le guardamos las variables
+**contacto.component.ts**
+~~~ typescript
+import { Component } from '@angular/core';
+import { ContactoUsuario } from '../models/contacto.usuario';
+
+@Component({
+  selector: 'app-contacto',
+  templateUrl: './contacto.component.html',
+  styleUrl: './contacto.component.css'
+})
+export class ContactoComponent {
+  public usuario: ContactoUsuario;
+
+  constructor(){
+    this.usuario = new ContactoUsuario('','','','');
+  }
+
+  onSubmit(){
+    console.log(this.usuario);
+  }
+}
+
+~~~
+
+tambien para el contactousuario usamos un modelo **contacto.usuario.ts**
+~~~ typescript
+export class ContactoUsuario{
+    constructor(
+        public nombre:string,
+        public apellidos:string,
+        public email:string,
+        public mensaje:string,
+    ){}
+}
+~~~
+## 203.- Validar formulario Angular
+para esto debemos hacer uso del html del formulario, ya que ahi le daremos la mayoria de los comandos
+~~~ html
+<h2>Contacto</h2>
+
+<form #formContacto="ngForm" (ngSubmit)="onSubmit(formContacto)">
+    <label for="nombre">Nombre</label> <br/>
+    <!--se le pone requiere para que se sepa que es obligatorio el campo-->
+    <!--hacer que solo acepte letras y no numeros-->
+    <input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="usuario.nombre" 
+    required pattern="[a-zA-Z]+"> <br/>
+    <!--asi se pone para que sea valido el nombre y es necesario tener que ser tocado-->
+    <!--los nombres nombre.valid se los dimos en #nombre-->
+    <span *ngIf="nombre.touched && !nombre.valid">
+        El nombre es obligatorio
+    </span>
+
+    <label for="apellidos">Apellidos</label> <br/>
+    <input type="text" name="apellidos" #apellidos="ngModel" [(ngModel)]="usuario.apellidos" 
+    required pattern="[a-zA-Z]+"> <br/>
+    <span *ngIf="apellidos.touched && !apellidos.valid">
+        Los apellidos son obligatorios
+    </span>
+
+    <label for="email">Email</label> <br/>
+    <input type="email" name="email" #email="ngModel" [(ngModel)]="usuario.email" required> <br/>
+    <span *ngIf="email.touched && !email.valid">
+        El email es obligatorio
+    </span>
+
+    <label for="Mensaje">Mensaje</label> <br/>
+    <textarea name="Mensaje" #mensaje="ngModel" [(ngModel)]="usuario.mensaje" required></textarea> <br/>
+    <span *ngIf="mensaje.touched && !mensaje.valid">
+        El mensaje es obligatorio
+    </span>
+
+    <!--voy a bloqueare l botn si el formulario no es valido-->
+    <input type="submit" value="enviar" [disabled]="!formContacto.form.valid">
+</form>
+~~~
+
+luego en el evento onsubmit vamos a vaciar los datos del form 
+~~~ typescript
+import { Component } from '@angular/core';
+import { ContactoUsuario } from '../models/contacto.usuario';
+
+@Component({
+  selector: 'app-contacto',
+  templateUrl: './contacto.component.html',
+  styleUrl: './contacto.component.css'
+})
+export class ContactoComponent {
+  public usuario: ContactoUsuario;
+
+  constructor(){
+    this.usuario = new ContactoUsuario('','','','');
+  }
+
+  onSubmit(form:any){
+    
+    console.log(this.usuario);
+
+    form.reset();
+  }
+}
+~~~
+## 204.- Ejercicio con Formularios, AJAX y HTTP Post
+para guardar datos en una api res, es importante adaptar nuestrois servicios ajax, para que puedan hacer la peticion desde ellos, de una manera más rapida 
+~~~ typescript
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Observable } from "rxjs";
+
+@Injectable()
+export class PeticionesService{
+    public url: string;
+    
+    constructor(
+        public _http: HttpClient
+    ){
+        this.url = "https://reqres.in";
+    }
+
+    getUser(userId:string): Observable<any>{
+        return this._http.get(this.url+"/api/users/"+userId)
+    }
+
+    addUser(user:any): Observable<any>{
+        //pasamos el user a json 
+        let params = JSON.stringify(user);
+        //creamos una nueva cabecera
+        let headers = new HttpHeaders().set('Content-Type', 'application/json');
+        //le pasamos el json a la url con los headers
+        return this._http.post(this.url+ '/api/users', params, {headers: headers})
+    }
+}
+
+
+~~~
+luego se hace la obtencion de datos a traves de two data binding en el formulario de html 
+~~~ html
+<hr>
+<h2>Crear usuario</h2>
+<form #newUser="ngForm" (ngSubmit)="onSubmit(newUser)">
+    <p>
+        <label for="name">Nombre</label>
+        <input type="text" name="name" #name="ngModel" [(ngModel)]="new_user.name" required>
+        <span *ngIf="name.touched && !name.valid">
+            El nombre no es valido
+        </span>
+    </p>
+
+    <p>
+        <label for="job">Trabajo</label>
+        <input type="text" name="job" #job="ngModel" [(ngModel)]="new_user.job" required>
+        <span *ngIf="job.touched && !job.valid">
+            El trabajo no es valido
+        </span>
+    </p>
+
+    <input type="submit" value="Guardar usuario" [disabled]="!newUser.form.valid">
+</form>
+
+<div *ngIf="usuarioGuardado">
+    <h2>El usuario se ha guardado correctamente</h2>
+    <h3>{{usuarioGuardado.name}}</h3>
+    <h4>{{usuarioGuardado.job}}</h4>
+</div>
+
+<hr>
+{{fecha | date:'dd/MM/YY'}} <br/>
+{{fecha | date: 'fullDate' | uppercase}} <br/>
+{{ 'Hola mundo usando pipes' | lowercase}}
+{{4 | calcualdora: 2}}
+<hr>
+<input type="text" [(ngModel)]="userId" (keyup.enter)="cargaUsuario()"/>
+
+<div *ngIf="!user">
+    Cargando...
+</div>
+
+<div *ngIf="user">
+    <img src="{{user.avatar}}" width="200px" alt="foto de janet">
+    <h2>{{user.first_name + ' ' + user.last_name}}</h2>
+</div>
+~~~
+y al final con los datos que ya tenemos se hace el llamado a nuestro servivio ajax 
+~~~ typescript
+import { Component, OnInit } from '@angular/core';
+import { PeticionesService } from '../services/peticiones.service';
+import { Console, error } from 'console';
+import { response } from 'express';
+
+@Component({
+  selector: 'app-externo',
+  templateUrl: './externo.component.html',
+  styleUrl: './externo.component.css',
+  providers: [PeticionesService]
+})
+export class ExternoComponent implements OnInit {
+  public user: any;
+  public userId: any;
+  public fecha: any;
+
+  public new_user:any;
+  public usuarioGuardado:any;
+
+  constructor(
+    private _peticionesService: PeticionesService
+  ){
+    this.userId = 1;
+    //creando el usuario a guardar, esto nos lo dijo la base de datos que solo necesita esto
+    this.new_user = {
+      "name": "",
+      "job": ""
+    }
+  }
+
+  ngOnInit(){
+    this.fecha = new Date();
+    this.cargaUsuario();
+  }
+
+  cargaUsuario(){
+    this.user = false;
+    this._peticionesService.getUser(this.userId).subscribe(
+      result => {
+        this.user = result.data;
+        console.log(this.user);      
+      },
+      error => {
+        console.log(<any>error)
+      }
+
+    )
+  }
+
+  onSubmit(form: any){
+    this._peticionesService.addUser(this.new_user).subscribe(
+      response =>{
+        console.log(response);
+        //guardando las rtespuesta de la apiRes
+        this.usuarioGuardado = response;
+
+        form.reset();
+      },
+      error =>{
+        console.log(<any>error);
+      }
+    )
+  }
+}
+
+~~~
+## 205.- Ejercicios Angular
+4378
+~~~ javascript
+
+~~~
+
+~~~ typescript
+
+~~~
+
 *****************************************************
 ## XX.- 
 ~~~ javascript

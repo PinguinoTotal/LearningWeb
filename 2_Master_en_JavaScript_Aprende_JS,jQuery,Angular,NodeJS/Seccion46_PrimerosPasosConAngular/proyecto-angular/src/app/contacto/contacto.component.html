@@ -1,0 +1,36 @@
+<h2>Contacto</h2>
+
+<form #formContacto="ngForm" (ngSubmit)="onSubmit(formContacto)">
+    <label for="nombre">Nombre</label> <br/>
+    <!--se le pone requiere para que se sepa que es obligatorio el campo-->
+    <!--hacer que solo acepte letras y no numeros-->
+    <input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="usuario.nombre" 
+    required pattern="[a-zA-Z]+"> <br/>
+    <!--asi se pone para que sea valido el nombre y es necesario tener que ser tocado-->
+    <!--los nombres nombre.valid se los dimos en #nombre-->
+    <span *ngIf="nombre.touched && !nombre.valid">
+        El nombre es obligatorio
+    </span>
+
+    <label for="apellidos">Apellidos</label> <br/>
+    <input type="text" name="apellidos" #apellidos="ngModel" [(ngModel)]="usuario.apellidos" 
+    required pattern="[a-zA-Z]+"> <br/>
+    <span *ngIf="apellidos.touched && !apellidos.valid">
+        Los apellidos son obligatorios
+    </span>
+
+    <label for="email">Email</label> <br/>
+    <input type="email" name="email" #email="ngModel" [(ngModel)]="usuario.email" required> <br/>
+    <span *ngIf="email.touched && !email.valid">
+        El email es obligatorio
+    </span>
+
+    <label for="Mensaje">Mensaje</label> <br/>
+    <textarea name="Mensaje" #mensaje="ngModel" [(ngModel)]="usuario.mensaje" required></textarea> <br/>
+    <span *ngIf="mensaje.touched && !mensaje.valid">
+        El mensaje es obligatorio
+    </span>
+
+    <!--voy a bloqueare l botn si el formulario no es valido-->
+    <input type="submit" value="enviar" [disabled]="!formContacto.form.valid">
+</form>
